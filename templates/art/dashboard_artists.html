@@ -1,19 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
+{##}
+{#{% for artist in artists %}#}
+{# <div class="w3-row-padding w3-padding-16 w3-center" id="food">#}
+{#    <div class="w3-quarter">#}
+{#           <a href="{% url 'details profile' artist.pk %}">#}
+{#      <img src="{{ artist.profile.image }}" alt="Art" style="width:100%">#}
+{#                  </a>#}
+{##}
+{#      <h3>{{ artist.first_name }}</h3>#}
+{#      <h3>{{ artist.username }}</h3>#}
+{#      <p>{{ artist.description }}</p>#}
+{#    </div>#}
+{##}
+{#  </div>#}
+{#    {% endfor %}#}
 
-{% for artist in artists %}
- <div class="w3-row-padding w3-padding-16 w3-center" id="food">
-    <div class="w3-quarter">
-           <a href="{% url 'details profile' artist.pk %}">
-      <img src="{{ artist.profile.image }}" alt="Art" style="width:100%">
-                  </a>
-
-      <h3>{{ artist.first_name }}</h3>
-      <h3>{{ artist.username }}</h3>
-      <p>{{ artist.description }}</p>
-    </div>
-
+ <div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Dashboard ART</h3>
   </div>
-    {% endfor %}
+  <div class="w3-row-padding">
+      {% for artist in artists %}
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <a href="{% url 'details profile' artist.pk %}">
+        <div class="w3-display-topleft w3-black w3-padding">{{ artist.first_name}} {{ artist.last_name }}</div>
+        <img src="{{ artist.profile_photo.url }}" alt="House" style="width:100%">
+    </a>
+</div>
+</div>
+{% endfor %}
+</div>
 
 {% endblock %}

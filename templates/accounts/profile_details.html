@@ -28,19 +28,39 @@
 
   <!-- End Grid -->
   </div>
-
-{#EDIT THIS#}
-{% for art in own_art %}
- <div class="w3-row-padding w3-padding-16 w3-center" id="food">
-    <div class="w3-quarter">
-           <a href="{% url 'details art' art.pk %}">
-      <img src="{{ art.photo.url }}" alt="Art" style="width:100%">
-                  </a>
-      <h3>{{ art.title }}</h3>
-      <p>{{ art.description }}</p>
-    </div>
-
+ <div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">{{ profile.first_name }} {{ profile.last_name }}'s Art:</h3>
   </div>
 
-    {% endfor %}
+  <div class="w3-row-padding">
+      {% for art in own_art %}
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+           <a href="{% url 'details art' art.pk %}">
+        <div class="w3-display-topleft w3-black w3-padding">{{ art.title}}</div>
+        <img src="{{ art.photo.url }}" alt="House" style="width:100%">
+{{ art.description }}
+           </a>
+                                 <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p></div>
+
+      </div>
+    </div>
+            {% endfor %}
+
+
+   </div>
+{#EDIT THIS#}
+{#{% for art in own_art %}#}
+{# <div class="w3-row-padding w3-padding-16 w3-center" id="food">#}
+{#    <div class="w3-quarter">#}
+{#           <a href="{% url 'details art' art.pk %}">#}
+{#      <img src="{{ art.photo.url }}" alt="Art" style="width:100%">#}
+{#                  </a>#}
+{#      <h3>{{ art.title }}</h3>#}
+{#      <p>{{ art.description }}</p>#}
+{#    </div>#}
+{##}
+{#  </div>#}
+{##}
+{#    {% endfor %}#}
 {% endblock %}

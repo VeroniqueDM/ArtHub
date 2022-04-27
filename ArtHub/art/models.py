@@ -115,7 +115,7 @@ class Event(models.Model):
     location = models.CharField(
         max_length=LOCATION_MAX_LEN,
     )
-    date = models.DateTimeField(
+    date = models.DateField(
 
     )
 
@@ -128,7 +128,9 @@ class Event(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
-
+    photo = models.URLField(
+        verbose_name = 'Photo URL'
+    )
 
 class News(models.Model):
     title = models.CharField(
@@ -146,4 +148,8 @@ class News(models.Model):
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
+    )
+    photo = models.URLField(
+        verbose_name='Photo URL'
+
     )

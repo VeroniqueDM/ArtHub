@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
-from ArtHub.accounts.models import Artist
+from ArtHub.accounts.models import Artist, UserProfile
 from django.views import generic as views
 
 from ArtHub.art.forms import DeleteArtForm, CreateNewsForm, CreateEventForm
@@ -20,16 +20,21 @@ class DashboardArtView(views.ListView):
 
 
 class DashboardArtistsView(views.ListView):
-    model = Artist
+    model = UserProfile
     template_name = 'art/dashboard_artists.html'
-    context_object_name = 'artists_objects'
+    context_object_name = 'artists'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        artists = Artist.objects.all()
-        context['artists'] = artists
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     artists = Artist.objects.all()
+    #     context['artists'] = artists
+    #     return context
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user__type='ARTIST')
+    #     profiles = UserProfile.objects.filter(user__type='Artist')
+    # Profile.objects.filter(user__groups__name='My Group')
     ##maybe do this with def get_queryset ^^
 
 
@@ -55,7 +60,7 @@ class EditArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin, v
     model = ArtPiece
     template_name = 'art/edit_art.html'
 
-    fields = '__all__'
+    fields = ('title', 'photo', 'description', 'style', 'technique', 'medium_used')
     context_object_name = 'art_object'
 
     def get_success_url(self):

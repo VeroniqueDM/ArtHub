@@ -1,14 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for art_piece in art %}
- <div class="w3-row-padding w3-padding-16 w3-center" id="food">
-    <div class="w3-quarter">
-      <img src="{{ art_piece.photo.url }}" alt="Art" style="width:100%">
-      <h3>{{ art_piece.title }}</h3>
-      <p>{{ art_piece.description }}</p>
-      <p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p>
-    </div>
+{#{% for art_piece in art %}#}
+{# <div class="w3-row-padding w3-padding-16 w3-center" id="food">#}
+{#    <div class="w3-quarter">#}
+{#      <img src="{{ art_piece.photo.url }}" alt="Art" style="width:100%">#}
+{#      <h3>{{ art_piece.title }}</h3>#}
+{#      <p>{{ art_piece.description }}</p>#}
+{#      <p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p>#}
+{#    </div>#}
+{#  </div>#}
+{#    {% endfor %}#}
 
+    <div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Featured</h3>
   </div>
-    {% endfor %}
+
+  <div class="w3-row-padding">
+      {% for art_piece in art %}
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">{{ art_piece.title}}</div>
+        <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p></div>
+        <img src="{{ art_piece.photo.url }}" alt="House" style="width:100%">
+      </div>
+    </div>
+            {% endfor %}
+
+
+   </div>
 {% endblock %}

@@ -95,13 +95,13 @@ class DeleteProfileForm(DisabledFieldsFormMixin, forms.ModelForm):
         self._init_disabled_fields()
 
     def save(self, commit=True):
-        ArtPiece.objects.filter(user=self.instance.pk).delete()
+        ArtPiece.objects.filter(user_id=self.instance.pk).delete()
         profile = self.instance
-        user = ArtHubUser.objects.get(pk=profile.user)
+        user = ArtHubUser.objects.get(pk=profile.user_id)
         user.delete()
         return user
 
     class Meta:
         model = UserProfile
-        exclude = ('user', 'profile_photo', 'first_name', 'last_name', 'date_of_birth', 'email', )
+        exclude = ('user', 'description', 'profile_photo', 'first_name', 'last_name', 'date_of_birth', 'email', )
 

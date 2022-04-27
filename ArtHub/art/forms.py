@@ -45,11 +45,16 @@ class CreateNewsForm(forms.ModelForm):
 
     class Meta:
         model = News
-        fields = ('title', 'subtitle', 'content')
+        fields = ('title', 'subtitle', 'content', 'photo')
         widgets = {
             'title': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter Title',
+                }
+            ),
+            'photo': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter URL',
                 }
             ),
         }
@@ -72,7 +77,7 @@ class CreateEventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ('title', 'description', 'location', 'date', 'price', )
+        fields = ('title', 'description', 'location', 'date', 'price', 'photo' )
         widgets = {
             'title': forms.TextInput(
                 attrs={
