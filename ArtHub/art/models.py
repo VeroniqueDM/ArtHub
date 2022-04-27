@@ -118,9 +118,7 @@ class Event(models.Model):
     date = models.DateTimeField(
 
     )
-    is_free_entrance = models.BooleanField(
-        default = False,
-    )
+
     price = models.FloatField(
         validators=(
 
