@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for art_piece in art %}
+ <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+    <div class="w3-quarter">
+      <img src="{{ art_piece.photo.url }}" alt="Art" style="width:100%">
+      <h3>{{ art_piece.title }}</h3>
+      <p>{{ art_piece.description }}</p>
+      <p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p>
+    </div>
+
+  </div>
+    {% endfor %}
+{% endblock %}

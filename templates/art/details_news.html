@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load groups_tags %}
+{% block content %}
+
+     {% if request.user|has_group:"ArtMod" %}
+            <a href="{% url 'edit news' news.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'delete news' news.pk %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+    {{ news.title }}
+    {{ news.subtitle }}
+    {{ news.content }}
+
+
+
+{% endblock %}

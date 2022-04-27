@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load groups_tags %}
+{% block content %}
+          <img src="{{ art_object.photo.url }}"  alt="Art" style="width:20%">
+    {{ art_object.title }}
+    {{ art_object.description }}
+  {% if not is_owner %}
+            <a href="{% url 'like art' art_object.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+
+    {% endif %}
+     <p class="mt-2">Likes: {{ art_object.likes }}</p>  
+     {% if is_owner %}
+            <a href="{% url 'edit art' art_object.pk %}" class="btn btn-primary">Edit</a>
+         {% endif %}
+         {% if is_owner or request.user|has_group:"ArtMod" %}
+            <a href="{% url 'delete art' art_object.pk %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+{% endblock %}

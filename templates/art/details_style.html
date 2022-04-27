@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load groups_tags %}
+{% block content %}
+
+
+    {% if style.photo %}
+    {{ style.photo }}
+    {% endif %}
+  <h1> {{ style.name }} </h1>
+  <h2>  {{ style.description }} </h2>
+
+    {% if request.user|has_group:"ArtMod" %}
+            <a href="{% url 'edit style' style.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'delete style' style.pk %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+{% endblock %}

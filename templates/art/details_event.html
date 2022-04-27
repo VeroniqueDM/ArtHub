@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load groups_tags %}
+{% block content %}
+
+   <h1> {{ event.title }}</h1>
+     <h1> {{ event.date }}</h1>
+     <h1> {{ event.location }}</h1>
+     <h1> {{ event.description }}</h1>
+     <h1> {{ event.price }}€</h1>
+
+     {% if is_owner or request.user|has_group:"ArtMod" %}
+            <a href="{% url 'edit event' event.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'delete event' event.pk %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+{% endblock %}

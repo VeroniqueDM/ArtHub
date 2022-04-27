@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for art in art_objects %}
+ <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+    <div class="w3-quarter">
+           <a href="{% url 'details art' art.pk %}">
+      <img src="{{ art.photo.url }}" alt="Art" style="width:100%">
+                  </a>
+      <h3>{{ art.title }}</h3>
+      <p>{{ art.description }}</p>
+    </div>
+
+  </div>
+    {% endfor %}
+
+{% endblock %}

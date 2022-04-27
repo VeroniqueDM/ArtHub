@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load groups_tags %}
+{% block content %}
+  {% if request.user|has_group:"ArtMod" %}
+            <a href="{% url 'edit technique' style.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'delete technique' style.pk %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+    {% if technique.photo %}
+    {{ technique.photo }}
+    {% endif %}
+    {{ technique.name }}
+    {{ technique.description }}
+
+{% endblock %}

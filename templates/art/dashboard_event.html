@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for event in events %}
+ <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+    <div class="w3-quarter">
+           <a href="{% url 'details event' event.pk %}">
+      <h2>{{ event.title }}</h2>
+                  </a>
+
+      <h3>{{ event.description }}</h3>
+
+    </div>
+
+  </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for news_piece in news %}
+ <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+    <div class="w3-quarter">
+           <a href="{% url 'details news' news_piece.pk %}">
+                 <h2>{{ news_piece.title }}</h2>
+               <h3>{{ news_piece.subtitle }}</h3>
+           </a>
+    </div>
+
+  </div>
+    {% endfor %}
+{% endblock %}
