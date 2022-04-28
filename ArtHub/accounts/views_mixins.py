@@ -2,12 +2,12 @@ from django.shortcuts import redirect
 from django import forms
 
 
-class RedirectToDashboard:
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('dashboard')
-
-        return super().dispatch(request, *args, **kwargs)
+# class RedirectToDashboard:
+#     def dispatch(self, request, *args, **kwargs):
+#         if request.user.is_authenticated:
+#             return redirect('dashboard')
+#
+#         return super().dispatch(request, *args, **kwargs)
 
 
 class DisabledFieldsFormMixin:

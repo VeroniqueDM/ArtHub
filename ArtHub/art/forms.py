@@ -1,6 +1,7 @@
 from django import forms
 
 from ArtHub.art.models import ArtPiece, News, Event
+from ArtHub.art.views_mixins import BootstrapFormMixin
 
 '''
 THIS IS FOR CREATE ART FORM
@@ -15,7 +16,30 @@ THIS IS FOR CREATE ART FORM
 #     queryset=Technique.objects.all(),
 #     widget=forms.CheckboxSelectMultiple,
 # )
+class CreateArtForm(BootstrapFormMixin, forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+        # self.user = user
+
+    def save(self, commit=True):
+        art = super().save(commit=False)
+        # art.user = self.user
+        if commit:
+            art.save()
+        return art
+
+    class Meta:
+        model = ArtPiece
+        fields = ('title', 'photo', 'description', 'style', 'technique', 'medium_used')
+        widgets = {
+            'style': forms.CheckboxSelectMultiple,
+            'technique': forms.CheckboxSelectMultiple,
+        }
+        labels = {
+            'category': 'Select Categories'
+        }
 class DeleteArtForm(forms.ModelForm):
     def save(self, commit=True):
         self.instance.delete()
@@ -23,13 +47,14 @@ class DeleteArtForm(forms.ModelForm):
 
     class Meta:
         model = ArtPiece
-        exclude = ('title', 'photo', 'description', 'publication_date', 'user', 'style', 'technique', 'medium_used', 'likes' )
+        exclude = ('title', 'liked_by','photo', 'description', 'publication_date', 'user', 'style', 'technique', 'medium_used', 'likes' )
 
 
 
-class CreateNewsForm(forms.ModelForm):
+class CreateNewsForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
         self.user = user
 
     def save(self, commit=True):
@@ -60,9 +85,10 @@ class CreateNewsForm(forms.ModelForm):
         }
 
 
-class CreateEventForm(forms.ModelForm):
+class CreateEventForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
         self.user = user
 
     def save(self, commit=True):
@@ -85,3 +111,34 @@ class CreateEventForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class EditEventForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+
+    class Meta:
+        model = Event
+        fields = ('title', 'description', 'location', 'date', 'price', 'photo')
+
+
+class EditNewsForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = News
+        fields = ('title', 'subtitle', 'content', 'photo', )
+
+
+class EditArtForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = ArtPiece
+        fields = ('title', 'photo', 'description', 'style', 'technique', 'medium_used')

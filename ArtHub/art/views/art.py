@@ -8,7 +8,8 @@ from django.urls import reverse_lazy
 from ArtHub.accounts.models import Artist, UserProfile
 from django.views import generic as views
 
-from ArtHub.art.forms import DeleteArtForm, CreateNewsForm, CreateEventForm
+from ArtHub.art.forms import DeleteArtForm, CreateNewsForm, CreateEventForm, CreateArtForm, EditEventForm, EditNewsForm, \
+    EditArtForm
 from ArtHub.art.models import ArtPiece, News, Event
 from ArtHub.art.views_mixins import CheckArtModGroupMixin, CheckArtistOrAdModGroupMixin
 
@@ -39,16 +40,15 @@ class DashboardArtistsView(views.ListView):
 
 
 class CreateArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin, views.CreateView):
-    model = ArtPiece
     template_name = 'art/create_art.html'
-    fields = ('title', 'photo', 'description', )
+    form_class = CreateArtForm
 
     success_url = reverse_lazy('index')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        url_name = 'add painting'
-        context['url_name'] = url_name
+        # url_name = 'add painting'
+        # context['url_name'] = url_name
         return context
 
     def form_valid(self, form):
@@ -57,10 +57,9 @@ class CreateArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin,
 
 
 class EditArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin, views.UpdateView):
-    model = ArtPiece
     template_name = 'art/edit_art.html'
-
-    fields = ('title', 'photo', 'description', 'style', 'technique', 'medium_used')
+    form_class = EditArtForm
+    queryset = ArtPiece.objects.all()
     context_object_name = 'art_object'
 
     def get_success_url(self):
@@ -74,8 +73,12 @@ class ArtDetailsView(auth_mixin.LoginRequiredMixin, views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        # styles = art.style_set.all()
+        styles=self.object.style.all()
+        techniques=self.object.technique.all()
         context['is_owner'] = self.object.user == self.request.user
+        context['styles'] = styles
+        context['techniques'] = techniques
         return context
 
 class DeleteArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin,views.DeleteView):
@@ -126,7 +129,8 @@ class DetailsNewsView(views.DetailView):
 
 class UpdateNewsView(CheckArtModGroupMixin, LoginRequiredMixin, views.UpdateView):
     template_name = 'art/edit_news.html'
-    model = News
+    form_class = EditNewsForm
+    queryset = News.objects.all()
     context_object_name = 'news'
 
 
@@ -160,11 +164,15 @@ class DetailsEventView(views.DetailView):
     model = Event
     context_object_name = 'event'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_owner'] = self.object.user == self.request.user
+        return context
 
 class UpdateEventView(CheckArtistOrAdModGroupMixin, LoginRequiredMixin, views.UpdateView):
     template_name = 'art/edit_event.html'
-    model = Event
-    fields = ('title', 'description', 'location', 'date', 'price')
+    form_class = EditEventForm
+    queryset = Event.objects.all()
     context_object_name = 'event'
     success_url = reverse_lazy('dashboard events')
 

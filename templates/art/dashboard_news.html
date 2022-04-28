@@ -10,9 +10,9 @@
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
         <a href="{% url 'details news' news_piece.pk %}">
-        <div class="w3-display-topleft w3-black w3-padding">{{ news_piece.title}} </div>
+        <div class="w3-display-topleft w3-black w3-padding">{{ news_piece.title|truncatewords:15}} </div>
         <img src="{{ news_piece.photo }}" alt="House" style="width:100%">
-            {{ news_piece.subtitle }}
+            {{ news_piece.subtitle|truncatewords:20 }}
     </a>
 </div>
 </div>

@@ -11,7 +11,6 @@ from django.views.generic import RedirectView
 
 from ArtHub.accounts.forms import CreateRegularProfileForm, RegularProfileUpdateForm, DeleteProfileForm
 from ArtHub.accounts.models import UserProfile
-from ArtHub.accounts.views_mixins import RedirectToDashboard
 from ArtHub.art.models import ArtPiece, Event
 
 
@@ -35,7 +34,7 @@ class RegularUserRegisterView(views.CreateView):
 class UserLoginView(auth_views.LoginView):
     template_name = 'accounts/login_page.html'
     success_url = reverse_lazy('index')
-
+    # form_class = UserLoginForm
     # Make success_url different depending on type of user
     def get_success_url(self):
         if self.success_url:
@@ -80,6 +79,7 @@ class RegularProfileDetailsView(views.DetailView):
             'total_pieces_of_art': total_pieces_of_art,
             'is_owner': self.object.user_id == self.request.user.id,
             'own_art': own_art,
+            'own_events': own_events,
         })
 
         return context
@@ -118,7 +118,10 @@ class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
 #
 class DeleteProfileView(views.DeleteView):
     template_name = 'accounts/profile_delete.html'
-    form_class = DeleteProfileForm
-    queryset = UserProfile.objects.all()
+    # form_class = DeleteProfileForm
+    model = UserProfile
+    # queryset = UserProfile.objects.all()
     # url = reverse_lazy('index')
     success_url = reverse_lazy('index')
+    # def get_queryset(self):
+

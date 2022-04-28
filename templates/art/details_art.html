@@ -1,18 +1,34 @@
 {% extends 'base.html' %}
 {% load groups_tags %}
 {% block content %}
-          <img src="{{ art_object.photo.url }}"  alt="Art" style="width:20%">
-    {{ art_object.title }}
-    {{ art_object.description }}
-  {% if not is_owner %}
-            <a href="{% url 'like art' art_object.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+  <div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">{{ art_object.title }}</h3>
+  </div>
 
-    {% endif %}
-     <p class="mt-2">Likes: {{ art_object.likes }}</p>  
-     {% if is_owner %}
+      <div class="w3-row-padding">
+
+          <img src="{{ art_object.photo.url }}"  alt="Art" style="width:20%">
+       {% if is_owner %}
             <a href="{% url 'edit art' art_object.pk %}" class="btn btn-primary">Edit</a>
          {% endif %}
          {% if is_owner or request.user|has_group:"ArtMod" %}
             <a href="{% url 'delete art' art_object.pk %}" class="btn btn-danger">Delete</a>
         {% endif %}
+      <p class="mt-2"><b>Likes: {{ art_object.likes }}</b></p>
+    <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i>{{ art_object.description }}</i></h4>
+{% if not is_owner %}
+            <a href="{% url 'like art' art_object.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+    {% endif %}
+
+{#    {{ art_object.description }}#}
+    <h4><u>Styles:</u></h4>
+          {% for style in styles %}
+   <br> -{{ style }}
+    {% endfor %}
+      <h4><u> Techniques:</u></h4>
+    {% for technique in techniques %}
+ <br> -{{ technique }}
+    {% endfor %}
+   <h4><u> Medium used:</u></h4> <br> -{{ art_object.medium_used }}
+      </div>
 {% endblock %}

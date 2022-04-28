@@ -18,16 +18,25 @@
   </div>
   <div class="w3-row-padding">
       {% for art in art_objects %}
-    <div class="w3-col l3 m6 w3-margin-bottom">
+{#    <div class="w3-col l3 m6 w3-margin-bottom">#}
+{#      <div class="w3-display-container">#}
+{#        <a href="{% url 'details art' art.pk %}">   <img src="{{ art.photo.url }}" alt="House" style="width:100%">  </a>#}
+{#        <div class="w3-display-topleft w3-black w3-padding">{{ art.title}}</div>#}
+{#     <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p></div>#}
+{##}
+{#        {{ art.description }}#}
+{##}
+{#</div>#}
+{#</div>#}
+            <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <a href="{% url 'details art' art.pk %}">
         <div class="w3-display-topleft w3-black w3-padding">{{ art.title}}</div>
-        <img src="{{ art.photo.url }}" alt="House" style="width:100%">
-        {{ art.description }}
-    </a>
-<div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p></div>
-</div>
-</div>
+        <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art.likes }}</p></div>
+
+                  <a href="{% url 'details art' art.pk %}"> <img src="{{ art.photo.url }}" alt="House" style="width:100%"></a>
+
+      </div>
+    </div>
 {% endfor %}
 </div>
 

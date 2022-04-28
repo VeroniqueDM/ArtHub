@@ -4,10 +4,14 @@ from django import forms
 
 from ArtHub.accounts.models import UserProfile, ArtHubUser
 from ArtHub.accounts.views_mixins import DisabledFieldsFormMixin
-from ArtHub.art.models import Style, Technique, ArtPiece
+from ArtHub.art.models import ArtPiece
+from ArtHub.art.views_mixins import BootstrapFormMixin
+UserModel = get_user_model()
 
-
-class CreateRegularProfileForm(UserCreationForm):
+class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
 
     first_name = forms.CharField(
         max_length=UserProfile.FIRST_NAME_MAX_LENGTH,
@@ -68,7 +72,11 @@ class CreateRegularProfileForm(UserCreationForm):
 
 # class CreateArtistProfileForm(CreateRegularProfileForm):
 
-class RegularProfileUpdateForm(forms.ModelForm):
+class RegularProfileUpdateForm(BootstrapFormMixin,forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
     first_name = forms.CharField(max_length=32)
     last_name = forms.CharField(max_length=32)
     profile_photo = forms.ImageField(
@@ -89,19 +97,28 @@ class RegularProfileUpdateForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'profile_photo', 'date_of_birth', 'email', 'description']
 
 
-class DeleteProfileForm(DisabledFieldsFormMixin, forms.ModelForm):
+class DeleteProfileForm(DisabledFieldsFormMixin, BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_disabled_fields()
+        self._init_bootstrap_form_controls()
 
     def save(self, commit=True):
-        ArtPiece.objects.filter(user_id=self.instance.pk).delete()
-        profile = self.instance
-        user = ArtHubUser.objects.get(pk=profile.user_id)
+        # ArtPiece.objects.filter(user_id=self.instance.pk).delete()
+        # profile = self.instance
+        # own_art = self.instance.art_piece__set
+        user = ArtHubUser.objects.get(pk=self.instance.pk)
+        own_art = user.art_piece__set
+        own_art.delete()
+        own_events = user.event_set
+        own_events.delete()
+        # profile = UserProfile.objects.get(pk=self.instance.pk)
         user.delete()
-        return user
+        self.instance.delete()
+        return self.instance
 
     class Meta:
         model = UserProfile
         exclude = ('user', 'description', 'profile_photo', 'first_name', 'last_name', 'date_of_birth', 'email', )
+
 

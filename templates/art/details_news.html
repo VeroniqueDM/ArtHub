@@ -2,14 +2,30 @@
 {% load groups_tags %}
 {% block content %}
 
-     {% if request.user|has_group:"ArtMod" %}
+  <div class="w3-container w3-padding-32" id="projects">
+
+  </div>
+      <div class="w3-row-padding">
+<!-- Blog entries -->
+<div class="w3-col l8 s12">
+  <!-- Blog entry -->
+  <div class="w3-card-4 w3-margin w3-white">
+
+    <div class="w3-container">
+      <img src="{{ news.photo }}" alt="Nature" style="width:30%">
+         {% if request.user|has_group:"ArtMod" %}
             <a href="{% url 'edit news' news.pk %}" class="btn btn-primary">Edit</a>
             <a href="{% url 'delete news' news.pk %}" class="btn btn-danger">Delete</a>
         {% endif %}
-    {{ news.title }}
-    {{ news.subtitle }}
+    <h2 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{ news.title }}</b></h2>
+      <h3>{{ news.subtitle }}, <span class="w3-opacity">{{ news.creation_date }}</span></h3>
     {{ news.content }}
+    </div>
 
 
+  </div>
+  <hr>
+
+</div>
 
 {% endblock %}

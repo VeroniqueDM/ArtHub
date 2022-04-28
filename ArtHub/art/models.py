@@ -10,6 +10,8 @@ UserModel = get_user_model()
 class Style(models.Model):
     name = models.CharField(
         max_length=50,
+        # unique=True,
+        # primary_key=True,
 
     )
     description = models.TextField()
@@ -28,6 +30,8 @@ class Style(models.Model):
 class Technique(models.Model):
     name = models.CharField(
         max_length=50,
+        # unique=True,
+        # primary_key=True,
 
     )
     description = models.TextField()
@@ -44,8 +48,8 @@ class Technique(models.Model):
 
 class ArtPiece(models.Model):
     MAX_LENGTH_TITLE = 50
-    STYLES = ['Modernism', 'Impressionism', 'Abstract Art', 'Expressionism', 'Cubism', 'Surrealism',]
-    CHOICES_STYLES = [(x, x) for x in STYLES]
+    # STYLES = ['Modernism', 'Impressionism', 'Abstract Art', 'Expressionism', 'Cubism', 'Surrealism',]
+    # CHOICES_STYLES = [(x, x) for x in STYLES]
     MEDIUMS = ['painting', 'drawing', 'print',]
     CHOICES_MEDIUM = [(x, x) for x in MEDIUMS]
     title = models.CharField(
@@ -75,13 +79,13 @@ class ArtPiece(models.Model):
     )
     style = models.ManyToManyField(
         Style,
-        blank=True,
-        null=True,
+        # blank=True,
+        # null=True,
     )
     technique = models.ManyToManyField(
         Technique,
-        blank=True,
-        null=True,
+        # blank=True,
+        # null=True,
     )
 
     medium_used = models.CharField(
@@ -142,6 +146,9 @@ class News(models.Model):
     creation_date = models.DateField(
         auto_now_add=True,
     )
+    # update_date = models.DateField(
+    #     auto_now=True,
+    # )
     content = models.TextField(
 
     )

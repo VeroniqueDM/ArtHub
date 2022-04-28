@@ -20,7 +20,9 @@
 {#    {% endfor %}#}
        <div class="w3-container w3-padding-32" id="projects">
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Dashboard STYLES</h3>
-  </div>
+       <a class="btn btn-success btn-lg" href="{% url 'add style' %}" role="button">ADD NEW STYLE</a>
+
+       </div>
   <div class="w3-row-padding">
 {% for style in styles %}
       <div class="w3-col l3 m6 w3-margin-bottom">
@@ -34,6 +36,5 @@
 </div>
 {% endfor %}
   </div>
-     <a class="btn btn-primary" href="{% url 'add style' %}" role="button">ADD STYLE</a>
 
 {% endblock %}

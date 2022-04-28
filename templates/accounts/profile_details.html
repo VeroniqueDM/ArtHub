@@ -1,35 +1,70 @@
 {% extends 'base.html' %}
 {% load groups_tags %}
 {% block content %}
- <!-- The Grid -->
-  <div class="w3-row-padding">
+{# <!-- The Grid -->#}
+{#  <div class="w3-row-padding">#}
+{##}
+{#    <!-- Left Column -->#}
+{#    <div class="w3-third">#}
+{##}
+{#      <div class="w3-white w3-text-grey w3-card-4">#}
+{#        <div class="w3-display-container">#}
+{#          <img src="{{ profile.profile_photo.url }}"  alt="Profile Picture" style="width:20%" >#}
+{#          <div class="w3-display-bottomleft w3-container w3-text-black">#}
+{#            <h2>{{ profile.first_name}} {{ profile.last_name }}</h2>#}
+{#          <h3>{{ profile.description }}</h3>#}
+{#                      {% if is_owner %}#}
+{##}
+{#       <a href="{% url 'edit profile' profile.pk %}"> EDIT PROFILE</a>#}
+{#       <a href="{% url 'delete profile' profile.pk %}"> DELETE PROFILE</a>#}
+{#          {% endif %}#}
+{#               {% if request.user|has_group:"Artist" %}#}
+{##}
+{#                <a href="{% url 'add art' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Painting</a>#}
+{#                <a href="{% url 'add event' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Event</a>#}
+{#              {% endif %}#}
+{#    </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#-----#}
 
-    <!-- Left Column -->
-    <div class="w3-third">
+  <div class="w3-container w3-padding-32" id="projects">
+{#    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">{{ art_object.title }}</h3>#}
+  </div>
 
-      <div class="w3-white w3-text-grey w3-card-4">
-        <div class="w3-display-container">
-          <img src="{{ profile.profile_photo.url }}"  alt="Profile Picture" style="width:20%" >
-          <div class="w3-display-bottomleft w3-container w3-text-black">
-            <h2>{{ profile.first_name}} {{ profile.last_name }}</h2>
-       <a href="{% url 'edit profile' profile.pk %}"> EDIT PROFILE</a>
-       <a href="{% url 'delete profile' profile.pk %}"> DELETE PROFILE</a>
-               {% if request.user|has_group:"Artist" %}
+      <div class="w3-row-padding">
+<!-- Introduction menu -->
+<div class="w3-col l4">
+  <!-- About Card -->
+  <div class="w3-card w3-margin w3-margin-top">
+  <img src="{{ profile.profile_photo.url }}" style="width:40%">
+                {% if is_owner %}
 
-                <a href="{% url 'add art' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Painting</a>
-                <a href="{% url 'add event' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Event</a>
+{#       <a href="{% url 'edit profile' profile.pk %}"> EDIT PROFILE</a>#}
+<a class="btn btn-warning" href="{% url 'edit profile' profile.pk %}" role="button">EDIT PROFILE</a>
+<a class="btn btn-danger" href="{% url 'delete profile' profile.pk %}" role="button">DELETE PROFILE</a>
+
+
+{#       <a href="{% url 'delete profile' profile.pk %}"> DELETE PROFILE</a>#}
+<a class="btn btn-success" href="{% url 'add art' %}" role="button">Add Art</a>
+<a class="btn btn-success" href="{% url 'add event' %}" role="button">Add Event</a>
+{#                <a href="{% url 'add art' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Painting</a>#}
+{#                <a href="{% url 'add event' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Event</a>#}
               {% endif %}
+    <div class="w3-container w3-white">
+      <h4><b>{{ profile.first_name}} {{ profile.last_name }}</b></h4>
 
-    <!-- End Left Column -->
+      <p>{{ profile.description }}</p>
+
     </div>
-        </div>
-      </div>
-    </div>
+  </div><hr>
 
   <!-- End Grid -->
+  {% if own_art %}
   </div>
  <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">{{ profile.first_name }} {{ profile.last_name }}'s Art:</h3>
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{ profile.first_name }} {{ profile.last_name }}'s Art:</b></h3>
   </div>
 
   <div class="w3-row-padding">
@@ -49,18 +84,27 @@
 
 
    </div>
-{#EDIT THIS#}
-{#{% for art in own_art %}#}
-{# <div class="w3-row-padding w3-padding-16 w3-center" id="food">#}
-{#    <div class="w3-quarter">#}
-{#           <a href="{% url 'details art' art.pk %}">#}
-{#      <img src="{{ art.photo.url }}" alt="Art" style="width:100%">#}
-{#                  </a>#}
-{#      <h3>{{ art.title }}</h3>#}
-{#      <p>{{ art.description }}</p>#}
-{#    </div>#}
-{##}
-{#  </div>#}
-{##}
-{#    {% endfor %}#}
+    {% endif %}
+{% if own_events %}
+ <div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{ profile.first_name }} {{ profile.last_name }}'s Events:</b></h3>
+  </div>
+
+  <div class="w3-row-padding">
+      {% for event in own_events %}
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+           <a href="{% url 'details event' event.pk %}">
+        <div class="w3-display-topleft w3-black w3-padding">{{ event.title}}</div>
+        <img src="{{ event.photo }}" alt="House" style="width:100%">
+{{ event.description|truncatewords:10 }}
+           </a>
+
+      </div>
+    </div>
+            {% endfor %}
+
+
+   </div>
+{% endif %}
 {% endblock %}

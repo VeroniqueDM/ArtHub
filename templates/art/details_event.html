@@ -2,14 +2,27 @@
 {% load groups_tags %}
 {% block content %}
 
-   <h1> {{ event.title }}</h1>
-     <h1> {{ event.date }}</h1>
-     <h1> {{ event.location }}</h1>
-     <h1> {{ event.description }}</h1>
-     <h1> {{ event.price }}€</h1>
+       <div class="w3-container w3-padding-32" id="projects">
+    <h1 class="text-center"></h1>
+  </div>
+  <div class="w3-row-padding">
+    <div>
+    <div class="w3-card-4 w3-margin w3-white">
 
-     {% if is_owner or request.user|has_group:"ArtMod" %}
+    <div class="w3-container">
+      <img src="{{ event.photo }}" alt="Nature" style="width:30%">
+         {%  if is_owner or request.user|has_group:"ArtMod" %}
             <a href="{% url 'edit event' event.pk %}" class="btn btn-primary">Edit</a>
             <a href="{% url 'delete event' event.pk %}" class="btn btn-danger">Delete</a>
         {% endif %}
+      <h2><b>    {{ event.title }}</b></h2>
+    <h3>Entry: {{ event.price|floatformat:2 }}€</h3>
+      <h3>{{ event.description }}, <span class="w3-opacity">{{ event.date }}</span></h3>
+
+    </div>
+
+
+  </div>
+  <hr>
+</div>
 {% endblock %}

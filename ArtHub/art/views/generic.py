@@ -3,7 +3,6 @@ from operator import attrgetter
 
 from django.views.generic import ListView
 
-from ArtHub.accounts.views_mixins import RedirectToDashboard
 from django.views import generic as views
 
 from ArtHub.art.models import ArtPiece

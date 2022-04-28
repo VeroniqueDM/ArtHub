@@ -12,7 +12,7 @@
 {#    {% endfor %}#}
 
     <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Featured</h3>
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Most Popular</h3>
   </div>
 
   <div class="w3-row-padding">
@@ -21,7 +21,9 @@
       <div class="w3-display-container">
         <div class="w3-display-topleft w3-black w3-padding">{{ art_piece.title}}</div>
         <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p></div>
-        <img src="{{ art_piece.photo.url }}" alt="House" style="width:100%">
+
+                  <a href="{% url 'details art' art_piece.pk %}"> <img src="{{ art_piece.photo.url }}" alt="House" style="width:100%"></a>
+
       </div>
     </div>
             {% endfor %}
