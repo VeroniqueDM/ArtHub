@@ -62,6 +62,12 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
             raise ValidationError("Date of birth must be after 1 January 1900")
         return data
 
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if UserProfile.objects.filter(email=email).count() > 0:
+            raise ValidationError('This email is already in use.')
+        return email
+
     def save(self, commit=True):
         # user.type = self.cleaned_data['type']
 

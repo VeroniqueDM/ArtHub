@@ -1,7 +1,7 @@
 from django import forms
 
 from ArtHub.art.models import ArtPiece, News, Event, Style, Technique
-from ArtHub.art.views_mixins import BootstrapFormMixin
+from ArtHub.art.views_mixins import BootstrapFormMixin, FileSizeValidator
 
 '''
 THIS IS FOR CREATE ART FORM
@@ -23,12 +23,15 @@ class CreateArtForm(BootstrapFormMixin, forms.ModelForm):
         self._init_bootstrap_form_controls()
         # self.user = user
 
-    # def save(self, commit=True):
-    #     art = super().save(commit=False)
-    #     # art.user = self.user
-    #     if commit:
-    #         art.save()
-    #     return art
+    max_upload_limit = 5 * 1024 * 1024
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('photo', f"File must be < 5 MB")
 
     class Meta:
         model = ArtPiece
@@ -51,6 +54,8 @@ class CreateArtForm(BootstrapFormMixin, forms.ModelForm):
             'category': 'Select Categories',
             'type': 'Type of Art'
         }
+
+
 class DeleteArtForm(forms.ModelForm):
     def save(self, commit=True):
         self.instance.delete()
@@ -150,15 +155,34 @@ class EditArtForm(BootstrapFormMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
 
+    max_upload_limit = 5 * 1024 * 1024
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('photo', f"File must be < 5 MB")
     class Meta:
         model = ArtPiece
         fields = ('title', 'photo', 'description', 'style', 'technique', 'medium_used')
 
 
-class CreateStyleForm(BootstrapFormMixin, forms.ModelForm):
+class CreateStyleForm( BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+
+    max_upload_limit = 5 * 1024 * 1024
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('photo', f"File must be < 5 MB")
 
     class Meta:
         model = Style
@@ -171,7 +195,15 @@ class CreateTechniqueForm(BootstrapFormMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
 
+    max_upload_limit = 5 * 1024 * 1024
 
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('photo', f"File must be < 5 MB")
 
     class Meta:
         model = Technique
@@ -183,6 +215,15 @@ class EditStyleForm(BootstrapFormMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
 
+    max_upload_limit = 5 * 1024 * 1024
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('photo', f"File must be < 5 MB")
 
     class Meta:
         model = Style
@@ -194,6 +235,15 @@ class EditTechniqueForm(BootstrapFormMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
 
+    max_upload_limit = 5 * 1024 * 1024
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('photo', f"File must be < 5 MB")
 
     class Meta:
         model = Technique

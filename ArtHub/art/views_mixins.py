@@ -29,3 +29,15 @@ class BootstrapFormMixin:
             if 'class' not in field.widget.attrs:
                 field.widget.attrs['class'] = ''
             field.widget.attrs['class'] += 'form-control'
+
+
+class FileSizeValidator:
+    max_upload_limit = 5 * 1024 * 1024
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('profile_photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('profile_photo', f"File must be < 5 MB")

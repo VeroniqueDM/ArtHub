@@ -19,7 +19,9 @@ class RegularProfileAdmin(admin.ModelAdmin):
 @admin.register(ArtHubUser)
 class ArtHubUserAdmin(admin.ModelAdmin):
     filter_horizontal = ('groups', 'user_permissions')
-    list_display = ('username', 'type', )
+    list_display = ('username',
+                    'type',
+                    )
     fieldsets = (
         (None, {'fields': ('username', 'type')}),
         # Other fieldsets
