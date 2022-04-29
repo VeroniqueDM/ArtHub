@@ -1,10 +1,13 @@
-from django.core.validators import MinLengthValidator
+from datetime import date
+from enum import unique
+
+from django.core.validators import MinLengthValidator, MaxValueValidator, MinValueValidator
 from django.db import models
 from django.contrib.auth import models as auth_models
 # Create your models here.
 from ArtHub.accounts.managers import ArtHubManager
 # from ArtHub.art.models import News
-from ArtHub.common.validators import validate_only_letters, validate_file_max_size_in_mb
+from ArtHub.common.validators import validate_only_letters_or_space
 
 
 class ArtHubUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
@@ -96,7 +99,7 @@ class UserProfile(models.Model):
         max_length=FIRST_NAME_MAX_LENGTH,
         validators=(
             MinLengthValidator(FIRST_NAME_MIN_LENGTH),
-            validate_only_letters,
+            validate_only_letters_or_space,
         )
     )
 
@@ -104,7 +107,7 @@ class UserProfile(models.Model):
         max_length=LAST_NAME_MAX_LENGTH,
         validators=(
             MinLengthValidator(LAST_NAME_MIN_LENGTH),
-            validate_only_letters,
+            validate_only_letters_or_space,
         )
     )
 
@@ -112,7 +115,7 @@ class UserProfile(models.Model):
         blank=True,
         null=True,
         validators=(
-            # validate_file_max_size_in_mb(5),
+            # validate_file_size(5),
         )
     )
 
@@ -124,6 +127,7 @@ class UserProfile(models.Model):
     email = models.EmailField(
         null=True,
         blank=True,
+        unique=True,
     )
 
     user = models.OneToOneField(

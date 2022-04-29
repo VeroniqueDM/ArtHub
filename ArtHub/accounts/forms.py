@@ -1,6 +1,10 @@
+from datetime import date
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from ArtHub.accounts.models import UserProfile, ArtHubUser
 from ArtHub.accounts.views_mixins import DisabledFieldsFormMixin
@@ -12,6 +16,8 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+
+    max_upload_limit = 5 * 1024 * 1024
 
     first_name = forms.CharField(
         max_length=UserProfile.FIRST_NAME_MAX_LENGTH,
@@ -48,6 +54,14 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
             ),
         }
 
+    def clean_date_of_birth(self):
+        data = self.cleaned_data['date_of_birth']
+        if data > timezone.now().date():
+            raise ValidationError("Date of birth cannot be a date in the future")
+        elif data < date(1900, 1 , 1):
+            raise ValidationError("Date of birth must be after 1 January 1900")
+        return data
+
     def save(self, commit=True):
         # user.type = self.cleaned_data['type']
 
@@ -69,6 +83,13 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
         #     )
         return user
 
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('profile_photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('profile_photo', f"File must be < 5 MB")
 
 # class CreateArtistProfileForm(CreateRegularProfileForm):
 
