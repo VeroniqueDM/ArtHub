@@ -5,10 +5,14 @@
   /*   padding: 100px 0 0 0;*/
   /*   }*/
 
+/*.hero-wrap js-fullheight{*/
 
-  body {
-    background: url("images/background.jpg")  50% 0 no-repeat fixed;
-}
+/*  background-image: url('static/images/background.jpg');*/
+/*}*/
+
+/*  body {*/
+/*    background: url("images/background.jpg")  50% 0 no-repeat fixed;*/
+/*}*/
 
 /*.header-task{*/
 /*background-image: url("/static/images/background.jpg");*/

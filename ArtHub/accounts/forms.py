@@ -94,8 +94,26 @@ class RegularProfileUpdateForm(BootstrapFormMixin,forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['first_name', 'last_name', 'profile_photo', 'date_of_birth', 'email', 'description']
+        fields = ['first_name', 'last_name', 'profile_photo', 'date_of_birth', 'email', 'website','address','description']
+        widgets = {
 
+            'address': forms.TextInput(
+                attrs={
+                    'placeholder': 'Add an address for visitors interested in your art'
+                }
+            ),
+            'website': forms.TextInput(
+                attrs={
+                    'placeholder': 'Add a website'
+                }
+            ),
+            'description': forms.TextInput(
+                attrs={
+                    'placeholder': 'Provide a general summary of your skills and your work'
+                }
+            ),
+
+        }
 
 class DeleteProfileForm(DisabledFieldsFormMixin, BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):

@@ -80,6 +80,7 @@ class ArtDetailsView(auth_mixin.LoginRequiredMixin, views.DetailView):
         techniques=self.object.technique.all()
         context['is_owner'] = self.object.user == self.request.user
         context['styles'] = styles
+        context['owner'] = UserProfile.objects.get(user_id=self.object.user)
         # context['is_liked'] = ArtPiece.objects.all().filter(se)
         context['techniques'] = techniques
         return context

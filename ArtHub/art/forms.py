@@ -36,6 +36,11 @@ class CreateArtForm(BootstrapFormMixin, forms.ModelForm):
         widgets = {
             # 'style': forms.CheckboxSelectMultiple,
             # 'technique': forms.CheckboxSelectMultiple,
+            'medium_used': forms.TextInput(
+                attrs={
+                    'placeholder': 'e.g. glass, paint, charcoal..'
+                }
+            ),
             'type': forms.TextInput(
                 attrs={
                     'placeholder': 'e.g. drawing, sculpture..'

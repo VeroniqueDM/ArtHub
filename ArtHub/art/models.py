@@ -89,10 +89,11 @@ class ArtPiece(models.Model):
     )
 
     medium_used = models.CharField(
-        blank=True,
-        null=True,
-        max_length=max(len(x) for (x, _) in CHOICES_MEDIUM),
-        choices=CHOICES_MEDIUM,
+        max_length = 200,
+        # blank=True,
+        # null=True,
+        # max_length=max(len(x) for (x, _) in CHOICES_MEDIUM),
+        # choices=CHOICES_MEDIUM,
     )
     # is_framed = models.BooleanField(
     #     default=False,

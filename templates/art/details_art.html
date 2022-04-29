@@ -18,19 +18,26 @@
     <a href="{% url 'like art' art_object.pk %}"><b><i class="fa fa-heart-o"  style ="font-size:35px; color:red" aria-hidden="true"></i>    </b></a>
 {#{% if  %}#}
     {% endif %}
+
+      <p class="mt-2"><b>Artist:
+          <a href="{% url 'details profile' owner.pk %}" style="color:royalblue"><b>  {{ owner.first_name }} {{ owner.last_name }}</b></a>
+
+      </b></p>
       <p class="mt-2"><b>Likes: {{ art_object.likes }}</b></p>
 
 
     <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i>{{ art_object.description }}</i></h4>
 
 {#    {{ art_object.description }}#}
+
     <h4><u>Styles:</u></h4>
           {% for style in styles %}
-   <br> -{{ style }}
+              <br> - <a href="{% url 'details style' style.pk %}" style="color:royalblue"><b>{{ style }}</b></a>
     {% endfor %}
       <h4><u> Techniques:</u></h4>
     {% for technique in techniques %}
- <br> -{{ technique }}
+        <br> - <a href="{% url 'details technique' technique.pk %}" style="color:royalblue"><b>{{ technique }}</b></a>
+
     {% endfor %}
    <h4><u> Medium used:</u></h4> <br> -{{ art_object.medium_used }}
       </div>

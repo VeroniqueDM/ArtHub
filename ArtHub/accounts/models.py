@@ -131,18 +131,20 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
-    # is_artist = models.CharField(
-    #     max_length=max(len(x) for x, _ in USER_TYPES),
-    #
-    #     default=False,
-    #     choices=USER_TYPES,
-    # )
-    # styles = models.ManyToManyField(
-    #     Style,
-    # )
+
     description = models.TextField(
 
     )
+    website = models.URLField(
+        null=True,
+        blank=True,
+    )
+    address = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
