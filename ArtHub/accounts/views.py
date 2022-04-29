@@ -1,5 +1,5 @@
 from itertools import chain
-from django.contrib.auth import mixins as auth_mixin, login
+from django.contrib.auth import mixins as auth_mixin, login, get_user_model
 from django.contrib.auth.models import Group
 from django.shortcuts import render
 from django.contrib.auth import logout as auth_logout
@@ -12,13 +12,13 @@ from django.views.generic import RedirectView
 from ArtHub.accounts.forms import CreateRegularProfileForm, RegularProfileUpdateForm, DeleteProfileForm
 from ArtHub.accounts.models import UserProfile
 from ArtHub.art.models import ArtPiece, Event
-
+UserModel=get_user_model()
 
 class RegularUserRegisterView(views.CreateView):
     form_class = CreateRegularProfileForm
     template_name = 'accounts/profile_create.html'
     success_url = reverse_lazy('index')
-
+    context_object_name = 'profile'
     def form_valid(self, form):
         result = super().form_valid(form)
 
@@ -86,7 +86,7 @@ class RegularProfileDetailsView(views.DetailView):
 
 class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
     template_name = 'accounts/profile_edit.html'
-    context_object_name = 'user'
+    context_object_name = 'profile'
     queryset = UserProfile.objects.all()
     form_class = RegularProfileUpdateForm
 
@@ -119,7 +119,7 @@ class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
 class DeleteProfileView(views.DeleteView):
     template_name = 'accounts/profile_delete.html'
     # form_class = DeleteProfileForm
-    model = UserProfile
+    model = UserModel
     # queryset = UserProfile.objects.all()
     # url = reverse_lazy('index')
     success_url = reverse_lazy('index')

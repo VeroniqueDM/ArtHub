@@ -10,7 +10,7 @@
 {% for technique in techniques %}
       <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <a href="{% url 'details style' technique.pk %}">
+        <a href="{% url 'details technique' technique.pk %}">
         <div class="w3-display-topleft w3-black w3-padding">{{ technique.name}} </div>
         <img src="{{ technique.photo.url }}" alt="House" style="width:100%">
 

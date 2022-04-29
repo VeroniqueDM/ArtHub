@@ -102,9 +102,11 @@ class ArtPiece(models.Model):
     )
     liked_by = models.ManyToManyField(
         UserModel,
-        related_name= 'likes',
+        related_name= 'liked_by',
     )
-
+    type = models.CharField(
+        max_length=60,
+    )
 
 class Event(models.Model):
     LOCATION_MAX_LEN = 100
@@ -160,3 +162,8 @@ class News(models.Model):
         verbose_name='Photo URL'
 
     )
+
+class UserNewsTimestamp(models.Model):
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name="timestamps")
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name="timestamps")
+    timestamp = models.DateTimeField("Time Stamp", blank=True, null=True)

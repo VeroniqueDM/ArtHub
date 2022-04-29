@@ -2,11 +2,15 @@ from django.urls import path
 
 from ArtHub.art.views.art import DashboardArtView, CreateArtView, ArtDetailsView, EditArtView, DeleteArtView, \
     DashboardEventView, CreateEventView, DetailsEventView, UpdateEventView, DeleteEventView, DashboardNewsView, \
-    CreateNewsView, DetailsNewsView, UpdateNewsView, DeleteNewsView, DashboardArtistsView, like_art
-from ArtHub.art.views.generic import HomeView
+    CreateNewsView, DetailsNewsView, UpdateNewsView, DeleteNewsView, DashboardArtistsView, like_art, \
+    NewsListLastSeenView
+from ArtHub.art.views.generic import HomeView, LikedArtView
 from ArtHub.art.views.styles_and_techniques import DashboardStylesView, CreateStyleView, DetailsStyleView, \
     UpdateStyleView, DeleteStyleView, DashboardTechniqueView, CreateTechniqueView, DetailsTechniqueView, \
     UpdateTechniqueView, DeleteTechniqueView
+
+
+
 
 urlpatterns = [
     path('', HomeView.as_view(), name='index'),
@@ -15,6 +19,7 @@ urlpatterns = [
     path('art/details/<int:pk>/', ArtDetailsView.as_view(), name='details art'),
     path('art/edit/<int:pk>/', EditArtView.as_view(), name='edit art'),
     path('art/delete/<int:pk>/', DeleteArtView.as_view(), name='delete art'),
+    path('art/favourites/', LikedArtView.as_view(), name='liked art'),
     path('art/like/<int:pk>/', like_art, name='like art'),
 
     path('events/dashboard/', DashboardEventView.as_view(), name='dashboard events'),
@@ -28,6 +33,7 @@ urlpatterns = [
     path('news/details/<int:pk>/', DetailsNewsView.as_view(), name='details news'),
     path('news/edit/<int:pk>/', UpdateNewsView.as_view(), name='edit news'),
     path('news/delete/<int:pk>/', DeleteNewsView.as_view(), name='delete news'),
+    path('news/last-viewed/', NewsListLastSeenView.as_view(), name='last seen news'),
 
     path('styles/dashboard/', DashboardStylesView.as_view(), name='dashboard styles'),
     path('styles/add/', CreateStyleView.as_view(), name='add style'),

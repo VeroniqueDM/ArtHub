@@ -1,16 +1,18 @@
+from itertools import chain
 
 from django.contrib.auth import mixins as auth_mixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 
 from ArtHub.accounts.models import Artist, UserProfile
 from django.views import generic as views
 
 from ArtHub.art.forms import DeleteArtForm, CreateNewsForm, CreateEventForm, CreateArtForm, EditEventForm, EditNewsForm, \
     EditArtForm
-from ArtHub.art.models import ArtPiece, News, Event
+from ArtHub.art.models import ArtPiece, News, Event, UserNewsTimestamp
 from ArtHub.art.views_mixins import CheckArtModGroupMixin, CheckArtistOrAdModGroupMixin
 
 
@@ -78,6 +80,7 @@ class ArtDetailsView(auth_mixin.LoginRequiredMixin, views.DetailView):
         techniques=self.object.technique.all()
         context['is_owner'] = self.object.user == self.request.user
         context['styles'] = styles
+        # context['is_liked'] = ArtPiece.objects.all().filter(se)
         context['techniques'] = techniques
         return context
 
@@ -121,11 +124,57 @@ class DashboardNewsView(views.ListView):
     context_object_name = 'news'
 
 
-class DetailsNewsView(views.DetailView):
-    template_name = 'art/details_news.html'
+class NewsListLastSeenView(LoginRequiredMixin,views.ListView):
     model = News
+    template_name = "art/last_seen_news.html"
+    context_object_name = "last_seen_news"
+    queryset = News.objects.all()
+
+    def get_queryset(self):
+        queryset = self.queryset
+        user = self.request.user
+        # ALTERNATIVELY, THIS FIRST SORTS THE NEWS SEEN BEFORE, THEN SHOWS ALL ELSE
+        # if user.is_authenticated:
+        #     queryset_one = queryset.filter(
+        #         timestamps__user=user).order_by("-timestamps__timestamp")
+        #     queryset_two = queryset.exclude(timestamps__user=self.request.user)
+        #     queryset = chain(queryset_one, queryset_two)
+        queryset_one = queryset.filter(
+            timestamps__user=user).order_by("-timestamps__timestamp")
+        return queryset_one
+
+
+
+# class DetailsNewsView(views.DetailView):
+#     template_name = 'art/details_news.html'
+#     model = News
+#     context_object_name = 'news'
+
+class DetailsNewsView(views.DetailView):
+    model = News
+    template_name = "art/details_news.html"
     context_object_name = 'news'
 
+    def get(self, request, *args, **kwargs):
+        self.user_viewed(now())
+        return super().get(request, *args, **kwargs)
+
+    def user_viewed(self, timestamp):
+        user = self.request.user
+        if not user.is_authenticated:
+            return
+        upt, _ = UserNewsTimestamp.objects.get_or_create(
+            user=user, news=self.get_object())
+        upt.timestamp = timestamp
+        upt.save()
+        return upt.timestamp
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        timestamper = UserNewsTimestamp.objects.get(user_id=self.request.user.id, news_id=self.object)
+        timestamp = timestamper.timestamp
+        context['timestamp'] = timestamp
+        return context
 
 class UpdateNewsView(CheckArtModGroupMixin, LoginRequiredMixin, views.UpdateView):
     template_name = 'art/edit_news.html'

@@ -1,6 +1,6 @@
 from django import forms
 
-from ArtHub.art.models import ArtPiece, News, Event
+from ArtHub.art.models import ArtPiece, News, Event, Style, Technique
 from ArtHub.art.views_mixins import BootstrapFormMixin
 
 '''
@@ -23,22 +23,28 @@ class CreateArtForm(BootstrapFormMixin, forms.ModelForm):
         self._init_bootstrap_form_controls()
         # self.user = user
 
-    def save(self, commit=True):
-        art = super().save(commit=False)
-        # art.user = self.user
-        if commit:
-            art.save()
-        return art
+    # def save(self, commit=True):
+    #     art = super().save(commit=False)
+    #     # art.user = self.user
+    #     if commit:
+    #         art.save()
+    #     return art
 
     class Meta:
         model = ArtPiece
-        fields = ('title', 'photo', 'description', 'style', 'technique', 'medium_used')
+        fields = ('title', 'photo', 'description', 'style', 'technique', 'medium_used', 'type')
         widgets = {
-            'style': forms.CheckboxSelectMultiple,
-            'technique': forms.CheckboxSelectMultiple,
+            # 'style': forms.CheckboxSelectMultiple,
+            # 'technique': forms.CheckboxSelectMultiple,
+            'type': forms.TextInput(
+                attrs={
+                    'placeholder': 'e.g. drawing, sculpture..'
+                }
+            )
         }
         labels = {
-            'category': 'Select Categories'
+            'category': 'Select Categories',
+            'type': 'Type of Art'
         }
 class DeleteArtForm(forms.ModelForm):
     def save(self, commit=True):
@@ -142,3 +148,48 @@ class EditArtForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = ArtPiece
         fields = ('title', 'photo', 'description', 'style', 'technique', 'medium_used')
+
+
+class CreateStyleForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = Style
+        fields = ('name', 'description', 'photo')
+
+
+
+class CreateTechniqueForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+
+
+    class Meta:
+        model = Technique
+        fields = ('name', 'description', 'photo')
+
+
+class EditStyleForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+
+    class Meta:
+        model = Style
+        fields = ('photo', 'name', 'description')
+
+
+class EditTechniqueForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+
+    class Meta:
+        model = Technique
+        fields = ('photo', 'name', 'description')

@@ -14,11 +14,14 @@
          {% if is_owner or request.user|has_group:"ArtMod" %}
             <a href="{% url 'delete art' art_object.pk %}" class="btn btn-danger">Delete</a>
         {% endif %}
-      <p class="mt-2"><b>Likes: {{ art_object.likes }}</b></p>
-    <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i>{{ art_object.description }}</i></h4>
-{% if not is_owner %}
-            <a href="{% url 'like art' art_object.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+      {% if not is_owner %}
+    <a href="{% url 'like art' art_object.pk %}"><b><i class="fa fa-heart-o"  style ="font-size:35px; color:red" aria-hidden="true"></i>    </b></a>
+{#{% if  %}#}
     {% endif %}
+      <p class="mt-2"><b>Likes: {{ art_object.likes }}</b></p>
+
+
+    <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i>{{ art_object.description }}</i></h4>
 
 {#    {{ art_object.description }}#}
     <h4><u>Styles:</u></h4>

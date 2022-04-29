@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth import models as auth_models
 # Create your models here.
 from ArtHub.accounts.managers import ArtHubManager
+# from ArtHub.art.models import News
 from ArtHub.common.validators import validate_only_letters, validate_file_max_size_in_mb
 
 
@@ -91,7 +92,6 @@ class UserProfile(models.Model):
     FIRST_NAME_MAX_LENGTH = 30
     LAST_NAME_MIN_LENGTH = 2
     LAST_NAME_MAX_LENGTH = 30
-    USER_TYPES = [(x, x) for x in ['Artist', 'Art-enthusiast']]
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_LENGTH,
         validators=(
@@ -145,5 +145,6 @@ class UserProfile(models.Model):
     )
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
 
 

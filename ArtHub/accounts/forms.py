@@ -25,7 +25,7 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
     date_of_birth = forms.DateField()
     email = forms.EmailField()
     type = forms.ChoiceField(
-        widget=forms.RadioSelect(attrs={"required": True}),
+        # widget=forms.RadioSelect(attrs={"required": True}),
         choices=ArtHubUser.Types.choices,
         required=True,
     )

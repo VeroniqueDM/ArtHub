@@ -17,7 +17,8 @@
         {% endif %}
       <h2><b>    {{ event.title }}</b></h2>
     <h3>Entry: {{ event.price|floatformat:2 }}€</h3>
-      <h3>{{ event.description }}, <span class="w3-opacity">{{ event.date }}</span></h3>
+    <h3>Date: {{ event.date }}</h3>
+      <h4>{{ event.description }}, <span class="w3-opacity"></span></h4>
 
     </div>
 

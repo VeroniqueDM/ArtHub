@@ -1,16 +1,31 @@
 {% extends 'base.html' %}
 {% load groups_tags %}
 {% block content %}
+  <div class="w3-container w3-padding-32" id="projects">
 
+  </div>
+      <div class="w3-row-padding">
+<!-- Blog entries -->
+<div class="w3-col l8 s12">
+  <!-- Blog entry -->
+  <div class="w3-card-4 w3-margin w3-white">
 
-    {% if style.photo %}
-    {{ style.photo }}
-    {% endif %}
-  <h1> {{ style.name }} </h1>
-  <h2>  {{ style.description }} </h2>
-
-    {% if request.user|has_group:"ArtMod" %}
-            <a href="{% url 'edit style' style.pk %}" class="btn btn-primary">Edit</a>
+    <div class="w3-container">
+        {% if style.photo %}
+  <img src="{{ style.photo.url }}" alt="Nature" style="width:30%">
+            {% endif %}
+         {% if request.user|has_group:"ArtMod" %}
+        <a href="{% url 'edit style' style.pk %}" class="btn btn-primary">Edit</a>
             <a href="{% url 'delete style' style.pk %}" class="btn btn-danger">Delete</a>
         {% endif %}
+    <h2 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{ style.name }}</b></h2>
+      <h3>{{ style.description }}, <span class="w3-opacity"></span></h3>
+    </div>
+  </div>
+  <hr>
+</div>
+      </div>
+
+
+
 {% endblock %}

@@ -1,14 +1,45 @@
 {% extends 'base.html' %}
 {% load groups_tags %}
 {% block content %}
-  {% if request.user|has_group:"ArtMod" %}
-            <a href="{% url 'edit technique' style.pk %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'delete technique' style.pk %}" class="btn btn-danger">Delete</a>
+    <div class="w3-container w3-padding-32" id="projects">
+
+  </div>
+      <div class="w3-row-padding">
+<!-- Blog entries -->
+<div class="w3-col l8 s12">
+  <!-- Blog entry -->
+  <div class="w3-card-4 w3-margin w3-white">
+
+    <div class="w3-container">
+        {% if technique.photo %}
+  <img src="{{ technique.photo.url }}" alt="Nature" style="width:30%">
+            {% endif %}
+         {% if request.user|has_group:"ArtMod" %}
+           <a href="{% url 'edit technique' technique.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'delete technique' technique.pk %}" class="btn btn-danger">Delete</a>
         {% endif %}
-    {% if technique.photo %}
-    {{ technique.photo }}
-    {% endif %}
-    {{ technique.name }}
-    {{ technique.description }}
+    <h2 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{ technique.name }}</b></h2>
+      <h3>{{ technique.description }}, <span class="w3-opacity"></span></h3>
+    </div>
+  </div>
+  <hr>
+</div>
+      </div>
+
+
+
+
+
+{##}
+{##}
+{#    {% if request.user|has_group:"ArtMod" %}#}
+{#            <a href="{% url 'edit technique' style.pk %}" class="btn btn-primary">Edit</a>#}
+{#            <a href="{% url 'delete technique' style.pk %}" class="btn btn-danger">Delete</a>#}
+{#        {% endif %}#}
+{#    {% if technique.photo %}#}
+{#    {{ technique.photo }}#}
+{#    {% endif %}#}
+{#    {{ technique.name }}#}
+{#    {{ technique.description }}#}
 
 {% endblock %}

@@ -1,0 +1,27 @@
+  /*#third{*/
+  /*   background: url("/static/images/background.jpg) 50% 0 no-repeat fixed;*/
+  /*   color: white;*/
+  /*   height: 650px;*/
+  /*   padding: 100px 0 0 0;*/
+  /*   }*/
+
+
+  body {
+    background: url("images/background.jpg")  50% 0 no-repeat fixed;
+}
+
+/*.header-task{*/
+/*background-image: url("/static/images/background.jpg");*/
+/*background-repeat: no-repeat;*/
+/*background-size: 100% 200%;*/
+/*height: 120px;*/
+/*position: relative;*/
+/*}*/
+
+/*ul.navbar-nav{ white-space:nowrap;}*/
+/*.navbar-nav li{ align-items: center;*/
+/*    justify-content: space-between;*/
+/*    display: inline-flex;*/
+/*    padding: 10px 5px;*/
+/*    font-size: 25px;*/
+/*    margin: auto;}*/

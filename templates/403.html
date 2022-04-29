@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Header -->
+<header class="w3-container w3-red w3-center" style="padding:128px 16px">
+  <h1 class="w3-margin w3-jumbo">403</h1>
+  <h1 class="w3-margin w3-jumbo">Forbidden</h1>
+  <p class="w3-xlarge">You don't have permission to access this page.</p>
+  <a href="{% url 'index' %}" class="w3-bar-item w3-button w3-teal w3-hover-cyan" ><i class="fa fa-home w3-margin-right"></i>BACK TO HOME</a>
+</header>
+
+{% endblock %}
