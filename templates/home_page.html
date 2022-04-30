@@ -1,15 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-{#{% for art_piece in art %}#}
-{# <div class="w3-row-padding w3-padding-16 w3-center" id="food">#}
-{#    <div class="w3-quarter">#}
-{#      <img src="{{ art_piece.photo.url }}" alt="Art" style="width:100%">#}
-{#      <h3>{{ art_piece.title }}</h3>#}
-{#      <p>{{ art_piece.description }}</p>#}
-{#      <p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p>#}
-{#    </div>#}
-{#  </div>#}
-{#    {% endfor %}#}
 
     <header class="w3-container w3-teal w3-center" style="padding:128px 16px">
   <h1 class="w3-margin w3-jumbo"><i>The</i> <b>ARTHUB</b></h1>
@@ -27,8 +17,7 @@
         <div class="w3-display-topleft w3-black w3-padding">{{ art_piece.title}}</div>
         <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p></div>
        <img src="{{ art_piece.photo.url }}" alt="Art" style="width:100%">
-{#          <img src='{{  art_piece.photo.url  }}' hspace='40' vspace='40' style='width:80%;height:60%;'>#}
-{#              <img src='{{ art_piece.photo.url}}' width='500px' height='250px'/>#}
+
 
 
           </a>
