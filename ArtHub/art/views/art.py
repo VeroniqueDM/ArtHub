@@ -1,7 +1,8 @@
 from django.contrib.auth import mixins as auth_mixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.timezone import now
 
@@ -51,6 +52,9 @@ class EditArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin, v
     queryset = ArtPiece.objects.all()
     context_object_name = 'art_object'
 
+    def get_queryset(self):
+        return ArtPiece.objects.filter(user_id=self.request.user)
+
     def get_success_url(self):
         painting_id = self.get_object().id
         return reverse_lazy('details art', kwargs={'pk': painting_id})
@@ -72,11 +76,31 @@ class ArtDetailsView(auth_mixin.LoginRequiredMixin, views.DetailView):
         return context
 
 
-class DeleteArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin,views.DeleteView):
+class DeleteArtView(auth_mixin.LoginRequiredMixin,views.DeleteView):
     template_name = 'art/delete_art.html'
     form_class = DeleteArtForm
-    queryset = ArtPiece.objects.all()
     success_url = reverse_lazy('index')
+
+    def get_queryset(self):
+        return ArtPiece.objects.filter(user_id=self.request.user)
+    # context_object_name = 'object'
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['art'] = get_object_or_404(ArtPiece, pk=kwargs['id'])
+    #
+    #     context['is_owner'] = self.object.user == self.request.user
+    #
+    #     return context
+    #
+    # def dispatch(self, request, *args, **kwargs):
+    #     art=get_object_or_404(ArtPiece, pk=kwargs['id'])
+    #     if request.user.id == art.user_id:
+    #     # if self.object.user == self.request.user:
+    #         return super().dispatch(request, *args, **kwargs)
+    #     else:
+    #         raise PermissionDenied
+
 
 
 @login_required
@@ -129,7 +153,7 @@ class NewsListLastSeenView(LoginRequiredMixin,views.ListView):
         return queryset_one
 
 
-class DetailsNewsView(views.DetailView):
+class DetailsNewsView(LoginRequiredMixin, views.DetailView):
     model = News
     template_name = "art/details_news.html"
     context_object_name = 'news'
@@ -202,11 +226,18 @@ class UpdateEventView(CheckArtistOrAdModGroupMixin, LoginRequiredMixin, views.Up
     context_object_name = 'event'
     success_url = reverse_lazy('dashboard events')
 
+    def get_queryset(self):
+        if self.request.user.type == 'ARTIST':
+            return Event.objects.filter(user_id=self.request.user.id)
+
 class DeleteEventView(CheckArtistOrAdModGroupMixin, LoginRequiredMixin, views.DeleteView):
     template_name = 'art/delete_event.html'
     model = Event
     context_object_name = 'event'
 
+    def get_queryset(self):
+        if self.request.user.type == 'ARTIST':
+            return Event.objects.filter(user_id=self.request.user.id)
 
 
 

@@ -18,8 +18,9 @@
     <h2 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{ news.title }}</b></h2>
       <h3>{{ news.subtitle }}, <span class="w3-opacity">{{ news.creation_date }}</span></h3>
 <p>
+     {% if request.user.is_authenticated %}
        <i>Last viewed: {{ timestamp }}</i>
-
+    {% endif %}
 </p>
         {{ news.content }}
     </div>

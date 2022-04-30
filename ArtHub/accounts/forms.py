@@ -9,6 +9,7 @@ from django.utils import timezone
 from ArtHub.accounts.models import UserProfile, ArtHubUser
 from ArtHub.accounts.views_mixins import DisabledFieldsFormMixin
 from ArtHub.art.views_mixins import BootstrapFormMixin
+
 UserModel = get_user_model()
 
 class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):

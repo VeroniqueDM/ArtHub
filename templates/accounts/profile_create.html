@@ -18,7 +18,9 @@
             <form method="post" action="{% url 'register' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form }}
+
                 <button class="btn btn-primary mt-2" type="submit">Create</button>
+          <br> <b>* Note that you will need to be granted additional permissions by our staff to gain access to the ArtMod Section of the Site.</b>
             </form>
         </div>
         <div class="col-lg-3"></div>

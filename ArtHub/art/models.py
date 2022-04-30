@@ -42,6 +42,7 @@ class Technique(models.Model):
     def __str__(self):
         return self.name
 
+
 class ArtPiece(models.Model):
     MAX_LENGTH_TITLE = 50
     title = models.CharField(
