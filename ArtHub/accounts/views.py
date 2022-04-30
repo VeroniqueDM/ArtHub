@@ -100,6 +100,9 @@ class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
         user.profile_photo = form.cleaned_data['profile_photo']
         user.date_of_birth = form.cleaned_data['date_of_birth']
         user.email = form.cleaned_data['email']
+        user.website = form.cleaned_data['website']
+        user.address = form.cleaned_data['address']
+        user.description = form.cleaned_data['description']
         user.save()
         return super(EditRegularProfileView, self).form_valid(form)
 

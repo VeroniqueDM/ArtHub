@@ -93,7 +93,7 @@ class UserProfile(models.Model):
         max_length=FIRST_NAME_MAX_LENGTH,
         validators=(
             MinLengthValidator(FIRST_NAME_MIN_LENGTH),
-            validate_only_letters_or_space,
+            # validate_only_letters_or_space,
         )
     )
 
@@ -101,7 +101,7 @@ class UserProfile(models.Model):
         max_length=LAST_NAME_MAX_LENGTH,
         validators=(
             MinLengthValidator(LAST_NAME_MIN_LENGTH),
-            validate_only_letters_or_space,
+            # validate_only_letters_or_space,
         )
     )
 

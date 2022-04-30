@@ -173,7 +173,7 @@ class CreateStyleForm(BootstrapFormMixin, forms.ModelForm):
         cleaned_data = super().clean()
         pic = cleaned_data.get('photo')
         if pic is None:
-            return
+            self.add_error('photo', 'Please add a photo')
         if len(pic) > self.max_upload_limit:
             self.add_error('photo', f"File must be < 5 MB")
 
@@ -194,12 +194,12 @@ class CreateTechniqueForm(BootstrapFormMixin, forms.ModelForm):
         if Technique.objects.filter(name=name).count() > 0:
             raise ValidationError('This technique was already added.')
         return name
-    
+
     def clean(self):
         cleaned_data = super().clean()
         pic = cleaned_data.get('photo')
         if pic is None:
-            return
+            self.add_error('photo', 'Please add a photo')
         if len(pic) > self.max_upload_limit:
             self.add_error('photo', f"File must be < 5 MB")
 

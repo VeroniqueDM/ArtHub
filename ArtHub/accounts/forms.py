@@ -66,6 +66,14 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
             raise ValidationError('This email is already in use.')
         return email
 
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('profile_photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('profile_photo', f"File must be < 5 MB")
+
     def save(self, commit=True):
         user = super().save(commit=commit)
         profile = UserProfile(
@@ -80,34 +88,28 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
             profile.save()
         return user
 
-    def clean(self):
-        cleaned_data = super().clean()
-        pic = cleaned_data.get('profile_photo')
-        if pic is None:
-            return
-        if len(pic) > self.max_upload_limit:
-            self.add_error('profile_photo', f"File must be < 5 MB")
-
 
 class RegularProfileUpdateForm(BootstrapFormMixin,forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+
     max_upload_limit = 5 * 1024 * 1024
 
     first_name = forms.CharField(max_length=32)
     last_name = forms.CharField(max_length=32)
-    profile_photo = forms.ImageField(
-
-    )
-
+    profile_photo = forms.ImageField()
+    # website = forms.URLField()
+    address= forms.TextInput()
     date_of_birth = forms.DateField(widget=forms.TextInput, disabled=True)
-    email = forms.EmailField(
+    email = forms.EmailField()
+    description = forms.TextInput()
 
-    )
-    description = forms.TextInput(
-
-    )
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if UserProfile.objects.filter(email=email).count() > 0:
+            raise ValidationError('This email is already in use.')
+        return email
 
     def clean(self):
         cleaned_data = super().clean()
@@ -119,9 +121,8 @@ class RegularProfileUpdateForm(BootstrapFormMixin,forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['first_name', 'last_name', 'profile_photo', 'date_of_birth', 'email', 'website','address','description']
+        fields = ['first_name', 'last_name', 'profile_photo', 'date_of_birth', 'email', 'website', 'address', 'description']
         widgets = {
-
             'address': forms.TextInput(
                 attrs={
                     'placeholder': 'Add an address for visitors interested in your art'
@@ -134,7 +135,7 @@ class RegularProfileUpdateForm(BootstrapFormMixin,forms.ModelForm):
             ),
             'description': forms.TextInput(
                 attrs={
-                    'placeholder': 'Provide a general summary of your skills and your work'
+                    'placeholder': 'Provide a general summary of your interests or your skills and your work'
                 }
             ),
 
