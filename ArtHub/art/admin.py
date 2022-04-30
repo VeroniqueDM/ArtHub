@@ -5,7 +5,7 @@ from ArtHub.art.models import ArtPiece, News, Event
 
 
 @admin.register(ArtPiece)
-class PaintingAdmin(admin.ModelAdmin):
+class ArtAdmin(admin.ModelAdmin):
     list_display = ('title', )
 
 

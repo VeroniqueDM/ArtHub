@@ -1,12 +1,7 @@
-from datetime import date
-from enum import unique
-
-from django.core.validators import MinLengthValidator, MaxValueValidator, MinValueValidator
+from django.core.validators import MinLengthValidator
 from django.db import models
 from django.contrib.auth import models as auth_models
-# Create your models here.
 from ArtHub.accounts.managers import ArtHubManager
-# from ArtHub.art.models import News
 from ArtHub.common.validators import validate_only_letters_or_space
 
 
@@ -25,7 +20,6 @@ class ArtHubUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     type = models.CharField(
         max_length=50,
         choices=Types.choices,
-        # default = Types.REGULAR_USER,
     )
     date_joined = models.DateTimeField(
         auto_now_add=True,
@@ -115,7 +109,7 @@ class UserProfile(models.Model):
         blank=True,
         null=True,
         validators=(
-            # validate_file_size(5),
+
         )
     )
 

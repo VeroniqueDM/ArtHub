@@ -1,15 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
-from django.contrib.auth.admin import UserAdmin
-
 from ArtHub.accounts.models import ArtHubUser, UserProfile, Artist, ArtModUser, RegularUser
 
-
-# @admin.register(ArtistProfile)
-# class ArtistProfileAdmin(admin.ModelAdmin):
-#
-#     list_display = ('first_name', 'last_name')
 
 @admin.register(UserProfile)
 class RegularProfileAdmin(admin.ModelAdmin):

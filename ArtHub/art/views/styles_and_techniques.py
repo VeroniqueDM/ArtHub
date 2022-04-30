@@ -10,11 +10,8 @@ from django.views import generic as views
 
 class CreateStyleView(CheckArtModGroupMixin, LoginRequiredMixin, views.CreateView):
     template_name = 'art/create_style.html'
-    # model = Style
-    # fields = ('name', 'description', 'photo')
     form_class = CreateStyleForm
     success_url = reverse_lazy('dashboard styles')
-    # permission_required = ('art.add_style', 'art.edit_style', 'art.delete_style')
 
 
 class DashboardStylesView(CheckArtModGroupMixin,  LoginRequiredMixin, views.ListView):
@@ -37,7 +34,6 @@ class UpdateStyleView(CheckArtModGroupMixin, LoginRequiredMixin, views.UpdateVie
     success_url = reverse_lazy('dashboard styles')
 
 
-
 class DeleteStyleView(CheckArtModGroupMixin, LoginRequiredMixin, views.DeleteView):
     template_name = 'art/delete_style.html'
     model = Style
@@ -46,15 +42,10 @@ class DeleteStyleView(CheckArtModGroupMixin, LoginRequiredMixin, views.DeleteVie
     success_url = reverse_lazy('dashboard styles')
 
 
-
-
 class CreateTechniqueView(CheckArtModGroupMixin, LoginRequiredMixin, views.CreateView):
     template_name = 'art/create_technique.html'
-    # model = Technique
-    # fields = ('name', 'description', 'photo')
     form_class = CreateTechniqueForm
     success_url = reverse_lazy('dashboard techniques')
-    # permission_required = ('art.add_style', 'art.edit_style', 'art.delete_style')
 
 
 class DashboardTechniqueView(CheckArtModGroupMixin, LoginRequiredMixin,views.ListView):

@@ -3,28 +3,21 @@
 {% block content %}
 
   <div class="w3-container w3-padding-32" id="projects">
-{#    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">{{ art_object.title }}</h3>#}
   </div>
       <div class="w3-row-padding">
-<!-- Introduction menu -->
 <div class="w3-col l4">
-  <!-- About Card -->
   <div class="w3-card w3-margin w3-margin-top">
   <img src="{{ profile.profile_photo.url }}" style="width:40%" alt="profile image"><br>
                 {% if is_owner %}
 
-{#       <a href="{% url 'edit profile' profile.pk %}"> EDIT PROFILE</a>#}
 <a class="btn btn-warning" href="{% url 'edit profile' profile.pk %}" role="button">EDIT PROFILE</a>
 <a class="btn btn-warning" href="{% url 'change password' profile.user_id %}" role="button">CHANGE PASSWORD</a>
 <a class="btn btn-danger" href="{% url 'delete profile' profile.pk %}" role="button">DELETE PROFILE</a><br><br>
 
 {% if request.user|has_group:"Artist" %}
-{#       <a href="{% url 'delete profile' profile.pk %}"> DELETE PROFILE</a>#}
 <a class="btn btn-success" href="{% url 'add art' %}" role="button">Add Art</a>
 <a class="btn btn-success" href="{% url 'add event' %}" role="button">Add Event</a>
     {% endif %}
-{#                <a href="{% url 'add art' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Painting</a>#}
-{#                <a href="{% url 'add event' %}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Add Event</a>#}
               {% endif %}
     <div class="w3-container w3-white">
       <h4><b>{{ profile.first_name}} {{ profile.last_name }}</b></h4><br>
@@ -42,7 +35,6 @@
     </div></div>
   </div>
 
-  <!-- End Grid -->
   {% if own_art %}
   </div>
  <div class="w3-container w3-padding-32" id="projects">

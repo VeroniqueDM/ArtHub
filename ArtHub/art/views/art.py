@@ -1,5 +1,3 @@
-from itertools import chain
-
 from django.contrib.auth import mixins as auth_mixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,7 +5,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.timezone import now
 
-from ArtHub.accounts.models import Artist, UserProfile
+from ArtHub.accounts.models import UserProfile
 from django.views import generic as views
 
 from ArtHub.art.forms import DeleteArtForm, CreateNewsForm, CreateEventForm, CreateArtForm, EditEventForm, EditNewsForm, \
@@ -27,18 +25,9 @@ class DashboardArtistsView(views.ListView):
     template_name = 'art/dashboard_artists.html'
     context_object_name = 'artists'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     artists = Artist.objects.all()
-    #     context['artists'] = artists
-    #     return context
-
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(user__type='ARTIST')
-    #     profiles = UserProfile.objects.filter(user__type='Artist')
-    # Profile.objects.filter(user__groups__name='My Group')
-    ##maybe do this with def get_queryset ^^
 
 
 class CreateArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin, views.CreateView):
@@ -49,8 +38,6 @@ class CreateArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # url_name = 'add painting'
-        # context['url_name'] = url_name
         return context
 
     def form_valid(self, form):
@@ -68,6 +55,7 @@ class EditArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin, v
         painting_id = self.get_object().id
         return reverse_lazy('details art', kwargs={'pk': painting_id})
 
+
 class ArtDetailsView(auth_mixin.LoginRequiredMixin, views.DetailView):
     model = ArtPiece
     template_name = 'art/details_art.html'
@@ -75,21 +63,19 @@ class ArtDetailsView(auth_mixin.LoginRequiredMixin, views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # styles = art.style_set.all()
         styles=self.object.style.all()
         techniques=self.object.technique.all()
         context['is_owner'] = self.object.user == self.request.user
         context['styles'] = styles
         context['owner'] = UserProfile.objects.get(user_id=self.object.user)
-        # context['is_liked'] = ArtPiece.objects.all().filter(se)
         context['techniques'] = techniques
         return context
+
 
 class DeleteArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin,views.DeleteView):
     template_name = 'art/delete_art.html'
     form_class = DeleteArtForm
     queryset = ArtPiece.objects.all()
-    # url = reverse_lazy('index')
     success_url = reverse_lazy('index')
 
 
@@ -107,8 +93,6 @@ def like_art(request, pk):
 
 class CreateNewsView(CheckArtModGroupMixin, LoginRequiredMixin, views.CreateView):
     template_name = 'art/create_news.html'
-    # model = News
-    # fields = ('title', 'subtitle', 'content')
     form_class = CreateNewsForm
     success_url = reverse_lazy('dashboard news')
     permission_required = ('art.add_news', 'art.edit_news', 'art.delete_news')
@@ -144,12 +128,6 @@ class NewsListLastSeenView(LoginRequiredMixin,views.ListView):
             timestamps__user=user).order_by("-timestamps__timestamp")
         return queryset_one
 
-
-
-# class DetailsNewsView(views.DetailView):
-#     template_name = 'art/details_news.html'
-#     model = News
-#     context_object_name = 'news'
 
 class DetailsNewsView(views.DetailView):
     model = News
@@ -192,8 +170,6 @@ class DeleteNewsView(CheckArtModGroupMixin, LoginRequiredMixin, views.DeleteView
 
 class CreateEventView(CheckArtistOrAdModGroupMixin, LoginRequiredMixin, views.CreateView):
     template_name = 'art/create_event.html'
-    # model = Event
-    # fields = ('title', 'description', 'location', 'date', 'price', )
     form_class = CreateEventForm
     success_url = reverse_lazy('dashboard events')
 

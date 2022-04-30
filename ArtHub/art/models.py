@@ -2,17 +2,13 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
 
-# Create your models here.
-# from ArtHub.common.validators import validate_file_max_size_in_mb
-# from ArtHub.accounts.models import ArtHubUser
 UserModel = get_user_model()
 
 
 class Style(models.Model):
     name = models.CharField(
         max_length=50,
-        # unique=True,
-        # primary_key=True,
+        unique=True,
 
     )
     description = models.TextField()
@@ -20,7 +16,7 @@ class Style(models.Model):
         null=True,
         blank=True,
         validators=(
-            # validate_file_max_size_in_mb(5),
+
         ),
     )
 
@@ -31,8 +27,7 @@ class Style(models.Model):
 class Technique(models.Model):
     name = models.CharField(
         max_length=50,
-        # unique=True,
-        # primary_key=True,
+        unique=True,
 
     )
     description = models.TextField()
@@ -40,7 +35,7 @@ class Technique(models.Model):
         null=True,
         blank=True,
         validators=(
-            # validate_file_max_size_in_mb(5),
+
         ),
     )
 
@@ -49,10 +44,6 @@ class Technique(models.Model):
 
 class ArtPiece(models.Model):
     MAX_LENGTH_TITLE = 50
-    # STYLES = ['Modernism', 'Impressionism', 'Abstract Art', 'Expressionism', 'Cubism', 'Surrealism',]
-    # CHOICES_STYLES = [(x, x) for x in STYLES]
-    MEDIUMS = ['painting', 'drawing', 'print',]
-    CHOICES_MEDIUM = [(x, x) for x in MEDIUMS]
     title = models.CharField(
         max_length= MAX_LENGTH_TITLE,
     )
@@ -61,7 +52,6 @@ class ArtPiece(models.Model):
         null=True,
         blank=True,
         validators=(
-            # validate_file_max_size_in_mb(5),
 
         )
     )
@@ -80,25 +70,19 @@ class ArtPiece(models.Model):
     )
     style = models.ManyToManyField(
         Style,
-        # blank=True,
-        # null=True,
+        blank=True,
+        null=True,
     )
     technique = models.ManyToManyField(
         Technique,
-        # blank=True,
-        # null=True,
+        blank=True,
+        null=True,
     )
 
     medium_used = models.CharField(
         max_length = 200,
-        # blank=True,
-        # null=True,
-        # max_length=max(len(x) for (x, _) in CHOICES_MEDIUM),
-        # choices=CHOICES_MEDIUM,
     )
-    # is_framed = models.BooleanField(
-    #     default=False,
-    # )
+
     likes = models.IntegerField(
         default=0,
     )
@@ -109,6 +93,7 @@ class ArtPiece(models.Model):
     type = models.CharField(
         max_length=60,
     )
+
 
 class Event(models.Model):
     LOCATION_MAX_LEN = 100
@@ -140,6 +125,7 @@ class Event(models.Model):
         verbose_name = 'Photo URL'
     )
 
+
 class News(models.Model):
     title = models.CharField(
         max_length=200,
@@ -164,6 +150,7 @@ class News(models.Model):
         verbose_name='Photo URL'
 
     )
+
 
 class UserNewsTimestamp(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name="timestamps")

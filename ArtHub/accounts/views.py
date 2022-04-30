@@ -1,24 +1,24 @@
-from itertools import chain
 from django.contrib.auth import mixins as auth_mixin, login, get_user_model
 from django.contrib.auth.models import Group
-from django.shortcuts import render
 from django.contrib.auth import logout as auth_logout
-# Create your views here.
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import views as auth_views
 from django.views import generic as views
 from django.views.generic import RedirectView
 
-from ArtHub.accounts.forms import CreateRegularProfileForm, RegularProfileUpdateForm, DeleteProfileForm
+from ArtHub.accounts.forms import CreateRegularProfileForm, RegularProfileUpdateForm
 from ArtHub.accounts.models import UserProfile
 from ArtHub.art.models import ArtPiece, Event
-UserModel=get_user_model()
+
+UserModel = get_user_model()
+
 
 class RegularUserRegisterView(views.CreateView):
     form_class = CreateRegularProfileForm
     template_name = 'accounts/profile_create.html'
     success_url = reverse_lazy('index')
     context_object_name = 'profile'
+
     def form_valid(self, form):
         result = super().form_valid(form)
 
@@ -29,17 +29,16 @@ class RegularUserRegisterView(views.CreateView):
         login(self.request, self.object)
         return result
 
-    # def dispatch(self, request, *args, **kwargs):
 
 class UserLoginView(auth_views.LoginView):
     template_name = 'accounts/login_page.html'
     success_url = reverse_lazy('index')
-    # form_class = UserLoginForm
-    # Make success_url different depending on type of user
+
     def get_success_url(self):
         if self.success_url:
             return self.success_url
         return super().get_success_url()
+
 
 class UserLogoutView(RedirectView):
     url = reverse_lazy('index')
@@ -48,9 +47,7 @@ class UserLogoutView(RedirectView):
         auth_logout(request)
         return super(UserLogoutView, self).get(request, *args, **kwargs)
 
-# class EditProfileView:
-#     pass
-#
+
 class ChangeUserPasswordView(auth_views.PasswordChangeView):
     template_name = 'accounts/change_password.html'
 
@@ -59,18 +56,11 @@ class RegularProfileDetailsView(views.DetailView):
     model = UserProfile
     template_name = 'accounts/profile_details.html'
     context_object_name = 'profile'
-    # MUST GO TO ARTIST PROFILE
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # self.object is a Profile instance
         own_art = ArtPiece.objects.filter(user_id=self.object.user)
         own_events = Event.objects.filter(user_id=self.object.user)
-    #
-    #     q1=Painting.objects.filter(user_id=self.object.user)
-    #     # q2 = Sculpture.objects.filter(user_id=self.object.user)
-    #     # q3= OtherArt.objects.filter(user_id=self.object.user)
-    #     # all_art = list(chain(q1, q2, q3))
-    #
         total_likes_count = sum(pp.likes for pp in own_art)
         total_pieces_of_art = len(own_art)
 
@@ -83,6 +73,7 @@ class RegularProfileDetailsView(views.DetailView):
         })
 
         return context
+
 
 class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
     template_name = 'accounts/profile_edit.html'
@@ -98,8 +89,6 @@ class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
         user_profile = UserProfile.objects.get(pk=self.get_object().user_id)
         context['profile_form'] = RegularProfileUpdateForm(
             instance=user_profile,
-            # initial={'first_name': user.first_name, 'last_name': user.last_name},
-
         )
         return context
 
@@ -115,13 +104,7 @@ class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
         return super(EditRegularProfileView, self).form_valid(form)
 
 
-#
 class DeleteProfileView(views.DeleteView):
     template_name = 'accounts/profile_delete.html'
-    # form_class = DeleteProfileForm
     model = UserModel
-    # queryset = UserProfile.objects.all()
-    # url = reverse_lazy('index')
     success_url = reverse_lazy('index')
-    # def get_queryset(self):
-

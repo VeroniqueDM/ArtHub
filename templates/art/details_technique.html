@@ -5,9 +5,7 @@
 
   </div>
       <div class="w3-row-padding">
-<!-- Blog entries -->
 <div class="w3-col l8 s12">
-  <!-- Blog entry -->
   <div class="w3-card-4 w3-margin w3-white">
 
     <div class="w3-container">
@@ -25,21 +23,5 @@
   <hr>
 </div>
       </div>
-
-
-
-
-
-{##}
-{##}
-{#    {% if request.user|has_group:"ArtMod" %}#}
-{#            <a href="{% url 'edit technique' style.pk %}" class="btn btn-primary">Edit</a>#}
-{#            <a href="{% url 'delete technique' style.pk %}" class="btn btn-danger">Delete</a>#}
-{#        {% endif %}#}
-{#    {% if technique.photo %}#}
-{#    {{ technique.photo }}#}
-{#    {% endif %}#}
-{#    {{ technique.name }}#}
-{#    {{ technique.description }}#}
 
 {% endblock %}

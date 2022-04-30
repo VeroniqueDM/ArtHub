@@ -10,13 +10,11 @@
     <h1 class="text-center">Login to Your Profile</h1>
   </div>
   <div class="w3-row-padding">
-            <!-- Login Form -->
             <form method="POST" action="{% url 'login user' %}">
                 {% csrf_token %}
                 {{ form }}
                 <button class="btn btn-info mt-2" type="submit">LOGIN</button>
             </form>
-            <!-- End Login Form -->
 
         </div>
         <div class="col-lg-3"></div>

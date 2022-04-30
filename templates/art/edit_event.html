@@ -10,11 +10,11 @@
             <form method="post" action="{% url 'edit event' object.pk %}" enctype="multipart/form-data">
                 {{ form }}
                 {% csrf_token %}
-                <!-- Form for Editing a Photo -->
 
                 <button class="btn btn-primary mt-2" type="submit">Edit</button>
             </form>
         </div>
         <div class="col-lg-3"></div>
     </div>
+  </div>
 {% endblock %}

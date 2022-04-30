@@ -10,8 +10,6 @@ from ArtHub.art.views.styles_and_techniques import DashboardStylesView, CreateSt
     UpdateTechniqueView, DeleteTechniqueView
 
 
-
-
 urlpatterns = [
     path('', HomeView.as_view(), name='index'),
     path('dashboard/art/', DashboardArtView.as_view(), name='dashboard art'),

@@ -16,7 +16,7 @@
         {% endif %}
       {% if not is_owner %}
     <a href="{% url 'like art' art_object.pk %}"><b><i class="fa fa-heart-o"  style ="font-size:35px; color:red" aria-hidden="true"></i>    </b></a>
-{#{% if  %}#}
+
     {% endif %}
 
       <p class="mt-2"><b>Artist:
@@ -28,7 +28,6 @@
 
     <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i>{{ art_object.description }}</i></h4>
 
-{#    {{ art_object.description }}#}
 
     <h4><u>Styles:</u></h4>
           {% for style in styles %}

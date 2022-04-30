@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-{#<h1 class="text-center">Add a New Art</h1>#}
            <div class="w3-container w3-padding-32" id="projects">
     <h1 class="text-center">Add new Art</h1>
   </div>
@@ -11,7 +10,6 @@
             <form method="post" action="{% url 'add art' %}" enctype="multipart/form-data">
             {% csrf_token %}
                 {{ form }}
-                <!-- Form for Adding Photos -->
 
                 <button class="btn btn-primary mt-2" type="submit">Create</button>
             </form>

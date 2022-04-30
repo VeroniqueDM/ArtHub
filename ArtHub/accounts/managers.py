@@ -1,11 +1,5 @@
 from django.contrib.auth import base_user as auth_base, get_user_model
 from django.contrib.auth.hashers import make_password
-from django.db import models
-
-# from ArtHub.accounts.models import ArtHubUser
-
-# UserModel = get_user_model()
-
 
 class ArtHubManager(auth_base.BaseUserManager):
 

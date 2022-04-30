@@ -8,7 +8,6 @@ from django.utils import timezone
 
 from ArtHub.accounts.models import UserProfile, ArtHubUser
 from ArtHub.accounts.views_mixins import DisabledFieldsFormMixin
-from ArtHub.art.models import ArtPiece
 from ArtHub.art.views_mixins import BootstrapFormMixin
 UserModel = get_user_model()
 
@@ -31,7 +30,6 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
     date_of_birth = forms.DateField()
     email = forms.EmailField()
     type = forms.ChoiceField(
-        # widget=forms.RadioSelect(attrs={"required": True}),
         choices=ArtHubUser.Types.choices,
         required=True,
     )
@@ -69,8 +67,6 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
         return email
 
     def save(self, commit=True):
-        # user.type = self.cleaned_data['type']
-
         user = super().save(commit=commit)
         profile = UserProfile(
             first_name=self.cleaned_data['first_name'],
@@ -82,11 +78,6 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
         )
         if commit:
             profile.save()
-
-        # if profile.is_artist == 'Artist':
-        #     user.user_permissions.add(
-        #
-        #     )
         return user
 
     def clean(self):
@@ -97,20 +88,19 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
         if len(pic) > self.max_upload_limit:
             self.add_error('profile_photo', f"File must be < 5 MB")
 
-# class CreateArtistProfileForm(CreateRegularProfileForm):
 
 class RegularProfileUpdateForm(BootstrapFormMixin,forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+    max_upload_limit = 5 * 1024 * 1024
 
     first_name = forms.CharField(max_length=32)
     last_name = forms.CharField(max_length=32)
     profile_photo = forms.ImageField(
 
     )
-    # styles = forms.
-    # MAYBE FIX THIS
+
     date_of_birth = forms.DateField(widget=forms.TextInput, disabled=True)
     email = forms.EmailField(
 
@@ -118,6 +108,14 @@ class RegularProfileUpdateForm(BootstrapFormMixin,forms.ModelForm):
     description = forms.TextInput(
 
     )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pic = cleaned_data.get('profile_photo')
+        if pic is None:
+            return
+        if len(pic) > self.max_upload_limit:
+            self.add_error('profile_photo', f"File must be < 5 MB")
 
     class Meta:
         model = UserProfile
@@ -149,15 +147,11 @@ class DeleteProfileForm(DisabledFieldsFormMixin, BootstrapFormMixin, forms.Model
         self._init_bootstrap_form_controls()
 
     def save(self, commit=True):
-        # ArtPiece.objects.filter(user_id=self.instance.pk).delete()
-        # profile = self.instance
-        # own_art = self.instance.art_piece__set
         user = ArtHubUser.objects.get(pk=self.instance.pk)
         own_art = user.art_piece__set
         own_art.delete()
         own_events = user.event_set
         own_events.delete()
-        # profile = UserProfile.objects.get(pk=self.instance.pk)
         user.delete()
         self.instance.delete()
         return self.instance
@@ -165,5 +159,4 @@ class DeleteProfileForm(DisabledFieldsFormMixin, BootstrapFormMixin, forms.Model
     class Meta:
         model = UserProfile
         exclude = ('user', 'description', 'profile_photo', 'first_name', 'last_name', 'date_of_birth', 'email', )
-
 
