@@ -83,23 +83,7 @@ class DeleteArtView(auth_mixin.LoginRequiredMixin,views.DeleteView):
 
     def get_queryset(self):
         return ArtPiece.objects.filter(user_id=self.request.user)
-    # context_object_name = 'object'
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['art'] = get_object_or_404(ArtPiece, pk=kwargs['id'])
-    #
-    #     context['is_owner'] = self.object.user == self.request.user
-    #
-    #     return context
-    #
-    # def dispatch(self, request, *args, **kwargs):
-    #     art=get_object_or_404(ArtPiece, pk=kwargs['id'])
-    #     if request.user.id == art.user_id:
-    #     # if self.object.user == self.request.user:
-    #         return super().dispatch(request, *args, **kwargs)
-    #     else:
-    #         raise PermissionDenied
+
 
 
 
@@ -119,6 +103,7 @@ class CreateNewsView(CheckArtModGroupMixin, LoginRequiredMixin, views.CreateView
     template_name = 'art/create_news.html'
     form_class = CreateNewsForm
     success_url = reverse_lazy('dashboard news')
+    # COULD BE REMOVED
     permission_required = ('art.add_news', 'art.edit_news', 'art.delete_news')
 
     def get_form_kwargs(self):

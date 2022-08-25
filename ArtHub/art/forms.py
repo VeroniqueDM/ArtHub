@@ -201,7 +201,7 @@ class CreateTechniqueForm(BootstrapFormMixin, forms.ModelForm):
         if pic is None:
             self.add_error('photo', 'Please add a photo')
         if len(pic) > self.max_upload_limit:
-            self.add_error('photo', f"File must be < 5 MB")
+            self.add_error('photo', f"File size must be < 5 MB")
 
     class Meta:
         model = Technique

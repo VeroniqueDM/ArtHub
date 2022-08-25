@@ -107,8 +107,7 @@ class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
         return super(EditRegularProfileView, self).form_valid(form)
 
     def get_queryset(self):
-        if self.request.user.type == 'ARTIST':
-            return UserModel.objects.filter(id=self.request.user.id)
+        return UserModel.objects.filter(id=self.request.user.id)
 
 class DeleteProfileView(views.DeleteView):
     template_name = 'accounts/profile_delete.html'
@@ -116,5 +115,4 @@ class DeleteProfileView(views.DeleteView):
     success_url = reverse_lazy('index')
 
     def get_queryset(self):
-        if self.request.user.type == 'ARTIST':
-            return UserModel.objects.filter(id=self.request.user.id)
+        return UserModel.objects.filter(id=self.request.user.id)
