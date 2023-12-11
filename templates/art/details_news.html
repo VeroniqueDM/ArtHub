@@ -1,34 +1,89 @@
 {% extends 'base.html' %}
+{#{% load static %}#}
+
 {% load groups_tags %}
+{% load custom_filters %}
+
 {% block content %}
 
-  <div class="w3-container w3-padding-32" id="projects">
-
-  </div>
-      <div class="w3-row-padding">
-<div class="w3-col l8 s12">
-  <div class="w3-card-4 w3-margin w3-white">
-
-    <div class="w3-container">
-      <img src="{{ news.photo }}" alt="Nature" style="width:30%">
-         {% if request.user|has_group:"ArtMod" %}
-            <a href="{% url 'edit news' news.pk %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'delete news' news.pk %}" class="btn btn-danger">Delete</a>
-        {% endif %}
-    <h2 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{ news.title }}</b></h2>
-      <h3>{{ news.subtitle }}, <span class="w3-opacity">{{ news.creation_date }}</span></h3>
-<p>
-     {% if request.user.is_authenticated %}
-       <i>Last viewed: {{ timestamp }}</i>
-    {% endif %}
-</p>
-        {{ news.content }}
-    </div>
+    <section class="news-single section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="single-main">
+                                <!-- News Head -->
+                                <div class="news-head">
+                                    <img src="{{ news.photo }}" alt="news photo">
+                                </div>
+                                <!-- News Title -->
+                                <h1 class="news-title">{{ news.title }}</h1>
 
 
-  </div>
-  <hr>
+                                <!-- Meta -->
+                                <div class="meta">
+                                    <div class="meta-left">
+                                        {#											<span class="author"><a href="#"><img src="img/author1.jpg" alt="#">Naimur Rahman</a></span>#}
+                                        <span class="date"><i
+                                                class="fa fa-clock-o"></i>Published: {{ news.creation_date }}</span>
+                                    </div>
+                                    <div class="meta-right">
+                                        {#											<span class="comments"><a href="#"><i class="fa fa-comments"></i>05 Comments</a></span>#}
+                                        <span class="views">
 
-</div>
-      </div>
+                                                <i class="fa fa-eye"></i> {% if request.user.is_authenticated %}
+                                            Last viewed: {{ timestamp }}
+                                        {% endif %}
+                                            </span>
+                                    </div>
+                                </div>
+                                <!-- News Text -->
+                                <div class="news-text">
+                                    {#                                    <p>                    {{ news.content }}                                    </p>#}
+                                    {% with sentences=news.content|linebreaksbr|striptags|split:"." %}
+                                        {% with half_length=sentences|length|divisibleby:2 %}
+                                            <p>
+                                                {{ sentences|slice:":half_length"|join:"." }}.
+                                            </p>
+                                            <blockquote class="overlay">
+                                                <p>{{ news.subtitle }}</p>
+                                            </blockquote>
+                                            <p>
+                                                {{ sentences|slice:half_length|join:"." }}.
+                                            </p>
+                                        {% endwith %}
+                                    {% endwith %}
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-12">
+                    <div class="main-sidebar">
+
+                        {% if request.user|has_group:"ArtMod" %}
+                            <div class="single-widget category">
+                                <h3 class="title">
+                                    <a href="{% url 'edit news' news.pk %}"
+                                       class="btn btn-primary">Edit</a>
+                                </h3>
+                                <h3 class="title"><a href="{% url 'delete news' news.pk %}" class="btn btn-danger">Delete</a>
+                                </h3>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}

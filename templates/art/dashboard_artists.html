@@ -1,20 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
-
- <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Dashboard ARTISTS</h3>
-
-  <div class="w3-row-padding">
+  	<section class="blog section" id="blog">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title">
+							<h2>Artists</h2>
+{#							<img src="img/section-img.png" alt="#">#}
+							<p>Discover the Makers of Magic</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
       {% for artist in artists %}
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <a href="{% url 'details profile' artist.pk %}">
-        <div class="w3-display-topleft w3-black w3-padding">{{ artist.first_name}} {{ artist.last_name }}</div>
-        <img src="{{ artist.profile_photo.url }}" alt="House" style="width:100%">
-    </a>
-</div>
-</div>
-{% endfor %}
-</div>
-</div>
+					<div class="col-lg-4 col-md-6 col-12 portfolio">
+						<!-- Single Blog -->
+
+                          <div class="single-pf">
+                                <img src="{{ artist.profile_photo.url }}" alt="Art">
+                                <div class="w3-display-topleft w3-black w3-padding">{{ artist.first_name}} {{ artist.last_name }}</div>
+{#                                <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o"#}
+{#                                                                                           aria-hidden="true"></i>{{ art_piece.likes }}#}
+{#                                </p></div>#}
+                                <a href="{% url 'details profile' artist.pk %}" class="btn">View Details</a>
+
+                            </div>
+{#						<div class="single-news">#}
+{#							<div class="news-head">#}
+{#  <a  href="{% url 'details art' art.pk %}">#}
+{#            <img src="{{ art.photo.url }}"  alt="#">#}
+{#        </a>							</div>#}
+{#							<div class="news-body">#}
+{#								<div class="news-content">#}
+{#									<h2><a href="{% url 'details art' art.pk %}">{{ art.title}}</a></h2>#}
+{#                                    									<p class="text">{{ art }}</p>#}
+{##}
+{#                                    									<div class="date"><p>Likes: <i class="fa fa-heart-o" aria-hidden="true"></i>{{ art.likes }}</p></div>#}
+{##}
+{#								</div>#}
+{#							</div>#}
+{#						</div>#}
+						<!-- End Single Blog -->
+					</div>
+                                            {% endfor %}
+
+				</div>
+			</div>
+		</section>
+
+{##}
+{# <div class="w3-container w3-padding-32" id="projects">#}
+{#    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Dashboard ARTISTS</h3>#}
+{##}
+{#  <div class="w3-row-padding">#}
+{#      {% for artist in artists %}#}
+{#    <div class="w3-col l3 m6 w3-margin-bottom">#}
+{#      <div class="w3-display-container">#}
+{#        <a href="{% url 'details profile' artist.pk %}">#}
+{#        <div class="w3-display-topleft w3-black w3-padding">{{ artist.first_name}} {{ artist.last_name }}</div>#}
+{#        <img src="{{ artist.profile_photo.url }}" alt="House" style="width:100%">#}
+{#    </a>#}
+{#</div>#}
+{#</div>#}
+{#{% endfor %}#}
+{#</div>#}
+{#</div>#}
 {% endblock %}

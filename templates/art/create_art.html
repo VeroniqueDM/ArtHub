@@ -1,20 +1,105 @@
 {% extends 'base.html' %}
+{% block additional_head %}
+    <!-- Exclude the Nice Select script for this view -->
+{% endblock %}
 {% block content %}
-           <div class="w3-container w3-padding-32" id="projects">
-    <h1 class="text-center">Add new Art</h1>
-  </div>
-  <div class="w3-row-padding">
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <form method="post" action="{% url 'add art' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-                {{ form }}
+<section class="contact-us section">
+  <div class="container">
+    <div class="inner">
+      <div class="w3-row-padding">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="contact-us-form">
+              <h2>Add New Art</h2>
+              <p>If you have any questions, please feel free to contact us.</p>
 
-                <button class="btn btn-primary mt-2" type="submit">Create</button>
-            </form>
+              <form class="form" method="post" action="{% url 'add art' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="{{ form.title.id_for_label }}">Title</label>
+                      {{ form.title }}
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="{{ form.photo.id_for_label }}">Photo</label>
+                      {{ form.photo }}
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="{{ form.description.id_for_label }}">Description</label>
+                      {{ form.description }}
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="{{ form.style.id_for_label }}">Style</label>
+                      <select class="form-control" id="{{ form.style.id_for_label }}" multiple name="{{ form.style.name }}">
+                        {% for style in form.style.field.queryset %}
+                          <option value="{{ style.pk }}">{{ style.name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="{{ form.technique.id_for_label }}">Technique</label>
+                      <select class="form-control" id="{{ form.technique.id_for_label }}" multiple name="{{ form.technique.name }}">
+                        {% for technique in form.technique.field.queryset %}
+                          <option value="{{ technique.pk }}">{{ technique.name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="{{ form.medium_used.id_for_label }}">Medium Used</label>
+                      {{ form.medium_used }}
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="{{ form.type.id_for_label }}">Type</label>
+                      {{ form.type }}
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group login-btn">
+                      <button class="btn btn-primary mt-2" type="submit">Create</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
         </div>
-        <div class="col-lg-3"></div>
+      </div>
     </div>
   </div>
+</section>
+
+
+    {#    -----------------------------#}
+{#    <div class="w3-container w3-padding-32" id="projects">#}
+{#        <h1 class="text-center">Add new Art</h1>#}
+{#    </div>#}
+{#    <div class="w3-row-padding">#}
+{#        <div class="row">#}
+{#            <div class="col-lg-3"></div>#}
+{#            <div class="col-lg-6">#}
+{#                <form method="post" action="{% url 'add art' %}" enctype="multipart/form-data">#}
+{#                    {% csrf_token %}#}
+{#                    {{ form }}#}
+{##}
+{#                    <button class="btn btn-primary mt-2" type="submit">Create</button>#}
+{#                </form>#}
+{#            </div>#}
+{#            <div class="col-lg-3"></div>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}

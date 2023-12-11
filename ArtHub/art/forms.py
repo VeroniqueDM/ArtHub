@@ -6,7 +6,14 @@ from ArtHub.art.views_mixins import BootstrapFormMixin
 
 
 class CreateArtForm(BootstrapFormMixin, forms.ModelForm):
-
+    style = forms.ModelMultipleChoiceField(
+        queryset=Style.objects.all(),
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
+    )
+    technique = forms.ModelMultipleChoiceField(
+        queryset=Technique.objects.all(),
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
+    )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
@@ -27,6 +34,12 @@ class CreateArtForm(BootstrapFormMixin, forms.ModelForm):
         widgets = {
             # 'style': forms.CheckboxSelectMultiple,
             # 'technique': forms.CheckboxSelectMultiple,
+            'title': forms.TextInput(attrs={'placeholder': 'Enter the title of your art'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Describe your art piece'}),
+            'style': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'technique': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            # 'style': forms.CheckboxSelectMultiple(),
+            # 'technique': forms.CheckboxSelectMultiple(),
             'medium_used': forms.TextInput(
                 attrs={
                     'placeholder': 'e.g. glass, paint, charcoal..'
@@ -45,13 +58,14 @@ class CreateArtForm(BootstrapFormMixin, forms.ModelForm):
 
 
 class DeleteArtForm(forms.ModelForm):
+
     def save(self, commit=True):
         self.instance.delete()
         return self.instance
 
     class Meta:
         model = ArtPiece
-        exclude = ('title', 'liked_by','photo', 'description', 'publication_date', 'user', 'style', 'technique', 'medium_used', 'likes' )
+        exclude = ('title', 'liked_by','photo', 'description', 'publication_date', 'user', 'style', 'technique', 'medium_used', 'likes', 'type' )
 
 
 
@@ -84,6 +98,8 @@ class CreateNewsForm(BootstrapFormMixin, forms.ModelForm):
                     'placeholder': 'Enter URL',
                 }
             ),
+            'subtitle': forms.TextInput(attrs={'placeholder': 'Enter Subtitle'}),
+            'content': forms.Textarea(attrs={'placeholder': 'Enter Content'}),
         }
 
 
@@ -160,6 +176,9 @@ class CreateStyleForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+        self.fields['name'].widget.attrs['placeholder'] = 'Enter Name'
+        self.fields['description'].widget.attrs['placeholder'] = 'Enter Description'
+        self.fields['photo'].widget.attrs['placeholder'] = 'Enter Photo URL'
 
     max_upload_limit = 5 * 1024 * 1024
 
@@ -186,6 +205,9 @@ class CreateTechniqueForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+        self.fields['name'].widget.attrs['placeholder'] = 'Enter Name'
+        self.fields['description'].widget.attrs['placeholder'] = 'Enter Description'
+        self.fields['photo'].widget.attrs['placeholder'] = 'Enter Photo URL'
 
     max_upload_limit = 5 * 1024 * 1024
 
@@ -212,6 +234,9 @@ class EditStyleForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+        self.fields['name'].widget.attrs['placeholder'] = 'Enter Name'
+        self.fields['description'].widget.attrs['placeholder'] = 'Enter Description'
+        self.fields['photo'].widget.attrs['placeholder'] = 'Enter Photo URL'
 
     max_upload_limit = 5 * 1024 * 1024
 

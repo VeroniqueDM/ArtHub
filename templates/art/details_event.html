@@ -1,30 +1,107 @@
 {% extends 'base.html' %}
 {% load groups_tags %}
 {% block content %}
+    <section class="pf-details section">
+        {#    <h2>Edit Event</h2>#}
+        <div class="doctor-details-area section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="doctor-details-item doctor-details-left">
+                            {#                        <img src="{{ art_object.photo.url }}" alt="user photo">#}
+                            <div class="doctor-details-contact">
+                                <div class="main-sidebar">
+                                    {% if is_owner %}
 
-       <div class="w3-container w3-padding-32" id="projects">
-    <h1 class="text-center"></h1>
-  </div>
-  <div class="w3-row-padding">
-    <div>
-    <div class="w3-card-4 w3-margin w3-white">
+                                        <div class="single-widget category">
+                                            <h3 class="title">Actions</h3>
+                                            <ul class="categor-list">
+                                                {% if is_owner or request.user|has_group:"ArtMod" %}
+                                                    <li><a href="{% url 'edit event' event.pk %}">Edit</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{% url 'delete event' event.pk %}">Delete</a>
 
-    <div class="w3-container">
-      <img src="{{ event.photo }}" alt="Nature" style="width:30%">
-         {%  if is_owner or request.user|has_group:"ArtMod" %}
-            <a href="{% url 'edit event' event.pk %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'delete event' event.pk %}" class="btn btn-danger">Delete</a>
-        {% endif %}
-      <h2><b>    {{ event.title }}</b></h2>
-    <h3>Entry: {{ event.price|floatformat:2 }}€</h3>
-    <h3>Date: {{ event.date }}</h3>
-      <h4>{{ event.description }}, <span class="w3-opacity"></span></h4>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                            <br>
+                                            <br>
+                                        </div>
+                                    {% endif %}
 
-    </div>
+                                </div>
 
 
-  </div>
-  <hr>
-</div>
-  </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-7">
+                        <div class="inner-content">
+                            <div class="image-slider">
+                                <div class="news-head">
+                                    <img src="{{ event.photo }}" alt="Nature">
+
+                                    {#									<img src="img/call-bg.jpg" alt="#">#}
+                                    {#									<img src="img/call-bg.jpg" alt="#">#}
+                                    {#									<img src="img/call-bg.jpg" alt="#">#}
+                                </div>
+                            </div>
+                            <div class="date">
+                                <ul>
+                                    <li><span>Entry :</span> {{ event.price|floatformat:2 }}€</li>
+                                    <li><span>Date :</span> {{ event.date }}</li>
+                                    <li><span>Location :</span> {{ event.location }}</li>
+                                    {#                                <li><span>Ags :</span> Typo</li>#}
+                                </ul>
+                            </div>
+                            <div class="body-text">
+
+                                <h3>  {{ event.title }}</h3>
+                                <p>{{ event.description }}</p>
+
+                                {#                            <div class="share">#}
+                                {#                                <h4>Share Now -</h4>#}
+                                {#                                <ul>#}
+                                {#                                    <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>#}
+                                {#                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>#}
+                                {#                                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>#}
+                                {#                                </ul>#}
+                                {#                            </div>#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {##}
+    {#    <div class="w3-container w3-padding-32" id="projects">#}
+    {#        <h1 class="text-center"></h1>#}
+    {#    </div>#}
+    {#    <div class="w3-row-padding">#}
+    {#        <div>#}
+    {#            <div class="w3-card-4 w3-margin w3-white">#}
+    {##}
+    {#                <div class="w3-container">#}
+    {#                    <img src="{{ event.photo }}" alt="Nature" style="width:30%">#}
+    {#                    {% if is_owner or request.user|has_group:"ArtMod" %}#}
+    {#                        <a href="{% url 'edit event' event.pk %}" class="btn btn-primary">Edit</a>#}
+    {#                        <a href="{% url 'delete event' event.pk %}" class="btn btn-danger">Delete</a>#}
+    {#                    {% endif %}#}
+    {#                    <h2><b>    {{ event.title }}</b></h2>#}
+    {#                    <h3>Entry: {{ event.price|floatformat:2 }}€</h3>#}
+    {#                    <h3>Date: {{ event.date }}</h3>#}
+    {#                    <h4>{{ event.description }}, <span class="w3-opacity"></span></h4>#}
+    {##}
+    {#                </div>#}
+    {##}
+    {##}
+    {#            </div>#}
+    {#            <hr>#}
+    {#        </div>#}
+    {#    </div>#}
 {% endblock %}

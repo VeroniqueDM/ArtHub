@@ -1,22 +1,58 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+    	<section class="blog section" id="blog">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title">
+							<h2>News History</h2>
+{#							<img src="img/section-img.png" alt="#">#}
+							<p>Come back to the latest news articles you viewed</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+                      {% for news_piece in object_list  %}
+					<div class="col-lg-4 col-md-6 col-12">
+						<!-- Single Blog -->
+						<div class="single-news">
+							<div class="news-head">
+  <a href="{% url 'details news' news_piece.pk %}">
+            <img src="{{ news_piece.photo }}" alt="#">
+        </a>							</div>
+							<div class="news-body">
+								<div class="news-content">
+									<div class="date">{{ news_piece.creation_date }}</div>
+									<h2><a href="{% url 'details news' news_piece.pk %}">{{ news_piece.title|truncatewords:15 }}</a></h2>
+									<p class="text">{{ news_piece.subtitle|truncatewords:20 }}</p>
+								</div>
+							</div>
+						</div>
+						<!-- End Single Blog -->
+					</div>
+                                            {% endfor %}
 
-       <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Last seen NEWS</h3>
-  </div>
-  <div class="w3-row-padding">
-{% for news_piece in object_list %}
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <a href="{% url 'details news' news_piece.pk %}">
-        <div class="w3-display-topleft w3-black w3-padding">{{ news_piece.title|truncatewords:15}} </div>
-        <img src="{{ news_piece.photo }}" alt="News Photo" style="width:100%">
-            {{ news_piece.subtitle|truncatewords:20 }}
-    </a>
-</div>
-</div>
-    </div>
+				</div>
+			</div>
+		</section>
 
-{% endfor %}
+
+{#       <div class="w3-container w3-padding-32" id="projects">#}
+{#    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Last seen NEWS</h3>#}
+{#  </div>#}
+{#  <div class="w3-row-padding">#}
+{#{% for news_piece in object_list %}#}
+{#    <div class="w3-col l3 m6 w3-margin-bottom">#}
+{#      <div class="w3-display-container">#}
+{#        <a href="{% url 'details news' news_piece.pk %}">#}
+{#        <div class="w3-display-topleft w3-black w3-padding">{{ news_piece.title|truncatewords:15}} </div>#}
+{#        <img src="{{ news_piece.photo }}" alt="News Photo" style="width:100%">#}
+{#            {{ news_piece.subtitle|truncatewords:20 }}#}
+{#    </a>#}
+{#</div>#}
+{#</div>#}
+{#    </div>#}
+{##}
+{#{% endfor %}#}
 {% endblock %}

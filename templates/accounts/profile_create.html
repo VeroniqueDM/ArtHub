@@ -1,32 +1,168 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 class="text-center"></h1>
-    <div class="row">
+    <section class="register section">
+        <div class="container">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="register-left" style="display: flex; align-items: center; justify-content: center;">
+                            <svg height="300px" width="300px" version="1.1" id="Capa_1"
+                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 viewBox="0 0 496.997 496.997" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                <g id="SVGRepo_iconCarrier"><g><path style="fill: #976073;" d="m45.632 476.193 6.633 -26.492 -18.291 -7.221 -12.564 20.706s6.927 18.789 -0.766 33.809c0.006 0.002 9.633 -16.396 24.988 -20.802zm-12.288 -12.156c2.252 -0.922 4.846 0.131 5.777 2.341 0.938 2.211 -0.131 4.756 -2.382 5.679 -2.252 0.922 -4.846 -0.131 -5.777 -2.341 -0.947 -2.22 0.123 -4.766 2.382 -5.679z"/><path
+                                        style="fill: #976073;"
+                                        d="M237.53 168.931c-52.672 43.2 -121.629 132.186 -180.109 236.135l-0.033 -0.041 -10.223 18.039 10.901 4.194 5.76 -15.176c31.198 -56.236 115.836 -203.1 270.596 -300.676 0 0 57.617 -34.316 114.384 -81.774 -13.821 11.553 -41.087 26.034 -55.87 35.376 -38.802 24.516 -86.685 47.556 -155.404 103.923z"/><path
+                                        style="fill: #6a425c;"
+                                        d="M49.8 323.048c-11.978 42.334 -11.292 74.577 -6.657 83.438h7.245c20.005 -41.438 116.358 -191.54 176.331 -238.524 62.136 -48.682 110.067 -77.008 150.38 -97.667 14.155 -7.252 28.677 -17.076 41.772 -26.924 15.902 -12.54 32.022 -25.953 46.137 -39.08L424.092 31.125 442.335 3.222l-34.83 35.416L430.17 0c-53.619 4.838 -103.377 31.664 -103.377 31.664 -19.907 23.611 -35.938 61.173 -35.938 61.173 -0.555 -18.782 12.165 -47.222 12.165 -47.222 -9.399 4.292 -45.109 24.688 -45.109 24.688 -17.468 14.49 -22.893 52.59 -22.893 52.59 -3.321 -15.029 8.289 -43.999 8.289 -43.999 -50.314 28.98 -86.253 78.347 -86.253 78.347 -24.876 48.829 -4.422 86.93 -12.165 77.808 -7.743 -9.122 -6.078 -42.392 -6.078 -42.392 -52.526 50.445 -58.048 74.586 -58.048 74.586 -8.844 21.465 -16.587 78.885 -16.587 78.885 -4.977 -5.369 0 -35.416 0 -35.416 -12.718 26.834 -6.633 52.052 -6.633 52.052 -6.078 -2.152 -7.741 -39.715 -7.741 -39.715z"/><path
+                                        style="fill: #6a425c;"
+                                        d="M465.015 21.287s-20.224 19.598 -46.137 39.08c-40.621 32.038 -79.734 58.229 -79.734 58.229C185.917 209.138 100.538 356.898 72.318 407.562h15.003c5.303 -4.251 13.266 -7.457 46.521 -17.084 42.017 -12.165 67.08 -37.562 67.08 -37.562s-38.33 21.465 -56.392 19.32 -42.334 4.65 -42.334 4.65 -9.268 -4.292 36.437 -11.088 120.894 -57.951 120.894 -57.951 -28.751 11.805 -42.017 10.728c-13.266 -1.077 -46.071 0 -46.071 0 21.742 -5.01 42.017 -2.145 75.189 -14.668s31.329 -11.447 31.329 -11.447c37.594 -12.524 53.211 -51.513 53.211 -51.513 -6.502 2.505 -56.164 8.583 -76.764 2.505 -20.601 -6.078 -55.698 0 -55.698 0 33.172 -11.088 40.548 -6.078 48.65 -6.437 8.109 -0.358 34.282 1.787 86.253 -16.096s66.713 -40.066 66.713 -40.066l-35.049 4.683c22.886 -3.851 48.682 -18.993 48.682 -18.993 -15.852 4.292 -40.548 6.437 -40.548 6.437 29.118 -6.437 45.338 -15.38 45.338 -15.38 27.274 -20.748 33.54 -51.513 33.54 -51.513 -38.705 13.233 -69.291 7.155 -69.291 7.155 53.081 -3.573 67.823 -17.174 75.189 -20.388 7.375 -3.222 10.41 -16.545 10.41 -16.545 -26.817 9.66 -57.225 11.267 -57.225 11.267 32.895 -5.098 61.083 -21.735 61.083 -21.735V49.188c-12.718 7.245 -35.099 12.882 -35.099 12.882l34.829 -22.535c1.958 -11.274 -7.164 -18.249 -7.164 -18.249z"/><path
+                                        style="fill: #6a425c;"
+                                        points="23.551,290.571 37.361,296.103 39.933,289.989 26.124,284.458 "
+                                        d="M35.326 435.857L56.041 444.154L59.9 434.983L39.186 426.687Z"/><path style="fill: #4c3252
+;"
+                                                                                                               d="M265.554 428.187c-68.442 32.904 -134.193 55.332 -221.637 58.269 -8.159 0.277 -8.199 8.436 0 8.159 78.225 -2.627 143.315 -19.442 206.087 -48.863 69.927 -32.781 134.153 -60.251 221.742 -69.585 8.078 -0.865 4.643 -8.721 -3.378 -7.865 -77.571 8.274 -140.596 29.976 -202.814 59.885z"/></g></g></svg>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="register-form">
+                            <h2>Register Here</h2>
+                            <p>Already have an account? <a href="login.html">Login Here</a></p>
 
+                            <form class="form" method="post" action="{% url 'register' %}"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
 
-<div class="container mb-5">
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="text"
+                                                   name="username"
+                                                   placeholder="Enter Username" required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="text" style="color: #757575;">User Type:</div>
+                                        <div class="form-group">
+                                            {{ form.type }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="file" name="profile_photo" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="text"
+                                                   name="first_name"
+                                                   placeholder="Enter first name" required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="text"
+                                                   name="last_name"
+                                                   placeholder="Enter last name" required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="text" id="datepicker"
+                                                   name="date_of_birth"
+                                                   placeholder="Date of Birth" required="">
+                                        </div>
+                                    </div>
 
- <div class="w3-container w3-padding-32" id="projects">
-    <h1 class="text-center">Create Your Profile</h1>
-  </div>
-  <div class="w3-row-padding">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <form method="post" action="{% url 'register' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form }}
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="email"
+                                                   name="email"
+                                                   placeholder="Enter email"
+                                                   required=""
+                                                   autocapitalize="none"
+                                                   autocomplete="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="password"
+                                                   name="password1"
+                                                   placeholder="Enter password" required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="password"
+                                                   name="password2"
+                                                   placeholder="Confirm password" required="">
+                                        </div>
+                                    </div>
+                                </div>
 
-                <button class="btn btn-primary mt-2" type="submit">Create</button>
-          <br> <b>* Note that you will need to be granted additional permissions by our staff to gain access to the ArtMod Section of the Site.</b>
-            </form>
+                                <div class="form-group login-btn">
+                                    <button class="btn" type="submit">Create</button>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label class="checkbox-inline" for="2">
+                                        <input name="news" id="2" type="checkbox">Yes, I agree with all
+                                    </label>
+                                </div>
+                                <a href="#" class="terms">Terms &amp; Conditions</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-3"></div>
-    </div>
-        </div>
-    </div>
-</div>
-    </div>
+    </section>
+
+
+
+    {#    ........#}
+
+    {##}
+    {#    <h1 class="text-center"></h1>#}
+    {#    <div class="row">#}
+    {##}
+    {##}
+    {#        <div class="container mb-5">#}
+    {#            <div class="row">#}
+    {#                <div class="col-lg-3"></div>#}
+    {#                <div class="col-lg-6">#}
+    {##}
+    {#                    <div class="w3-container w3-padding-32" id="projects">#}
+    {#                        <h1 class="text-center">Create Your Profile</h1>#}
+    {#                    </div>#}
+    {#                    <div class="w3-row-padding">#}
+    {#                        <div class="col-lg-3"></div>#}
+    {#                        <div class="col-lg-6">#}
+    {#                            <form method="post" action="{% url 'register' %}" enctype="multipart/form-data">#}
+    {#                                {% csrf_token %}#}
+    {#                                {{ form }}#}
+    {##}
+    {#                                <button class="btn btn-primary mt-2" type="submit">Create</button>#}
+    {#                                <br> <b>* Note that you will need to be granted additional permissions by our staff to#}
+    {#                                gain access to the ArtMod Section of the Site.</b>#}
+    {#                            </form>#}
+    {#                        </div>#}
+    {#                        <div class="col-lg-3"></div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Prevent automatic capitalization for the email input field
+            $('#id_email').on('input', function () {
+                $(this).val($(this).val().toLowerCase());
+            });
+        });
+    </script>
+
 {% endblock %}

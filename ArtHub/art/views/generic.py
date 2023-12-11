@@ -17,8 +17,8 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        art = ArtPiece.objects.order_by('-likes')[:3]
-        news = News.objects.order_by('-creation_date')[:3]
+        art = ArtPiece.objects.order_by('-likes')[:5]
+        news = News.objects.order_by('-creation_date')[:5]
         context['art'] = art
         context['news'] = news
         return context

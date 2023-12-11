@@ -9,13 +9,16 @@ from django.utils import timezone
 from ArtHub.accounts.models import UserProfile, ArtHubUser
 from ArtHub.accounts.views_mixins import DisabledFieldsFormMixin
 from ArtHub.art.views_mixins import BootstrapFormMixin
+import logging
 
+logger = logging.getLogger(__name__)    
 UserModel = get_user_model()
 
 class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+        logging.debug(self.fields['type'].choices)
 
     max_upload_limit = 5 * 1024 * 1024
 
@@ -29,7 +32,10 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
 
     )
     date_of_birth = forms.DateField()
-    email = forms.EmailField()
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'placeholder': 'Enter email', 'autocapitalize': 'none'}),
+
+    )
     type = forms.ChoiceField(
         choices=ArtHubUser.Types.choices,
         required=True,
@@ -40,17 +46,25 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
         fields = ('username', 'password1', 'password2', 'type',
                   'first_name', 'last_name', 'profile_photo'
                   )
+        # widgets = {
+        #     'first_name': forms.TextInput(
+        #         attrs={
+        #             'placeholder': 'Enter first name',
+        #         }
+        #     ),
+        #     'last_name': forms.TextInput(
+        #         attrs={
+        #             'placeholder': 'Enter last name',
+        #         }
+        #     ),
+        # }
         widgets = {
-            'first_name': forms.TextInput(
-                attrs={
-                    'placeholder': 'Enter first name',
-                }
-            ),
-            'last_name': forms.TextInput(
-                attrs={
-                    'placeholder': 'Enter last name',
-                }
-            ),
+            'first_name': forms.TextInput(attrs={'placeholder': 'Enter first name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Enter last name'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Enter email'}),
+            'password1': forms.PasswordInput(attrs={'placeholder': 'Enter password'}),
+            'password2': forms.PasswordInput(attrs={'placeholder': 'Confirm password'}),
+            # Add other fields and their placeholders as needed
         }
 
     def clean_date_of_birth(self):
@@ -106,12 +120,22 @@ class RegularProfileUpdateForm(BootstrapFormMixin,forms.ModelForm):
     email = forms.EmailField()
     description = forms.TextInput()
 
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if UserProfile.objects.filter(email=email).count() > 0:
-            raise ValidationError('This email is already in use.')
-        return email
+    # def clean_email(self):
+    #     email = self.cleaned_data['email']
+    #     if UserProfile.objects.filter(email=email).count() > 0:
+    #         raise ValidationError('This email is already in use.')
+    #     return email
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        profile_id = self.instance.user_id if self.instance else None
+
+        if email:
+            # Check for uniqueness only if the email is modified
+            if UserProfile.objects.exclude(user_id=profile_id).filter(email=email).exists():
+                raise forms.ValidationError('This email address is already in use.')
+
+        return email
     def clean(self):
         cleaned_data = super().clean()
         pic = cleaned_data.get('profile_photo')
@@ -124,6 +148,12 @@ class RegularProfileUpdateForm(BootstrapFormMixin,forms.ModelForm):
         model = UserProfile
         fields = ['first_name', 'last_name', 'profile_photo', 'date_of_birth', 'email', 'website', 'address', 'description']
         widgets = {
+            'date_of_birth': forms.DateInput(attrs={'id': 'datepicker'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'Enter your first name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Enter your last name'}),
+            'profile_photo': forms.ClearableFileInput(attrs={'placeholder': 'Choose a profile photo'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
+
             'address': forms.TextInput(
                 attrs={
                     'placeholder': 'Add an address for visitors interested in your art'

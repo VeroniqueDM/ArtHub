@@ -1,20 +1,86 @@
 {% extends 'base.html' %}
 {% block content %}
-   <div class="w3-container w3-padding-32" id="projects">
-    <h1 class="text-center">Edit Event</h1>
-  </div>
-  <div class="w3-row-padding">
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <form method="post" action="{% url 'edit event' object.pk %}" enctype="multipart/form-data">
-                {{ form }}
-                {% csrf_token %}
 
-                <button class="btn btn-primary mt-2" type="submit">Edit</button>
-            </form>
+     <section class="contact-us section">
+        <div class="container">
+            <div class="inner">
+                <div class="w3-row-padding">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="contact-us-form">
+                                <h2>Edit Event</h2>
+                                <p>If you have any questions, please feel free to contact us.</p>
+
+            <form method="post" action="{% url 'edit event' object.pk %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="{{ form.title.id_for_label }}">Title</label>
+                                                {{ form.title }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="{{ form.description.id_for_label }}">Description</label>
+                                                {{ form.description }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="{{ form.location.id_for_label }}">Location</label>
+                                                {{ form.location }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="{{ form.date.id_for_label }}">Date</label>
+                                                {{ form.date }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="{{ form.price.id_for_label }}">Price</label>
+                                                {{ form.price }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="{{ form.photo.id_for_label }}">Photo</label>
+                                                {{ form.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group login-btn">
+                                                <button class="btn btn-primary mt-2" type="submit">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-3"></div>
-    </div>
-  </div>
+    </section>
+{#    ---------#}
+{#   <div class="w3-container w3-padding-32" id="projects">#}
+{#    <h1 class="text-center">Edit Event</h1>#}
+{#  </div>#}
+{#  <div class="w3-row-padding">#}
+{#    <div class="row">#}
+{#        <div class="col-lg-3"></div>#}
+{#        <div class="col-lg-6">#}
+{#            <form method="post" action="{% url 'edit event' object.pk %}" enctype="multipart/form-data">#}
+{#                {{ form }}#}
+{#                {% csrf_token %}#}
+{##}
+{#                <button class="btn btn-primary mt-2" type="submit">Edit</button>#}
+{#            </form>#}
+{#        </div>#}
+{#        <div class="col-lg-3"></div>#}
+{#    </div>#}
+{#  </div>#}
 {% endblock %}

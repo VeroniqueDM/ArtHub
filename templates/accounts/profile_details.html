@@ -1,83 +1,299 @@
 {% extends 'base.html' %}
 {% load groups_tags %}
+{% load custom_filters %}
+{% load static %}
 {% block content %}
 
-  <div class="w3-container w3-padding-32" id="projects">
-  </div>
-      <div class="w3-row-padding">
-<div class="w3-col l4">
-  <div class="w3-card w3-margin w3-margin-top">
-  <img src="{{ profile.profile_photo.url }}" style="width:40%" alt="profile image"><br>
-                {% if is_owner %}
+    <div class="doctor-details-area section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="doctor-details-item doctor-details-left">
+                        <img src="{{ profile.profile_photo.url }}" alt="user photo">
+                        <div class="doctor-details-contact">
+                            <h3>Contact info</h3>
+                            <ul class="basic-info">
+                                <li>
+                                    {#<i class="icofont-ui-call"></i>#}
+                                    {#Call : +07 554 332 322#}
+                                    {% if profile.website %}
+                                        {#        <b>Website:</b> #}
+                                        <i class="icofont-globe"></i>
+                                        {#<i class="icofont-ui-browser"></i>#}
 
-<a class="btn btn-warning" href="{% url 'edit profile' profile.pk %}" role="button">EDIT PROFILE</a>
-<a class="btn btn-warning" href="{% url 'change password' profile.user_id %}" role="button">CHANGE PASSWORD</a>
-<a class="btn btn-danger" href="{% url 'delete profile' profile.pk %}" role="button">DELETE PROFILE</a><br><br>
+                                        <a href="{{ profile.website }}">{{ profile.website }}</a>
+                                    {% endif %}
+                                </li>
+                                <li>
 
-{% if request.user|has_group:"Artist" %}
-<a class="btn btn-success" href="{% url 'add art' %}" role="button">Add Art</a>
-<a class="btn btn-success" href="{% url 'add event' %}" role="button">Add Event</a>
-    {% endif %}
-              {% endif %}
-    <div class="w3-container w3-white">
-      <h4><b>{{ profile.first_name}} {{ profile.last_name }}</b></h4><br>
-        {% if profile.email %}
-        <b>Email:</b> {{ profile.email }}
-        {% endif %}<br>
-       {% if profile.website %}
-        <b>Website:</b> <a href="{{ profile.website }}">{{ profile.website }}</a>
-        {% endif %}<br>
-       {% if profile.address %}
-        <b>Address:</b> {{ profile.address }}
-        {% endif %}<br>
-     <b>Total Likes on their Art:</b> {{ total_likes_count }}<br>
-      <p>{{ profile.description }}</p>
+                                    {% if profile.email %}
+                                        <i class="icofont-ui-message"></i>
+                                        {#        <b>Email:</b> #}
+                                        {{ profile.email }}
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    {% if profile.address %}
+                                        {#        <b>Address:</b> #}
+                                        <i class="icofont-location-pin"></i>
+                                        {{ profile.address }}
+                                    {% endif %}<br>
 
-    </div></div>
-  </div>
 
-  {% if own_art %}
-  </div>
- <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{ profile.first_name }} {{ profile.last_name }}'s Art:</b></h3>
-  </div>
+                                </li>
+                            </ul>
 
-  <div class="w3-row-padding">
-      {% for art in own_art %}
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-           <a href="{% url 'details art' art.pk %}">
-        <div class="w3-display-topleft w3-black w3-padding">{{ art.title}}</div>
-        <img src="{{ art.photo.url }}" alt="House" style="width:100%">
-{{ art.description }}
-           </a>
-          <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o" aria-hidden="true"></i>{{ art_piece.likes }}</p></div>
+                            <ul class="social">
+                                {#<li><a href="#"><i class="icofont-facebook"></i></a></li>#}
+                                {#<li><a href="#"><i class="icofont-google-plus"></i></a></li>#}
+                                {#<li><a href="#"><i class="icofont-twitter"></i></a></li>#}
+                                {#<li><a href="#"><i class="icofont-vimeo"></i></a></li>#}
+                                {#<li><a href="#"><i class="icofont-pinterest"></i></a></li>#}
+                            </ul>
+                            <div class="main-sidebar">
+                                {% if is_owner %}
 
-      </div>
+                                    <div class="single-widget category">
+                                        <h3 class="title">Manage your Profile</h3>
+                                        <ul class="categor-list">
+                                            <li><a href="{% url 'edit profile' profile.pk %}">Update Profile</a></li>
+                                            <li><a href="{% url 'change password' profile.user_id %}">Change
+                                                password</a>
+                                            </li>
+                                            <li><a href="{% url 'delete profile' profile.pk %}">Delete Profile</a></li>
+                                        </ul>
+                                        <br>
+                                        <br>
+                                        {% if request.user|has_group:"Artist" %}
+                                            <h3 class="title">Add new content</h3>
+                                            <ul class="categor-list">
+                                                <li><a href="{% url 'add art' %}">Add New Art</a></li>
+                                                <li><a href="{% url 'add event' %}">Add New Event</a></li>
+                                            </ul>
+                                        {% endif %}
+
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                            <div class="doctor-details-work">
+
+                                {#<ul class="time-sidual">#}
+                                {#<li class="day">Monday - Fridayp <span>8.00-20.00</span></li>#}
+                                {#<li class="day">Saturday <span>9.00-18.30</span></li>#}
+                                {#<li class="day">Monday - Thusday <span>9.00-15.00</span></li>#}
+                                {#<li class="day">Monday - Fridayp <span>8.00-20.00</span></li>#}
+                                {#</ul>#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="doctor-details-item">
+                        <div class="doctor-details-right">
+                            <div class="doctor-name">
+                                <h3 class="name">{{ profile.first_name }} {{ profile.last_name }}</h3>
+                                <p class="deg">Total Likes for this Artist: {{ total_likes_count }}</p>
+                                <br>
+                                {#<div class="doctor-details-biography">#}
+                                {#<h3>Biography</h3>#}
+                                {#<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p><br>#}
+                                {#<p>Risus commodo viverra maecenas accumsan lacus vel facilisis.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>#}
+                                {#</div>#}
+                            </div>
+                            <div class="doctor-details-biography">
+                                <h3>Biography</h3>
+                                {#<p>{{ profile.description }}</p><br>#}
+                                {#{% for paragraph in profile.description|split:"<br>"|split:"." %}#}
+                                {#    <p>{{ paragraph }}</p>#}
+                                {#{% endfor %}#}
+                                {% with grouped_sentences=profile.description|group_sentences %}
+                                    <p>{{ grouped_sentences.first_group }}</p>
+                                    <p>{{ grouped_sentences.second_group }}</p>
+                                {% endwith %}
+                            </div>
+
+                            <div class="doctor-details-biography">
+                                {% if own_art %}
+                                    <h3>{{ profile.first_name }} {{ profile.last_name }}'s Art:</h3>
+
+                                    <section class="portfolio section" style="padding-top: 0; padding-bottom: 0;">
+                                        <div class="container">
+                                            <div class="row">
+
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-12">
+                                                    <div class="owl-carousel portfolio-slider">
+                                                        {% for art_piece in own_art %}
+                                                            <div class="single-pf">
+                                                                <img src="{{ art_piece.photo.url }}" alt="Art">
+                                                                <div class="w3-display-topleft w3-black w3-padding">{{ art_piece.title }}</div>
+                                                                <div class="w3-display-topright w3-black w3-padding">
+                                                                    <i
+                                                                            class="fa fa-heart-o"
+                                                                            aria-hidden="true"></i> {{ art_piece.likes }}
+                                                                </div>
+                                                                <a href="{% url 'details art' art_piece.pk %}"
+                                                                   class="btn">View
+                                                                    Details</a>
+
+                                                            </div>
+                                                        {% endfor %}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                {% endif %}
+
+                                {% if own_events %}
+                                    <h3>{{ profile.first_name }} {{ profile.last_name }}'s Events:</h3>
+                                    <section class="portfolio section" style="padding-top: 0; padding-bottom: 0;">
+                                        <div class="container">
+                                            <div class="row">
+
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-12">
+                                                    <div class="owl-carousel portfolio-slider">
+                                                        {% for event in own_events %}
+                                                            <div class="single-pf">
+                                                                <img src="{{ event.photo }}" alt="Art">
+                                                                <div class="w3-display-topleft w3-black w3-padding">{{ event.title }}</div>
+                                                                <div class="w3-display-topright w3-black w3-padding">
+                                                                    <svg fill="#fff" height="15px" width="15px"
+                                                                         version="1.1" id="Layer_1"
+                                                                         xmlns="http://www.w3.org/2000/svg"
+                                                                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                         viewBox="0 0.387 38.4 37.624"
+                                                                         xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                                                        <g id="SVGRepo_tracerCarrier"
+                                                                           stroke-linecap="round"
+                                                                           stroke-linejoin="round"/>
+                                                                        <g id="SVGRepo_iconCarrier"><g><g><path d="m28.386 7.813 -2.126 -1.472a0.625 0.625 0 0 0 -0.712 1.029l2.126 1.472a0.63 0.63 0 0 0 0.871 -0.159 0.625 0.625 0 0 0 -0.159 -0.871z"/></g></g>
+                                                                            <g><g><path d="m32.639 10.758 -2.126 -1.472a0.625 0.625 0 0 0 -0.871 0.159 0.625 0.625 0 0 0 0.158 0.871l2.126 1.472a0.636 0.636 0 0 0 0.871 -0.159 0.625 0.625 0 0 0 -0.158 -0.871z"/></g></g>
+                                                                            <g><g><path d="m12.525 10.086 -2.517 -0.591a0.625 0.625 0 0 0 -0.286 1.22l2.517 0.591a0.673 0.673 0 0 0 0.144 0.017 0.627 0.627 0 0 0 0.609 -0.483 0.627 0.627 0 0 0 -0.467 -0.753z"/></g></g>
+                                                                            <g><g><path d="m17.561 11.267 -2.517 -0.591a0.625 0.625 0 1 0 -0.286 1.22l2.517 0.591a0.673 0.673 0 0 0 0.144 0.017 0.625 0.625 0 0 0 0.143 -1.236z"/></g></g>
+                                                                            <g><g><path d="m18.541 14.234 -5.704 -1.338a0.625 0.625 0 1 0 -0.286 1.22l5.094 1.196 -4.11 17.517L4.02 30.595l4.11 -17.517 1.936 0.455a0.625 0.625 0 0 0 0.286 -1.22l-2.547 -0.597a0.627 0.627 0 0 0 -0.753 0.467L2.659 30.916a0.625 0.625 0 0 0 0.467 0.753l10.734 2.518a0.625 0.625 0 0 0 0.753 -0.467l4.396 -18.735a0.625 0.625 0 0 0 -0.467 -0.753z"/></g></g>
+                                                                            <g><g><path d="M15.33 21.297a0.625 0.625 0 0 0 -0.63 -0.381l-2.343 0.197 -0.91 -2.167a0.625 0.625 0 0 0 -1.187 0.099l-0.537 2.289 -2.343 0.197a0.625 0.625 0 0 0 -0.271 1.159l2.01 1.218 -0.537 2.289a0.625 0.625 0 0 0 1.018 0.616l1.779 -1.536 2.01 1.218a0.625 0.625 0 0 0 0.901 -0.778l-0.91 -2.167 1.779 -1.536a0.625 0.625 0 0 0 0.168 -0.717zm-3.279 2.317 0.341 0.81 -0.752 -0.456c-0.52 -0.315 -1.042 0.329 -1.398 0.636l0.201 -0.855a0.625 0.625 0 0 0 -0.285 -0.678l-0.752 -0.456 0.876 -0.074c0.608 -0.051 0.651 -0.879 0.758 -1.337l0.341 0.81c0.237 0.564 1.036 0.348 1.504 0.307 -0.361 0.312 -1.075 0.712 -0.833 1.29z"/></g></g>
+                                                                            <g><g><path d="M38.13 9.567a1.305 1.305 0 0 1 -0.42 -1.66 0.625 0.625 0 0 0 -0.201 -0.8l-3.202 -2.217a0.627 0.627 0 0 0 -0.819 0.093 1.309 1.309 0 0 1 -0.963 0.423 1.293 1.293 0 0 1 -0.74 -0.231 1.305 1.305 0 0 1 -0.42 -1.66 0.625 0.625 0 0 0 -0.201 -0.8L27.961 0.498a0.625 0.625 0 0 0 -0.819 0.093 1.309 1.309 0 0 1 -0.963 0.423 1.293 1.293 0 0 1 -0.74 -0.231 0.625 0.625 0 0 0 -0.871 0.159l-3.619 5.229a0.624 0.624 0 0 0 -0.195 -0.083l-3.792 -0.889a0.625 0.625 0 0 0 -0.728 0.386 1.319 1.319 0 0 1 -1.513 0.801 1.305 1.305 0 0 1 -0.999 -1.391 0.625 0.625 0 0 0 -0.48 -0.669L9.45 3.434a0.625 0.625 0 0 0 -0.728 0.386A1.319 1.319 0 0 1 7.209 4.62a0.627 0.627 0 0 0 -0.753 0.467l-0.939 3.999 -5.5 23.445a0.625 0.625 0 0 0 0.467 0.753 1.305 1.305 0 0 1 0.999 1.391 0.625 0.625 0 0 0 0.48 0.669l3.792 0.889a0.625 0.625 0 0 0 0.728 -0.386c0.526 -1.379 2.653 -0.874 2.513 0.59a0.625 0.625 0 0 0 0.48 0.669l3.792 0.889a0.63 0.63 0 0 0 0.728 -0.386 1.308 1.308 0 0 1 1.215 -0.836c0.276 0 0.513 0.118 0.772 -0.042a0.627 0.627 0 0 0 0.279 -0.389l0.824 -3.508 1.766 1.222a0.634 0.634 0 0 0 0.819 -0.093 1.309 1.309 0 0 1 1.703 -0.192 0.625 0.625 0 0 0 0.871 -0.159L38.287 10.437a0.625 0.625 0 0 0 -0.158 -0.871zM17.019 27.631l-0.944 4.021 -0.907 3.87a2.568 2.568 0 0 0 -2.087 1.145l-2.849 -0.669a2.568 2.568 0 0 0 -1.951 -2.172 2.582 2.582 0 0 0 -2.713 1.077l-2.849 -0.669a2.571 2.571 0 0 0 -1.361 -1.951L6.592 9.979l0.609 0.143a0.673 0.673 0 0 0 0.144 0.017 0.625 0.625 0 0 0 0.143 -1.236l-0.609 -0.143 0.669 -2.853a2.568 2.568 0 0 0 2.087 -1.145l2.849 0.669a2.568 2.568 0 0 0 1.951 2.172 2.583 2.583 0 0 0 2.713 -1.077l2.849 0.669c0.007 0.002 0.026 0.165 0.03 0.181a2.564 2.564 0 0 0 0.176 0.544 2.591 2.591 0 0 0 1.155 1.227l-0.669 2.854 -0.609 -0.143a0.627 0.627 0 0 0 -0.753 0.467 0.625 0.625 0 0 0 0.467 0.753l0.609 0.143 -0.996 4.244 -0.109 0.464 -0.73 3.115 -1.546 6.589zm18.259 -15.045 -0.515 -0.357a0.627 0.627 0 0 0 -0.871 0.159 0.625 0.625 0 0 0 0.159 0.871l0.515 0.357L21.527 32.453a2.54 2.54 0 0 0 -0.894 -0.162 2.565 2.565 0 0 0 -1.467 0.462l-1.773 -1.227 0.636 -2.712 2.769 1.917a0.63 0.63 0 0 0 0.871 -0.159l8.05 -11.63a0.625 0.625 0 1 0 -1.029 -0.712l-7.695 11.115 -2.659 -1.842 1.221 -5.202 2.199 -0.771 1.425 1.871a0.625 0.625 0 0 0 1.123 -0.395l-0.054 -2.35 2.219 -0.777a0.625 0.625 0 0 0 -0.027 -1.191l-2.252 -0.675 -0.054 -2.35a0.625 0.625 0 0 0 -1.141 -0.342l-1.338 1.932 -0.858 -0.257 1.612 -6.868 0.789 -1.14L31.236 14.55l-1.089 1.573a0.625 0.625 0 1 0 1.029 0.712l1.446 -2.088a0.636 0.636 0 0 0 -0.158 -0.871L23.4 7.601a0.63 0.63 0 0 0 -0.871 0.159l-0.271 0.393 -0.022 -0.006a1.306 1.306 0 0 1 -0.765 -0.517l-0.005 -0.006 1.44 -2.08 0.515 0.357a0.634 0.634 0 0 0 0.871 -0.159 0.625 0.625 0 0 0 -0.158 -0.871l-0.515 -0.357 1.668 -2.409a2.54 2.54 0 0 0 0.894 0.162 2.565 2.565 0 0 0 1.467 -0.462l2.405 1.665a2.568 2.568 0 0 0 1.02 2.736 2.575 2.575 0 0 0 2.919 -0.007l2.405 1.665a2.574 2.574 0 0 0 0.55 2.314l-1.668 2.41zm-12.27 8.521 -0.532 -0.699a0.633 0.633 0 0 0 -0.705 -0.211l-0.83 0.291c0.273 -0.395 0.864 -0.957 0.483 -1.458l-0.532 -0.699 0.842 0.252c0.587 0.176 0.925 -0.576 1.194 -0.966l0.019 0.879c0.013 0.61 0.837 0.702 1.287 0.839l-0.83 0.291a0.625 0.625 0 0 0 -0.419 0.606l0.019 0.879z"/></g></g></g></svg>
+
+                                                                    {{ event.price|floatformat:2 }} €
+                                                                </div>
+                                                                <a href="{% url 'details event' event.pk %}"
+                                                                   class="btn">View
+                                                                    Details</a>
+
+                                                            </div>
+                                                        {% endfor %}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-            {% endfor %}
 
+    {#        <div class="w3-container w3-padding-32" id="projects">#}
+    {#        </div>#}
+    {#        <div class="w3-row-padding">#}
+    {#            <div class="w3-col l4">#}
+    {#                <div class="w3-card w3-margin w3-margin-top">#}
+    {#                    <img src="{{ profile.profile_photo.url }}" style="width:40%" alt="profile image"><br>#}
+    {#                    {% if is_owner %}#}
+    {##}
+    {#                        <a class="btn btn-warning" href="{% url 'edit profile' profile.pk %}" role="button">EDIT#}
+    {#                            PROFILE</a>#}
+    {#                        <a class="btn btn-warning" href="{% url 'change password' profile.user_id %}" role="button">CHANGE#}
+    {#                            PASSWORD</a>#}
+    {#                        <a class="btn btn-danger" href="{% url 'delete profile' profile.pk %}" role="button">DELETE#}
+    {#                            PROFILE</a><br><br>#}
+    {##}
+    {#                        {% if request.user|has_group:"Artist" %}#}
+    {#                            <a class="btn btn-success" href="{% url 'add art' %}" role="button">Add Art</a>#}
+    {#                            <a class="btn btn-success" href="{% url 'add event' %}" role="button">Add Event</a>#}
+    {#                        {% endif %}#}
+    {#                    {% endif %}#}
+    {#                    <div class="w3-container w3-white">#}
+    {#                        <h4><b>{{ profile.first_name }} {{ profile.last_name }}</b></h4><br>#}
+    {#                        {% if profile.email %}#}
+    {#                            <b>Email:</b> {{ profile.email }}#}
+    {#                        {% endif %}<br>#}
+    {#                        {% if profile.website %}#}
+    {#                            <b>Website:</b> <a href="{{ profile.website }}">{{ profile.website }}</a>#}
+    {#                        {% endif %}<br>#}
+    {#                        {% if profile.address %}#}
+    {#                            <b>Address:</b> {{ profile.address }}#}
+    {#                        {% endif %}<br>#}
+    {#                        <b>Total Likes on their Art:</b> {{ total_likes_count }}<br>#}
+    {#                        <p>{{ profile.description }}</p>#}
+    {##}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {##}
+    {#            {% if own_art %}#}
+    {#                </div>#}
+    {#                <div class="w3-container w3-padding-32" id="projects">#}
+    {#                    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">#}
+    {#                        <b>{{ profile.first_name }} {{ profile.last_name }}'s Art:</b></h3>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="w3-row-padding">#}
+    {#                    {% for art in own_art %}#}
+    {#                        <div class="w3-col l3 m6 w3-margin-bottom">#}
+    {#                            <div class="w3-display-container">#}
+    {#                                <a href="{% url 'details art' art.pk %}">#}
+    {#                                    <div class="w3-display-topleft w3-black w3-padding">{{ art.title }}</div>#}
+    {#                                    <img src="{{ art.photo.url }}" alt="House" style="width:100%">#}
+    {#                                    {{ art.description }}#}
+    {#                                </a>#}
+    {#                                <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o"#}
+    {#                                                                                           aria-hidden="true"></i>{{ art_piece.likes }}#}
+    {#                                </p></div>#}
+    {##}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    {% endfor %}#}
+    {##}
+    {##}
+    {#                </div>#}
+    {#            {% endif %}#}
+    {#        {% if own_events %}#}
+    {#            <div class="w3-container w3-padding-32" id="projects">#}
+    {#                <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">#}
+    {#                    <b>{{ profile.first_name }} {{ profile.last_name }}'s Events:</b></h3>#}
+    {#            </div>#}
+    {##}
+    {#            <div class="w3-row-padding">#}
+    {#                {% for event in own_events %}#}
+    {#                    <div class="w3-col l3 m6 w3-margin-bottom">#}
+    {#                        <div class="w3-display-container">#}
+    {#                            <a href="{% url 'details event' event.pk %}">#}
+    {#                                <div class="w3-display-topleft w3-black w3-padding">{{ event.title }}</div>#}
+    {#                                <img src="{{ event.photo }}" alt="House" style="width:100%">#}
+    {#                                {{ event.description|truncatewords:10 }}#}
+    {#                            </a>#}
+    {##}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                {% endfor %}#}
+    {#            </div>#}
+    {#        {% endif %}#}
 
-   </div>
-    {% endif %}
-{% if own_events %}
- <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{ profile.first_name }} {{ profile.last_name }}'s Events:</b></h3>
-  </div>
-
-  <div class="w3-row-padding">
-      {% for event in own_events %}
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-           <a href="{% url 'details event' event.pk %}">
-        <div class="w3-display-topleft w3-black w3-padding">{{ event.title}}</div>
-        <img src="{{ event.photo }}" alt="House" style="width:100%">
-{{ event.description|truncatewords:10 }}
-           </a>
-
-      </div>
-    </div>
-            {% endfor %}
-   </div>
-{% endif %}
 {% endblock %}

@@ -15,6 +15,8 @@ UserModel = get_user_model()
 
 class RegularUserRegisterView(views.CreateView):
     form_class = CreateRegularProfileForm
+    # form = CreateRegularProfileForm(initial={'type': 'ARTIST'})
+
     template_name = 'accounts/profile_create.html'
     success_url = reverse_lazy('index')
     context_object_name = 'profile'
@@ -24,7 +26,6 @@ class RegularUserRegisterView(views.CreateView):
 
         if self.object.type == 'ARTIST':
             group = Group.objects.get(name='Artist').id
-
             self.object.groups.add(group)
         login(self.request, self.object)
         return result
@@ -70,6 +71,7 @@ class RegularProfileDetailsView(views.DetailView):
             'is_owner': self.object.user_id == self.request.user.id,
             'own_art': own_art,
             'own_events': own_events,
+            'profile_page': True,
         })
 
         return context
@@ -78,23 +80,42 @@ class RegularProfileDetailsView(views.DetailView):
 class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
     template_name = 'accounts/profile_edit.html'
     context_object_name = 'profile'
-    queryset = UserProfile.objects.all()
+    # queryset = UserProfile.objects.all()
     form_class = RegularProfileUpdateForm
+    model = UserProfile  # Add this line
 
     def get_success_url(self):
         return reverse('details profile', kwargs={'pk': self.get_object().user_id})
 
     def get_context_data(self, **kwargs):
-        context = super(EditRegularProfileView, self).get_context_data(**kwargs)
-        user_profile = UserProfile.objects.get(pk=self.get_object().user_id)
-        context['profile_form'] = RegularProfileUpdateForm(
-            instance=user_profile,
-        )
+        context = super().get_context_data(**kwargs)
+        context['profile_form'] = context['form']
         return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(EditRegularProfileView, self).get_context_data(**kwargs)
+    #     # user_profile = UserProfile.objects.get(pk=self.get_object().user_id)
+    #     user_profile = UserProfile.objects.get(pk=self.get_object().id)
+    #     context['profile_form'] = RegularProfileUpdateForm(
+    #         instance=user_profile,
+    #     )
+    #     return context
 
+    # def form_valid(self, form):
+    #     profile = form.save()
+    #     user = profile.user
+    #     user.last_name = form.cleaned_data['last_name']
+    #     user.first_name = form.cleaned_data['first_name']
+    #     user.profile_photo = form.cleaned_data['profile_photo']
+    #     user.date_of_birth = form.cleaned_data['date_of_birth']
+    #     user.email = form.cleaned_data['email']
+    #     user.website = form.cleaned_data['website']
+    #     user.address = form.cleaned_data['address']
+    #     user.description = form.cleaned_data['description']
+    #     user.save()
+    #     return super(EditRegularProfileView, self).form_valid(form)
     def form_valid(self, form):
-        profile = form.save()
-        user = profile.user
+        response = super().form_valid(form)
+        user = self.object.user
         user.last_name = form.cleaned_data['last_name']
         user.first_name = form.cleaned_data['first_name']
         user.profile_photo = form.cleaned_data['profile_photo']
@@ -104,10 +125,9 @@ class EditRegularProfileView(auth_mixin.LoginRequiredMixin, views.UpdateView):
         user.address = form.cleaned_data['address']
         user.description = form.cleaned_data['description']
         user.save()
-        return super(EditRegularProfileView, self).form_valid(form)
-
-    def get_queryset(self):
-        return UserModel.objects.filter(id=self.request.user.id)
+        return response
+    # def get_queryset(self):
+    #     return UserModel.objects.filter(id=self.request.user.id)
 
 class DeleteProfileView(views.DeleteView):
     template_name = 'accounts/profile_delete.html'

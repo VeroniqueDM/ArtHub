@@ -44,7 +44,9 @@ class CreateArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin,
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-
+    def get_success_url(self):
+        # Redirect to the desired URL after a successful form submission
+        return reverse_lazy('dashboard art')
 
 class EditArtView(CheckArtistOrAdModGroupMixin, auth_mixin.LoginRequiredMixin, views.UpdateView):
     template_name = 'art/edit_art.html'
@@ -79,7 +81,7 @@ class ArtDetailsView(auth_mixin.LoginRequiredMixin, views.DetailView):
 class DeleteArtView(auth_mixin.LoginRequiredMixin,views.DeleteView):
     template_name = 'art/delete_art.html'
     form_class = DeleteArtForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('dashboard art')
 
     def get_queryset(self):
         return ArtPiece.objects.filter(user_id=self.request.user)
@@ -169,13 +171,14 @@ class UpdateNewsView(CheckArtModGroupMixin, LoginRequiredMixin, views.UpdateView
     form_class = EditNewsForm
     queryset = News.objects.all()
     context_object_name = 'news'
+    success_url = reverse_lazy('dashboard news')
 
 
 class DeleteNewsView(CheckArtModGroupMixin, LoginRequiredMixin, views.DeleteView):
     template_name = 'art/delete_news.html'
     model = News
     context_object_name = 'news'
-
+    success_url = reverse_lazy('dashboard news')
 
 class CreateEventView(CheckArtistOrAdModGroupMixin, LoginRequiredMixin, views.CreateView):
     template_name = 'art/create_event.html'
@@ -219,6 +222,7 @@ class DeleteEventView(CheckArtistOrAdModGroupMixin, LoginRequiredMixin, views.De
     template_name = 'art/delete_event.html'
     model = Event
     context_object_name = 'event'
+    success_url = reverse_lazy('dashboard events')
 
     def get_queryset(self):
         if self.request.user.type == 'ARTIST':

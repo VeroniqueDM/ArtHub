@@ -1,21 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
 
-   <div class="w3-container w3-padding-32" id="projects">
-    <h1 class="text-center">Edit Style</h1>
-  </div>
-  <div class="w3-row-padding">
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <form method="post" action="{% url 'edit style' object.pk %}" enctype="multipart/form-data">
-                {{ form }}
-                {% csrf_token %}
+       <section class="register section">
+        <div class="container">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="register-form">
+                            <h2>Edit Style</h2>
 
-                <button class="btn btn-primary mt-2" type="submit">Edit</button>
-            </form>
+                            <form method="post" action="{% url 'edit style' object.pk %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label for="{{ form.name.id_for_label }}">Name</label>
+                                    {{ form.name }}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ form.description.id_for_label }}">Description</label>
+                                    {{ form.description }}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ form.photo.id_for_label }}">Photo URL</label>
+                                    {{ form.photo }}
+                                </div>
+
+                                <button class="btn btn-primary mt-2" type="submit">Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-3"></div>
-    </div>
-  </div>
+    </section>
+{#=================#}
+{#   <div class="w3-container w3-padding-32" id="projects">#}
+{#    <h1 class="text-center">Edit Style</h1>#}
+{#  </div>#}
+{#  <div class="w3-row-padding">#}
+{#    <div class="row">#}
+{#        <div class="col-lg-3"></div>#}
+{#        <div class="col-lg-6">#}
+{#            <form method="post" action="{% url 'edit style' object.pk %}" enctype="multipart/form-data">#}
+{#                {{ form }}#}
+{#                {% csrf_token %}#}
+{##}
+{#                <button class="btn btn-primary mt-2" type="submit">Edit</button>#}
+{#            </form>#}
+{#        </div>#}
+{#        <div class="col-lg-3"></div>#}
+{#    </div>#}
+{#  </div>#}
 {% endblock %}

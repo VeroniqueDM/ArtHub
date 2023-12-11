@@ -1,21 +1,62 @@
 {% extends 'base.html' %}
 {% block content %}
+    <section class="blog section" id="blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Dashboard Techniques</h2>
+                        {#							<img src="img/section-img.png" alt="#">#}
+                        <p>Add, update or delete existing techniques on the website.</p>
 
-      <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Dashboard TECHNIQUES</h3>
-       <a class="btn btn-success btn-lg" href="{% url 'add technique' %}" role="button">ADD NEW TECHNIQUE</a>
-  <div class="w3-row-padding">
+                    </div>
+                </div>
+            </div>
+            <div class="section-title">
+                <a class="btn btn-success btn-lg" href="{% url 'add technique' %}" role="button">ADD NEW TECHNIQUE</a>
+            </div>
+            <div class="row">
 {% for technique in techniques %}
-      <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <a href="{% url 'details technique' technique.pk %}">
-        <div class="w3-display-topleft w3-black w3-padding">{{ technique.name}} </div>
-        <img src="{{ technique.photo.url }}" alt="House" style="width:100%">
-    </a>
-</div>
-</div>
-{% endfor %}
-  </div>
-</div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- Single Blog -->
+                        <div class="single-news">
+                            <div class="news-head">
+                                <a href="{% url 'details technique' technique.pk %}">
+                                    <img src="{{ technique.photo.url }}"  alt="#">
+                                </a>
+                            </div>
+                            <div class="news-body">
+                                <div class="news-content">
+                                    {#									<div class="date">{{ event.date }}</div>#}
+                                    <h2><a href="{% url 'details technique' technique.pk %}">{{ technique.name}}</a></h2>
+                                    {#									<p class="text">Price: {{ event.price|floatformat:2 }} €</p>#}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Single Blog -->
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+
+{#      <div class="w3-container w3-padding-32" id="projects">#}
+{#    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Dashboard TECHNIQUES</h3>#}
+{#       <a class="btn btn-success btn-lg" href="{% url 'add technique' %}" role="button">ADD NEW TECHNIQUE</a>#}
+{#  <div class="w3-row-padding">#}
+{#{% for technique in techniques %}#}
+{#      <div class="w3-col l3 m6 w3-margin-bottom">#}
+{#      <div class="w3-display-container">#}
+{#        <a href="{% url 'details technique' technique.pk %}">#}
+{#        <div class="w3-display-topleft w3-black w3-padding">{{ technique.name}} </div>#}
+{#        <img src="{{ technique.photo.url }}" alt="House" style="width:100%">#}
+{#    </a>#}
+{#</div>#}
+{#</div>#}
+{#{% endfor %}#}
+{#  </div>#}
+{#</div>#}
 {% endblock %}
 
