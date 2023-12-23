@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 
-
+from django.views.generic import TemplateView
 from ArtHub.art.models import ArtPiece, News
 
 UserModel = get_user_model()
@@ -38,3 +38,10 @@ class LikedArtView(LoginRequiredMixin, ListView):
         return context
 
 
+
+
+class AboutUsView(TemplateView):
+    template_name = 'about_us.html'
+
+class ContactView(TemplateView):
+    template_name = 'contact.html'
