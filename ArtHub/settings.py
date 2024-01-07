@@ -13,11 +13,13 @@ import os
 import dj_database_url
 from django.conf.global_settings import DATABASES
 import dotenv
+from dotenv import load_dotenv
 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.urls import reverse_lazy
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,8 +31,7 @@ if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY =  os.environ['SECRET_KEY']
-SECRET_KEY = 'django-insecure-@m66n93obx&9+^4px!3*hla4-+6h=z7x^i6ez3hmwy3$&i2w)m'
+SECRET_KEY =  os.environ['SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -125,6 +126,7 @@ WSGI_APPLICATION = 'ArtHub.wsgi.application'
 #
 #         }
 #     }
+ENVIRONMENT = os.environ.get('ENVIRONMENT', 'DEVELOPMENT')
 
 if os.environ['ENVIRONMENT'] == "PRODUCTION":
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
