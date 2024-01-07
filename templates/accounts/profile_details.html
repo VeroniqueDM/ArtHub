@@ -10,6 +10,8 @@
                 <div class="col-lg-5">
                     <div class="doctor-details-item doctor-details-left">
                         <img src="{{ profile.profile_photo.url }}" alt="user photo">
+                        <img src="{{ profile.profile_photo }}" alt="user photo">
+                        <img src="data:image/jpeg;base64,{{ profile.profile_photo }}" alt="user photo">
                         <div class="doctor-details-contact">
                             <h3>Contact info</h3>
                             <ul class="basic-info">
