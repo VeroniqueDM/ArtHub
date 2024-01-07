@@ -10,6 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import dj_database_url
+from django.conf.global_settings import DATABASES
+import dotenv
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,15 +24,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@m66n93obx&9+^4px!3*hla4-+6h=z7x^i6ez3hmwy3$&i2w)m'
+SECRET_KEY =  os.environ['SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    '.vercel.app',
+    '.now.sh',
+    'localhost'
 ]
 
 
@@ -58,6 +70,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
 ]
 
 ROOT_URLCONF = 'ArtHub.urls'
@@ -85,18 +99,46 @@ WSGI_APPLICATION = 'ArtHub.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'arthub_app',
-        'USER': 'postgres',
-        'PASSWORD': '1123QwER',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'arthub_app',
+#         'USER': 'postgres',
+#         'PASSWORD': '1123QwER',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# # }
+# DATABASES = {}
+# if os.environ['ENVIRONMENT'] =="PRODUCTION":
+#     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': os.environ['ENGINE'],
+#             'HOST': os.environ['HOST'],
+#             'NAME':os.environ['NAME'],
+#             'USER': os.environ['USER'],
+#             'PASSWORD': os.environ['PASSWORD'],
+#             'PORT': os.environ['PORT'],
+#
+#         }
+#     }
+
+if os.environ['ENVIRONMENT'] == "PRODUCTION":
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ['ENGINE'],
+            'HOST': os.environ['HOST'],
+            'NAME': os.environ['NAME'],
+            'USER': os.environ['USER'],
+            'PASSWORD': os.environ['PASSWORD'],
+            'PORT': os.environ['PORT'],
+
+        }
     }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -131,10 +173,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
+# STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
 MEDIA_URL = '/media/'
 

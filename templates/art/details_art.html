@@ -2,255 +2,287 @@
 {% load groups_tags %}
 {% block content %}
 
-    <div class="doctor-details-area section">
+    <section class="news-single section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-5">
-                    <div class="doctor-details-item doctor-details-left">
-                        <img src="{{ art_object.photo.url }}" alt="user photo">
-                        <div class="doctor-details-contact">
-                            <div class="main-sidebar">
-                                {% if is_owner or request.user|has_group:"ArtMod" %}
+                <div class="col-lg-8 col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="single-main">
+                                <!-- Art Image -->
+                                <div class="news-head">
+                                    <img src="{{ art_object.photo.url }}" alt="{{ art_object.title }}">
+                                </div>
+                                <!-- Art Title -->
+                                <h1 class="news-title"
+                                    style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span>{{ art_object.title }}</span>
+                                    {% if not is_owner %}
+                                        <a href="{% url 'like art' art_object.pk %}">
+                                            <b><i class="fa fa-heart-o" style="font-size:35px; color:red"
+                                                  aria-hidden="true"></i></b>
+                                        </a>
+                                    {% endif %}
+                                </h1>
 
-                                    <div class="single-widget category">
-                                        <h3 class="title">Actions</h3>
-                                        <ul class="categor-list">
-                                            {% if is_owner %}
-                                                <li><a href="{% url 'edit art' art_object.pk %}">Edit</a>
-                                                </li>
-                                            {% endif %}
-                                            {% if is_owner or request.user|has_group:"ArtMod" %}
-                                                <li>
-                                                    <a href="{% url 'delete art' art_object.pk %}"
-                                                      >Delete</a>
+                                <!-- Meta -->
+                                <div class="meta">
+                                    <div class="meta-left">
+                                        <span class="author">
+                                            <a href="{% url 'details profile' owner.pk %}">
+{#                                                <img src="{{ owner.profile_photo }}" alt="{{ owner.username }}">#}
+                                                        <img src="{{ owner.profile_photo.url }}"
+                                                             alt="{{ owner.user.username }}">
 
-                                                </li>
-                                            {% endif %}
-                                        </ul>
-                                        <br>
-                                        <br>
-                                    </div>
-                                {% endif %}
-
-                            </div>
-
-                            <div class="doctor-details-work">
-
-                                {#<ul class="time-sidual">#}
-                                {#<li class="day">Monday - Fridayp <span>8.00-20.00</span></li>#}
-                                {#<li class="day">Saturday <span>9.00-18.30</span></li>#}
-                                {#<li class="day">Monday - Thusday <span>9.00-15.00</span></li>#}
-                                {#<li class="day">Monday - Fridayp <span>8.00-20.00</span></li>#}
-                                {#</ul>#}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {#                ......#}
-                <div class="col-lg-7">
-                    <div class="doctor-details-item">
-                        <div class="doctor-details-right">
-                            <div class="container mt-5">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        {#                                        <h1 class="mb-3">{{ art_object.title }}</h1>#}
-                                        <div class="main-sidebar">
-                                            <div class="single-widget">
-                                                <h2 class="title">{{ art_object.title }}</h2>
-                                            </div>
-                                        </div>
-                                        <p class="text-muted">by
-                                            <a href="{% url 'details profile' owner.pk %}"> <span
-                                                    style="font-size: 1.2em; color: #000000; font-style: italic; transition: color 0.3s, text-decoration 0.3s;"
-                                                    onmouseover="this.style.color='#6a425c'; this.style.fontWeight='bold';"
-                                                    onmouseout="this.style.color='#333333'; this.style.fontWeight='normal';">{{ owner.first_name }} {{ owner.last_name }} </span>
+{#                                                {{ owner.get_full_name }}#}
+                                              by
+                                                <span
+                                                        style="font-size: 1.2em; color: #000000; font-style: italic; transition: color 0.3s, text-decoration 0.3s;"
+                                                        onmouseover="this.style.color='#6a425c'; this.style.fontWeight='bold';"
+                                                        onmouseout="this.style.color='#333333'; this.style.fontWeight='normal';">{{ owner.first_name }} {{ owner.last_name }} </span>
                                             </a>
-                                        </p>
-                                        <div class=" mb-3">
-                                            <strong style="color: black;">Likes: {{ art_object.likes }}</strong>
-                                        </div>
-                                        <div class="mb-3">
-                                            <strong style="color: black;">Description:</strong>
-                                            <p>
-                                                {{ art_object.description }}
-                                            </p>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="main-sidebar">
-                                                <strong style="color: black;">Styles:</strong>
-
-                                                <ul class="categor-list">
-
-                                                    {% for style in styles %}
-
-                                                        <li class="list-inline-item"><a
-                                                                href="{% url 'details style' style.pk %}"
-                                                                style="font-size: 1.1em;">{{ style }}</a></li>
-                                                    {% endfor %}
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="main-sidebar">
-                                                <strong style="color: black;">Techniques:</strong>
-
-                                                <ul class="categor-list">
-                                                    {% for technique in techniques %}
-
-                                                        <li class="list-inline-item"><a
-                                                                href="{% url 'details technique' technique.pk %}"
-                                                                style="font-size: 1.1em;">{{ technique }}</a></li>
-                                                    {% endfor %}
-
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3" >
-                                            <div class="main-sidebar">
-                                                <strong style="color: black;">Medium used:</strong>
-                                                <ul class="categor-list">
-                                                    <li class="list-inline-item">
-                                                        <p style="font-size: 1.1em; transition: none !important; color: black !important" >
-                                                            Paint
-                                                        </p>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-
+                                        </span>
+                                    </div>
+                                    <div class="meta-right">
+                                        <span class="comments"><i class="fa fa-heart-o"></i>{{ art_object.likes }} Likes</span>
+                                    </div>
+                                </div>
+                                <!-- Art Description -->
+                                <div class="news-text">
+                                    <p>{{ art_object.description }}</p>
+                                    <!-- Styles -->
+                                    <div class="main-sidebar">
+                                        <strong style="color: black;">Styles:</strong>
+                                        <ul class="categor-list">
+                                            {% for style in styles %}
+                                                <li class="list-inline-item"><a
+                                                        href="{% url 'details style' style.pk %}">{{ style }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- Techniques -->
+                                    <div class="main-sidebar">
+                                        <strong style="color: black;">Techniques:</strong>
+                                        <ul class="categor-list">
+                                            {% for technique in techniques %}
+                                                <li class="list-inline-item"><a
+                                                        href="{% url 'details technique' technique.pk %}">{{ technique }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- Medium Used -->
+                                    <div class="main-sidebar">
+                                        <strong style="color: black;">Medium used:</strong>
+                                        <ul class="categor-list">
+                                            <li class="list-inline-item">
+                                                <p>{{ art_object.medium_used }}</p>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- ... (add other sections as needed) ... -->
                     </div>
                 </div>
-
-                {#            ......#}
-            </div>
-        </div>
-        {#    </div>#}
-
-
-
-        {% if own_art %}
-            </div>
-            <div class="w3-container w3-padding-32" id="projects">
-                <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">
-                    <b>{{ profile.first_name }} {{ profile.last_name }}'s Art:</b></h3>
-            </div>
-
-            <div class="w3-row-padding">
-                {% for art in own_art %}
-                    <div class="w3-col l3 m6 w3-margin-bottom">
-                        <div class="w3-display-container">
-                            <a href="{% url 'details art' art.pk %}">
-                                <div class="w3-display-topleft w3-black w3-padding">{{ art.title }}</div>
-                                <img src="{{ art.photo.url }}" alt="House" style="width:100%">
-                                {{ art.description }}
-                            </a>
-                            <div class="w3-display-topright w3-black w3-padding"><p><i class="fa fa-heart-o"
-                                                                                       aria-hidden="true"></i>{{ art_piece.likes }}
-                            </p></div>
-
+                <!-- Sidebar -->
+                <div class="col-lg-4 col-12">
+                    <div class="main-sidebar">
+                        <!-- Single Widget for Art Actions -->
+                        <div class="single-widget category">
+                            <h3 class="title">Actions</h3>
+                            <ul class="categor-list">
+                                {% if is_owner %}
+                                    <li><a href="{% url 'edit art' art_object.pk %}">Edit</a></li>
+                                {% endif %}
+                                {% if is_owner or request.user|has_group:"ArtMod" %}
+                                    <li><a href="{% url 'delete art' art_object.pk %}">Delete</a></li>
+                                {% endif %}
+                            </ul>
+                            <br>
+                            <br>
                         </div>
-                    </div>
-                {% endfor %}
+                        <!--/ End Single Widget for Art Actions -->
 
-
-            </div>
-        {% endif %}
-    {% if own_events %}
-        <div class="w3-container w3-padding-32" id="projects">
-            <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">
-                <b>{{ profile.first_name }} {{ profile.last_name }}'s Events:</b></h3>
-        </div>
-
-        <div class="w3-row-padding">
-            {% for event in own_events %}
-                <div class="w3-col l3 m6 w3-margin-bottom">
-                    <div class="w3-display-container">
-                        <a href="{% url 'details event' event.pk %}">
-                            <div class="w3-display-topleft w3-black w3-padding">{{ event.title }}</div>
-                            <img src="{{ event.photo }}" alt="House" style="width:100%">
-                            {{ event.description|truncatewords:10 }}
-                        </a>
-
+                    
                     </div>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    {% endif %}
-    </div>
+    </section>
 
 
-    -----
-    {#    <div class="row">#}
+    {#    <div class="doctor-details-area section">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col-lg-5">#}
+    {#                    <div class="doctor-details-item doctor-details-left">#}
     {##}
-    {#        <div class="col-lg-5">#}
-    {#            <div class="service-details-inner-left">#}
-    {#                <img src="{{ art_object.photo.url }}" alt="#">#}
+    {#                        <div class="doctor-details-contact">#}
+    {##}
+    {#                            <div class="main-sidebar">#}
+    {#                               <div class="single-widget category">#}
+    {#                               <img src="{{ art_object.photo.url }}" alt="user photo">#}
+    {#                               </div>#}
+    {#                                {% if is_owner or request.user|has_group:"ArtMod" %}#}
+    {##}
+    {#                                    <div class="single-widget category">#}
+    {#                                        <h3 class="title">Actions</h3>#}
+    {#                                        <ul class="categor-list">#}
+    {#                                            {% if is_owner %}#}
+    {#                                                <li><a href="{% url 'edit art' art_object.pk %}">Edit</a>#}
+    {#                                                </li>#}
+    {#                                            {% endif %}#}
+    {#                                            {% if is_owner or request.user|has_group:"ArtMod" %}#}
+    {#                                                <li>#}
+    {#                                                    <a href="{% url 'delete art' art_object.pk %}"#}
+    {#                                                      >Delete</a>#}
+    {##}
+    {#                                                </li>#}
+    {#                                            {% endif %}#}
+    {#                                        </ul>#}
+    {#                                        <br>#}
+    {#                                        <br>#}
+    {#                                    </div>#}
+    {#                                {% endif %}#}
+    {##}
+    {#                            </div>#}
+    {##}
+    {##}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                ......#}
+    {#                <div class="col-lg-7">#}
+    {#                    <div class="doctor-details-item">#}
+    {#                        <div class="doctor-details-right">#}
+    {#                            <div class="container mt-5">#}
+    {#                                <div class="row">#}
+    {#                                    <div class="col-lg-8">#}
+    {#                                        <h1 class="mb-3">{{ art_object.title }}</h1>#}
+    {#                                        <div class="main-sidebar">#}
+    {#                                            <div class="single-widget">#}
+    {#                                                <h2 class="title">{{ art_object.title }}</h2>#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {#                                        <p class="text-muted">by#}
+    {#                                            <a href="{% url 'details profile' owner.pk %}"> <span#}
+    {#                                                    style="font-size: 1.2em; color: #000000; font-style: italic; transition: color 0.3s, text-decoration 0.3s;"#}
+    {#                                                    onmouseover="this.style.color='#6a425c'; this.style.fontWeight='bold';"#}
+    {#                                                    onmouseout="this.style.color='#333333'; this.style.fontWeight='normal';">{{ owner.first_name }} {{ owner.last_name }} </span>#}
+    {#                                            </a>#}
+    {#                                        </p>#}
+    {#                                        <div class=" mb-3">#}
+    {#                                            <strong style="color: black;">Likes: {{ art_object.likes }}</strong>#}
+    {#                                        </div>#}
+    {#                                        <div class="mb-3">#}
+    {#                                            <strong style="color: black;">Description:</strong>#}
+    {#                                            <p>#}
+    {#                                                {{ art_object.description }}#}
+    {#                                            </p>#}
+    {#                                        </div>#}
+    {#                                        <div class="mb-3">#}
+    {#                                            <div class="main-sidebar">#}
+    {#                                                <strong style="color: black;">Styles:</strong>#}
+    {##}
+    {#                                                <ul class="categor-list">#}
+    {##}
+    {#                                                    {% for style in styles %}#}
+    {##}
+    {#                                                        <li class="list-inline-item"><a#}
+    {#                                                                href="{% url 'details style' style.pk %}"#}
+    {#                                                                style="font-size: 1.1em;">{{ style }}</a></li>#}
+    {#                                                    {% endfor %}#}
+    {##}
+    {#                                                </ul>#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {#                                        <div class="mb-3">#}
+    {#                                            <div class="main-sidebar">#}
+    {#                                                <strong style="color: black;">Techniques:</strong>#}
+    {##}
+    {#                                                <ul class="categor-list">#}
+    {#                                                    {% for technique in techniques %}#}
+    {##}
+    {#                                                        <li class="list-inline-item"><a#}
+    {#                                                                href="{% url 'details technique' technique.pk %}"#}
+    {#                                                                style="font-size: 1.1em;">{{ technique }}</a></li>#}
+    {#                                                    {% endfor %}#}
+    {##}
+    {#                                                </ul>#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {##}
+    {#                                        <div class="mb-3" >#}
+    {#                                            <div class="main-sidebar">#}
+    {#                                                <strong style="color: black;">Medium used:</strong>#}
+    {#                                                <ul class="categor-list">#}
+    {#                                                    <li class="list-inline-item">#}
+    {#                                                        <p style="font-size: 1.1em; transition: none !important; color: black !important" >#}
+    {#                                                          {{ art_object.medium_used }}#}
+    {#                                                        </p>#}
+    {#                                                    </li>#}
+    {#                                                </ul>#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {##}
+    {#                                    </div>#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#            ......#}
     {#            </div>#}
     {#        </div>#}
-    {#        <div class="col-lg-7">#}
-    {#            <div class="service-details-inner">#}
-    {#                <h2>We always take care <br> our patient</h2>#}
-    {#                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto blanditiis obcaecati veritatis#}
-    {#                    magnam pariatur molestiae in maxime. Animi quae vitae in inventore. Totam mollitia aspernatur#}
-    {#                    provident veniam aperiam placeat impedit! Lorem ipsum dolor sit amet, consectetur adipisicing elit.#}
-    {#                    Saepe rem natus nobis, dolorum nam excepturi iure autem nemo ducimus temporibus facere, est eum#}
-    {#                    voluptatem, culpa optio fugit assumenda quod? Praesentium.</p>#}
-    {#                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, laudantium ullam, iure distinctio#}
-    {#                    officia libero voluptatem obcaecati vero deleniti minima nemo itaque alias nisi eveniet soluta#}
-    {#                    architecto quae laboriosam unde.</p>#}
-    {#            </div>#}
-    {#        </div>#}
-    {##}
-    {##}
     {#    </div>#}
+    {#   </div>#}
+    {##}
+    {#END OLD CODE#}
 
-{#    ----------------#}
-{#    <div class="w3-container w3-padding-32" id="projects">#}
-{#        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">{{ art_object.title }}</h3>#}
-{#    </div>#}
-{##}
-{#    <div class="w3-row-padding">#}
-{##}
-{#        <img src="{{ art_object.photo.url }}" alt="Art" style="width:20%">#}
-{#        {% if is_owner %}#}
-{#            <a href="{% url 'edit art' art_object.pk %}" class="btn btn-primary">Edit</a>#}
-{#        {% endif %}#}
-{#        {% if is_owner or request.user|has_group:"ArtMod" %}#}
-{#            <a href="{% url 'delete art' art_object.pk %}" class="btn btn-danger">Delete</a>#}
-{#        {% endif %}#}
-{#        {% if not is_owner %}#}
-{#            <a href="{% url 'like art' art_object.pk %}"><b><i class="fa fa-heart-o" style="font-size:35px; color:red"#}
-{#                                                               aria-hidden="true"></i> </b></a>#}
-{##}
-{#        {% endif %}#}
-{##}
-{#        <p class="mt-2"><b>Artist:#}
-{#            <a href="{% url 'details profile' owner.pk %}"#}
-{#               style="color:royalblue"><b>  {{ owner.first_name }} {{ owner.last_name }}</b></a>#}
-{##}
-{#        </b></p>#}
-{#        <p class="mt-2"><b>Likes: {{ art_object.likes }}</b></p>#}
-{##}
-{##}
-{#        <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i>{{ art_object.description }}</i></h4>#}
-{##}
-{##}
-{#        <h4><u>Styles:</u></h4>#}
-{#        {% for style in styles %}#}
-{#            <br> - <a href="{% url 'details style' style.pk %}" style="color:royalblue"><b>{{ style }}</b></a>#}
-{#        {% endfor %}#}
-{#        <h4><u> Techniques:</u></h4>#}
-{#        {% for technique in techniques %}#}
-{#            <br> -#}
-{#            <a href="{% url 'details technique' technique.pk %}" style="color:royalblue"><b>{{ technique }}</b></a>#}
-{##}
-{#        {% endfor %}#}
-{#        <h4><u> Medium used:</u></h4> <br> -{{ art_object.medium_used }}#}
-{#    </div>#}
+    {#    ----------------#}
+    {#    <div class="w3-container w3-padding-32" id="projects">#}
+    {#        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">{{ art_object.title }}</h3>#}
+    {#    </div>#}
+    {##}
+    {#    <div class="w3-row-padding">#}
+    {##}
+    {#        <img src="{{ art_object.photo.url }}" alt="Art" style="width:20%">#}
+    {#        {% if is_owner %}#}
+    {#            <a href="{% url 'edit art' art_object.pk %}" class="btn btn-primary">Edit</a>#}
+    {#        {% endif %}#}
+    {#        {% if is_owner or request.user|has_group:"ArtMod" %}#}
+    {#            <a href="{% url 'delete art' art_object.pk %}" class="btn btn-danger">Delete</a>#}
+    {#        {% endif %}#}
+    {#        {% if not is_owner %}#}
+    {#            <a href="{% url 'like art' art_object.pk %}"><b><i class="fa fa-heart-o" style="font-size:35px; color:red"#}
+    {#                                                               aria-hidden="true"></i> </b></a>#}
+    {##}
+    {#        {% endif %}#}
+    {##}
+    {#        <p class="mt-2"><b>Artist:#}
+    {#            <a href="{% url 'details profile' owner.pk %}"#}
+    {#               style="color:royalblue"><b>  {{ owner.first_name }} {{ owner.last_name }}</b></a>#}
+    {##}
+    {#        </b></p>#}
+    {#        <p class="mt-2"><b>Likes: {{ art_object.likes }}</b></p>#}
+    {##}
+    {##}
+    {#        <h4 class="w3-border-bottom w3-border-light-grey w3-padding-16"><i>{{ art_object.description }}</i></h4>#}
+    {##}
+    {##}
+    {#        <h4><u>Styles:</u></h4>#}
+    {#        {% for style in styles %}#}
+    {#            <br> - <a href="{% url 'details style' style.pk %}" style="color:royalblue"><b>{{ style }}</b></a>#}
+    {#        {% endfor %}#}
+    {#        <h4><u> Techniques:</u></h4>#}
+    {#        {% for technique in techniques %}#}
+    {#            <br> -#}
+    {#            <a href="{% url 'details technique' technique.pk %}" style="color:royalblue"><b>{{ technique }}</b></a>#}
+    {##}
+    {#        {% endfor %}#}
+    {#        <h4><u> Medium used:</u></h4> <br> -{{ art_object.medium_used }}#}
+    {#    </div>#}
 {% endblock %}

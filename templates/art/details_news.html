@@ -69,13 +69,16 @@
 
                         {% if request.user|has_group:"ArtMod" %}
                             <div class="single-widget category">
+                             <ul class="categor-list">
                                 <h3 class="title">
-                                    <a href="{% url 'edit news' news.pk %}"
-                                       class="btn btn-primary">Edit</a>
+                                    <li>
+                                    <a href="{% url 'edit news' news.pk %}">Edit</a></li>
                                 </h3>
-                                <h3 class="title"><a href="{% url 'delete news' news.pk %}" class="btn btn-danger">Delete</a>
+                                <h3 class="title">
+                                    <li>
+                                    <a href="{% url 'delete news' news.pk %}">Delete</a></li>
                                 </h3>
-
+                             </ul>
                             </div>
 
                         {% endif %}

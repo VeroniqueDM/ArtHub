@@ -2,66 +2,117 @@
 {% load groups_tags %}
 {% block content %}
     <section class="pf-details section">
-        {#    <h2>Edit Event</h2>#}
-        <div class="doctor-details-area section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="doctor-details-item doctor-details-left">
-                            {#                        <img src="{{ art_object.photo.url }}" alt="user photo">#}
-                            <div class="doctor-details-contact">
-                                <div class="main-sidebar">
-                                    {% if is_owner %}
-
-                                        <div class="single-widget category">
-                                            <h3 class="title">Actions</h3>
-                                            <ul class="categor-list">
-                                                {% if is_owner or request.user|has_group:"ArtMod" %}
-                                                    <li><a href="{% url 'edit event' event.pk %}">Edit</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{% url 'delete event' event.pk %}">Delete</a>
-
-                                                    </li>
-                                                {% endif %}
-                                            </ul>
-                                            <br>
-                                            <br>
-                                        </div>
-                                    {% endif %}
-
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="single-main">
+                                <!-- Event Image Slider -->
+                                <div class="image-slider">
+                                    <div class="news-head">
+                                        <img src="{{ event.photo }}" alt="Event Photo">
+                                    </div>
                                 </div>
-
-
+                                <!-- Event Details -->
+                                <div class="date">
+                                    <ul>
+                                        <li><span>Entry :</span> {{ event.price|floatformat:2 }}€</li>
+                                        <li><span>Date :</span> {{ event.date }}</li>
+                                        <li><span>Location :</span> {{ event.location }}</li>
+                                    </ul>
+                                </div>
+                                <!-- Event Title and Description -->
+                                <div class="body-text">
+                                    <h1 class="news-title">{{ event.title }}</h1>
+                                    <p>{{ event.description }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-
-                    <div class="col-7">
-                        <div class="inner-content">
-                            <div class="image-slider">
-                                <div class="news-head">
-                                    <img src="{{ event.photo }}" alt="Nature">
-
-                                    {#									<img src="img/call-bg.jpg" alt="#">#}
-                                    {#									<img src="img/call-bg.jpg" alt="#">#}
-                                    {#									<img src="img/call-bg.jpg" alt="#">#}
-                                </div>
-                            </div>
-                            <div class="date">
-                                <ul>
-                                    <li><span>Entry :</span> {{ event.price|floatformat:2 }}€</li>
-                                    <li><span>Date :</span> {{ event.date }}</li>
-                                    <li><span>Location :</span> {{ event.location }}</li>
-                                    {#                                <li><span>Ags :</span> Typo</li>#}
+                <div class="col-lg-4 col-12">
+                    <div class="main-sidebar">
+                        {% if is_owner or request.user|has_group:"ArtMod" %}
+                            <div class="single-widget category">
+                                <h3 class="title">Actions</h3>
+                                <ul class="categor-list">
+                                    <li><a href="{% url 'edit event' event.pk %}">Edit</a></li>
+                                    <li><a href="{% url 'delete event' event.pk %}">Delete</a></li>
                                 </ul>
+                                <br>
+                                <br>
                             </div>
-                            <div class="body-text">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                                <h3>  {{ event.title }}</h3>
-                                <p>{{ event.description }}</p>
 
+{#    <section class="pf-details section">#}
+        {#    <h2>Edit Event</h2>#}
+{#        <div class="doctor-details-area section">#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <div class="col-lg-3">#}
+{#                        <div class="doctor-details-item doctor-details-left">#}
+                            {#                        <img src="{{ art_object.photo.url }}" alt="user photo">#}
+{#                            <div class="doctor-details-contact">#}
+{#                                <div class="main-sidebar">#}
+{#                                    {% if is_owner %}#}
+{##}
+{#                                        <div class="single-widget category">#}
+{#                                            <h3 class="title">Actions</h3>#}
+{#                                            <ul class="categor-list">#}
+{#                                                {% if is_owner or request.user|has_group:"ArtMod" %}#}
+{#                                                    <li><a href="{% url 'edit event' event.pk %}">Edit</a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <a href="{% url 'delete event' event.pk %}">Delete</a>#}
+{##}
+{#                                                    </li>#}
+{#                                                {% endif %}#}
+{#                                            </ul>#}
+{#                                            <br>#}
+{#                                            <br>#}
+{#                                        </div>#}
+{#                                    {% endif %}#}
+{##}
+{#                                </div>#}
+{##}
+{##}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{##}
+{#                    <div class="col-7">#}
+{#                        <div class="inner-content">#}
+{#                            <div class="image-slider">#}
+{#                                <div class="news-head">#}
+{#                                    <img src="{{ event.photo }}" alt="Nature">#}
+{##}
+                                    {#									<img src="img/call-bg.jpg" alt="#">#}
+                                    {#									<img src="img/call-bg.jpg" alt="#">#}
+                                    {#									<img src="img/call-bg.jpg" alt="#">#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="date">#}
+{#                                <ul>#}
+{#                                    <li><span>Entry :</span> {{ event.price|floatformat:2 }}€</li>#}
+{#                                    <li><span>Date :</span> {{ event.date }}</li>#}
+{#                                    <li><span>Location :</span> {{ event.location }}</li>#}
+                                    {#                                <li><span>Ags :</span> Typo</li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <div class="body-text">#}
+{##}
+{#                                <h3>  {{ event.title }}</h3>#}
+{#                                <p>{{ event.description }}</p>#}
+{##}
                                 {#                            <div class="share">#}
                                 {#                                <h4>Share Now -</h4>#}
                                 {#                                <ul>#}
@@ -70,13 +121,15 @@
                                 {#                                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>#}
                                 {#                                </ul>#}
                                 {#                            </div>#}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+{#END OLD SECTION#}
+
 
     {##}
     {#    <div class="w3-container w3-padding-32" id="projects">#}

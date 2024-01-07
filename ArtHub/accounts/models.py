@@ -20,6 +20,7 @@ class ArtHubUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     type = models.CharField(
         max_length=50,
         choices=Types.choices,
+        default='REGULAR_USER',
     )
     date_joined = models.DateTimeField(
         auto_now_add=True,
