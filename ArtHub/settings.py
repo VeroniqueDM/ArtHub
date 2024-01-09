@@ -68,7 +68,6 @@ INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 
 ]
 
@@ -118,33 +118,34 @@ WSGI_APPLICATION = 'ArtHub.wsgi.application'
 # if os.environ['ENVIRONMENT'] =="PRODUCTION":
 #     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 # else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': os.environ['ENGINE'],
-#             'HOST': os.environ['HOST'],
-#             'NAME':os.environ['NAME'],
-#             'USER': os.environ['USER'],
-#             'PASSWORD': os.environ['PASSWORD'],
-#             'PORT': os.environ['PORT'],
-#
-#         }
-#     }
-ENVIRONMENT = os.environ.get('ENVIRONMENT', 'DEVELOPMENT')
-
-if os.environ['ENVIRONMENT'] == "PRODUCTION":
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-else:
-    DATABASES = {
+DATABASES = {
         'default': {
             'ENGINE': os.environ['ENGINE'],
             'HOST': os.environ['HOST'],
-            'NAME': os.environ['NAME'],
+            'NAME':os.environ['NAME'],
             'USER': os.environ['USER'],
             'PASSWORD': os.environ['PASSWORD'],
             'PORT': os.environ['PORT'],
 
         }
     }
+
+# ENVIRONMENT = os.environ.get('ENVIRONMENT', 'DEVELOPMENT')
+#
+# if os.environ['ENVIRONMENT'] == "PRODUCTION":
+#     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': os.environ['ENGINE'],
+#             'HOST': os.environ['HOST'],
+#             'NAME': os.environ['NAME'],
+#             'USER': os.environ['USER'],
+#             'PASSWORD': os.environ['PASSWORD'],
+#             'PORT': os.environ['PORT'],
+#
+#         }
+#     }
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -187,6 +188,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
+# MEDIA_ROOT =  os.path.join(BASE_DIR, 'mediafiles_build', 'media')
 
 
 # Default primary key field type

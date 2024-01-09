@@ -107,6 +107,7 @@ class UserProfile(models.Model):
     )
 
     profile_photo = models.ImageField(
+        # upload_to='profile_photos/',
         blank=True,
         null=True,
         validators=(

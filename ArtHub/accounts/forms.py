@@ -84,17 +84,22 @@ class CreateRegularProfileForm(BootstrapFormMixin,UserCreationForm):
     def clean(self):
         cleaned_data = super().clean()
         pic = cleaned_data.get('profile_photo')
-        if pic is None:
-            return
-        if len(pic) > self.max_upload_limit:
-            self.add_error('profile_photo', f"File must be < 5 MB")
+        # if pic is None:
+        #     return
+        # if len(pic) > self.max_upload_limit:
+        #     self.add_error('profile_photo', f"File must be < 5 MB")
 
+        if pic:
+            if len(pic) > self.max_upload_limit:
+                self.add_error('profile_photo', f"File must be < 5 MB")
     def save(self, commit=True):
         user = super().save(commit=commit)
+        profile_photo = self.cleaned_data.get('profile_photo', None)
+
         profile = UserProfile(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
-            profile_photo=self.cleaned_data['profile_photo'],
+            profile_photo=profile_photo,
             date_of_birth=self.cleaned_data['date_of_birth'],
             email=self.cleaned_data['email'],
             user=user,

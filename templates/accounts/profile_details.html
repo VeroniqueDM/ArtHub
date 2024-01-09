@@ -9,9 +9,14 @@
             <div class="row">
                 <div class="col-lg-5">
                     <div class="doctor-details-item doctor-details-left">
-                        <img src="{{ profile.profile_photo.url }}" alt="user photo">
-                        <img src="{{ profile.profile_photo }}" alt="user photo">
-                        <img src="data:image/jpeg;base64,{{ profile.profile_photo }}" alt="user photo">
+                      {% if profile.profile_photo.url %}
+                                            <img src="{{ profile.profile_photo.url }}" alt="user photo">
+{% else %}
+                        <img src=https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg alt="user photo">
+{% endif %}
+{#                        <img src="{{ profile.profile_photo.url }}" alt="user photo">#}
+{#                        <img src="{{ profile.profile_photo }}" alt="user photo">#}
+{#                        <img src="data:image/jpeg;base64,{{ profile.profile_photo }}" alt="user photo">#}
                         <div class="doctor-details-contact">
                             <h3>Contact info</h3>
                             <ul class="basic-info">
