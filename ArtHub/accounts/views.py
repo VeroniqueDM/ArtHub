@@ -33,6 +33,7 @@ class RegularUserRegisterView(views.CreateView):
     def form_valid(self, form):
         try:
             result = super().form_valid(form)
+            profile = UserProfile.objects.create(user=self.object)
 
             if self.object.type == 'ARTIST':
                 group = Group.objects.get(name='Artist').id
