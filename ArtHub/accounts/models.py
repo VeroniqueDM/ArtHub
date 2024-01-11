@@ -4,7 +4,7 @@ from django.contrib.auth import models as auth_models
 from ArtHub.accounts.managers import ArtHubManager
 from ArtHub.common.validators import validate_only_letters_or_space
 
-
+from cloudinary.models import CloudinaryField
 class ArtHubUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     USERNAME_MAX_LENGTH = 25
 
@@ -106,13 +106,19 @@ class UserProfile(models.Model):
         )
     )
 
-    profile_photo = models.ImageField(
+    # profile_photo = models.ImageField(
+    #     # upload_to='profile_photos/',
+    #     blank=True,
+    #     null=True,
+    #     validators=(
+    #
+    #     )
+    # )
+    profile_photo = CloudinaryField(
         # upload_to='profile_photos/',
-        blank=True,
-        null=True,
-        validators=(
-
-        )
+     'image',
+    #     blank=True,
+    #     null=True,
     )
 
     date_of_birth = models.DateField(

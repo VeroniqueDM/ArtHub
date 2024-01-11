@@ -16,12 +16,17 @@ import dotenv
 from dotenv import load_dotenv
 
 from pathlib import Path
-
+# Cloudinary imports
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.urls import reverse_lazy
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
 
 # print("Loaded environment variables:")
 # for key, value in os.environ.items():
@@ -58,7 +63,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 THIRD_PARTY_APPS = [
-
+    'cloudinary',
 ]
 PROJECT_APPS = [
     'ArtHub.accounts',
@@ -68,6 +73,7 @@ INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,7 +81,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 
 ]
 
@@ -221,3 +226,11 @@ LOGIN_URL = reverse_lazy('login user')
 #         },
 #     },
 # }
+
+
+# Cloudinary - Django integration
+cloudinary.config(
+    cloud_name=os.environ['CLOUD_NAME'],
+    api_key=os.environ['API_KEY'],
+    api_secret=os.environ['API_SECRET'],
+)
