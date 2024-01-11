@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 UserModel = get_user_model()
 
@@ -49,13 +50,20 @@ class ArtPiece(models.Model):
         max_length= MAX_LENGTH_TITLE,
     )
 
-    photo = models.ImageField(
-        null=True,
-        blank=True,
-        validators=(
-
-        )
+    # photo = models.ImageField(
+    #     null=True,
+    #     blank=True,
+    #     validators=(
+    #
+    #     )
+    # )
+    photo = CloudinaryField(
+        # upload_to='profile_photos/',
+     'image',
+    #     blank=True,
+    #     null=True,
     )
+
     description = models.TextField(
         null=True,
         blank=True,

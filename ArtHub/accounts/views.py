@@ -23,13 +23,23 @@ class RegularUserRegisterView(views.CreateView):
     context_object_name = 'profile'
 
     def form_valid(self, form):
-        result = super().form_valid(form)
+      try:
+          result = super().form_valid(form)
 
-        if self.object.type == 'ARTIST':
-            group = Group.objects.get(name='Artist').id
-            self.object.groups.add(group)
-        login(self.request, self.object)
-        return result
+          if self.object.type == 'ARTIST':
+              group = Group.objects.get(name='Artist').id
+              self.object.groups.add(group)
+          login(self.request, self.object)
+          return result
+      except Exception as e:
+              # Log the error for debugging purposes
+        print(f"Error during registration: {e}")
+
+              # # Add an error message to be displayed to the user
+              # messages.error(self.request, 'An error occurred during registration. Please try again.')
+              #
+              # # Return an appropriate response, e.g., redirect to the registration page
+              # return self.form_invalid(form)
 
     # def form_valid(self, form):
     #     try:
