@@ -231,8 +231,13 @@ LOGIN_URL = reverse_lazy('login user')
 
 
 # Cloudinary - Django integration
-cloudinary.config(
-    cloud_name=os.environ['CLOUD_NAME'],
-    api_key=os.environ['API_KEY'],
-    api_secret=os.environ['API_SECRET'],
-)
+# cloudinary.config(
+#     cloud_name=os.environ['CLOUD_NAME'],
+#     api_key=os.environ['API_KEY'],
+#     api_secret=os.environ['API_SECRET'],
+# )
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ['CLOUD_NAME'],
+    'API_KEY': os.environ['API_KEY'],
+    'API_SECRET': os.environ['API_SECRET'],
+}
