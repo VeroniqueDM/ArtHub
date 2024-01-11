@@ -22,44 +22,43 @@ class RegularUserRegisterView(views.CreateView):
     success_url = reverse_lazy('index')
     context_object_name = 'profile'
 
-    # def form_valid(self, form):
-    #     result = super().form_valid(form)
-    #
-    #     if self.object.type == 'ARTIST':
-    #         group = Group.objects.get(name='Artist').id
-    #         self.object.groups.add(group)
-    #     login(self.request, self.object)
-    #     return result
-
-
     def form_valid(self, form):
-        try:
-            result = super().form_valid(form)
-            profile = UserProfile.objects.create(user=self.object)
+        result = super().form_valid(form)
 
-            if self.object.type == 'ARTIST' or self.object.type == 'Artist' :
-                group = Group.objects.get(name='Artist').id
-                self.object.groups.add(group)
+        if self.object.type == 'ARTIST':
+            group = Group.objects.get(name='Artist').id
+            self.object.groups.add(group)
+        login(self.request, self.object)
+        return result
 
-            login(self.request, self.object)
-            return result
-
-        except Exception as e:
-            # Log the error for debugging purposes
-            print(f"Error during registration: {e}")
-
-            # Add an error message to be displayed to the user
-            messages.error(self.request, 'An error occurred during registration. Please try again.')
-
-            # Return an appropriate response, e.g., redirect to the registration page
-            return self.form_invalid(form)
-
-    def form_invalid(self, form):
-        # Add an error message to be displayed to the user
-        messages.error(self.request, 'Invalid registration. Please check your input.')
-
-        # Continue with the default behavior for invalid forms
-        return super().form_invalid(form)
+    # def form_valid(self, form):
+    #     try:
+    #         result = super().form_valid(form)
+    #         profile = UserProfile.objects.create(user=self.object)
+    #
+    #         if self.object.type == 'ARTIST' or self.object.type == 'Artist' :
+    #             group = Group.objects.get(name='Artist').id
+    #             self.object.groups.add(group)
+    #
+    #         login(self.request, self.object)
+    #         return result
+    #
+    #     except Exception as e:
+    #         # Log the error for debugging purposes
+    #         print(f"Error during registration: {e}")
+    #
+    #         # Add an error message to be displayed to the user
+    #         messages.error(self.request, 'An error occurred during registration. Please try again.')
+    #
+    #         # Return an appropriate response, e.g., redirect to the registration page
+    #         return self.form_invalid(form)
+    #
+    # def form_invalid(self, form):
+    #     # Add an error message to be displayed to the user
+    #     messages.error(self.request, 'Invalid registration. Please check your input.')
+    #
+    #     # Continue with the default behavior for invalid forms
+    #     return super().form_invalid(form)
 
 
 class UserLoginView(auth_views.LoginView):
