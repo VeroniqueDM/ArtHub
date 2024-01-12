@@ -10,7 +10,7 @@
 							<h2>Dashboard Events</h2>
 {#							<img src="img/section-img.png" alt="#">#}
 							<p>Keep up with the most recent Art Events!</p>
-                                                    {% if request.user|has_group:"Artist" %}
+                                                    {% if request.user|has_group:"Artist" or request.user|has_group:"ArtMod"%}
 <br>
                                                         <a class="btn btn-success" href="{% url 'add event' %}" role="button">Add new Event</a>
     {% endif %}
