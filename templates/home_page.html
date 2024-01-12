@@ -122,7 +122,7 @@
                         {% for news_piece in news %}
 
                             <div class="single-pf">
-                                <img src="{{ news_piece.photo }}" alt="#">
+                                <img src="{{ news_piece.photo.url }}" alt="#">
                                 <div class="w3-display-topleft w3-black w3-padding">{{ news_piece.title|truncatewords:15 }} </div>
 
                                 <a href="{% url 'details news' news_piece.pk %}" class="btn">View Details</a>
