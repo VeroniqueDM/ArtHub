@@ -241,3 +241,4 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ['API_KEY'],
     'API_SECRET': os.environ['API_SECRET'],
 }
+CLOUDINARY_URL = os.environ['CLOUDINARY_URL']

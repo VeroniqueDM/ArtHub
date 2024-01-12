@@ -13,14 +13,19 @@ class Style(models.Model):
 
     )
     description = models.TextField()
-    photo = models.ImageField(
-        null=True,
-        blank=True,
-        validators=(
-
-        ),
+    # photo = models.ImageField(
+    #     null=True,
+    #     blank=True,
+    #     validators=(
+    #
+    #     ),
+    # )
+    photo = CloudinaryField(
+        # upload_to='profile_photos/',
+        'image',
+        #     blank=True,
+        #     null=True,
     )
-
     def __str__(self):
         return self.name
 
@@ -32,14 +37,19 @@ class Technique(models.Model):
 
     )
     description = models.TextField()
-    photo = models.ImageField(
-        null=True,
-        blank=True,
-        validators=(
-
-        ),
+    # photo = models.ImageField(
+    #     null=True,
+    #     blank=True,
+    #     validators=(
+    #
+    #     ),
+    # )
+    photo = CloudinaryField(
+        # upload_to='profile_photos/',
+        'image',
+        #     blank=True,
+        #     null=True,
     )
-
     def __str__(self):
         return self.name
 
@@ -130,8 +140,14 @@ class Event(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
-    photo = models.URLField(
-        verbose_name = 'Photo URL'
+    # photo = models.URLField(
+    #     verbose_name = 'Photo URL'
+    # )
+    photo = CloudinaryField(
+        # upload_to='profile_photos/',
+        'image',
+        #     blank=True,
+        #     null=True,
     )
 
 
@@ -155,9 +171,15 @@ class News(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
-    photo = models.URLField(
-        verbose_name='Photo URL'
-
+    # photo = models.URLField(
+    #     verbose_name='Photo URL'
+    #
+    # )
+    photo = CloudinaryField(
+        # upload_to='profile_photos/',
+        'image',
+        #     blank=True,
+        #     null=True,
     )
 
 
