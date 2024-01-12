@@ -93,11 +93,11 @@ class CreateNewsForm(BootstrapFormMixin, forms.ModelForm):
                     'placeholder': 'Enter Title',
                 }
             ),
-            'photo': forms.TextInput(
-                attrs={
-                    'placeholder': 'Enter URL',
-                }
-            ),
+            # 'photo': forms.TextInput(
+            #     attrs={
+            #         'placeholder': 'Enter URL',
+            #     }
+            # ),
             'subtitle': forms.TextInput(attrs={'placeholder': 'Enter Subtitle'}),
             'content': forms.Textarea(attrs={'placeholder': 'Enter Content'}),
         }
