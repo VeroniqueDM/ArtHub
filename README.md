@@ -45,9 +45,9 @@ Visit the live ArtHub website: [Demo](https://art-hub-rho.vercel.app/)
 ## Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/ArtHub.git
-   ```
+```bash
+git clone https://github.com/your-username/ArtHub.git
+```
    
 2. Navigate to the project directory:
 
