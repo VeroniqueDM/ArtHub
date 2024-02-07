@@ -91,7 +91,11 @@
                     <div class="main-sidebar">
                         <!-- Single Widget for Art Actions -->
                         <div class="single-widget category">
+                          {% if is_owner or request.user|has_group:"ArtMod" %}
+{#                                    <li><a href="{% url 'delete art' art_object.pk %}">Delete</a></li>#}
+
                             <h3 class="title">Actions</h3>
+                             {% endif %}
                             <ul class="categor-list">
                                 {% if is_owner %}
                                     <li><a href="{% url 'edit art' art_object.pk %}">Edit</a></li>
